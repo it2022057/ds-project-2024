@@ -27,7 +27,7 @@ public class Citizen extends User {
     @Column
     private String address;
 
-    @OneToMany(mappedBy = "citizen", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "applicant", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Adoption> pendingAdoptions;
 

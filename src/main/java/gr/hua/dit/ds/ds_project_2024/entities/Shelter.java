@@ -28,11 +28,11 @@ public class Shelter extends User {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "shelter", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "onShelter", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Pet> petsAvailable;
 
-    @OneToMany(mappedBy = "shelter", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "fromShelter", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Adoption> adoptionRequests;
 
