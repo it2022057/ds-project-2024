@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Citizens</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <div th:if="${ not#lists.isEmpty(pets)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Species</th>
+                <th>Sex</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pet : ${pets}">
+                <td th:text="${pet.name}"></td>
+                <td th:text="${pet.species}"></td>
+                <td th:text="${pet.sex}"></td>
+                                <td>
+                                    <a  class="btn btn-outline-light btn-sm" th:href="@{'/pet/' + ${pet.id}}">Details</a>
+                                    <a  class="btn btn-outline-info btn-sm" th:href="@{'/pet/search/' + ${pet.id}}">Adopt</a>
+                                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(pets)}">
+        No Pets found!
+    </div>
+    <a href="/pet/new" class="btn btn-primary" role="button">Create new Pet</a>
+</div>
+</body>
+</html>

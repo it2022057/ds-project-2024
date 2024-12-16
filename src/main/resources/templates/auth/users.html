@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Users</title>
+</head>
+<body>
+<h1>All Users</h1>
+<ul>
+    <li><a th:href="@{'/users/admins'}">Admins</a></li>
+    <li><a th:href="@{'/users/shelters'}">Shelters</a></li>
+    <li><a th:href="@{'/users/vets'}">Veterinarians</a></li>
+    <li><a th:href="@{'/users/citizens'}">Citizens</a></li>
+</ul>
+
+<h2>All Users:</h2>
+<ul>
+    <li th:each="user : ${users}">
+        <p th:text="'User: ' + ${user.name} + ' (' + ${user.role} + ')'">User Name (Role)</p>
+    </li>
+</ul>
+</body>
+</html>

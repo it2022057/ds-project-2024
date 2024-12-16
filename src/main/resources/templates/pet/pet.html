@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pet</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <form action="#" th:action="@{/pet/new}" th:object="${pet}"
+          method="post">
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" class="form-control" th:field="*{name}">
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" class="form-control" th:field="*{age}">
+        </div>
+
+        <div class="form-group">
+            <label for="species">Species</label>
+            <input type="text" id="species" class="form-control" th:field="*{species}">
+        </div>
+
+        <div class="form-group">
+            <label for="sex">Sex</label>
+            <input type="text" id="sex" class="form-control" th:field="*{sex}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Citizens</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <div th:if="${ not#lists.isEmpty(citizens)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="citizen : ${citizens}">
+                <td th:text="${citizen.firsname}"></td>
+                <td th:text="${citizen.lastName}"></td>
+                <td th:text="${citizen.address}"></td>
+<!--                <td>-->
+<!--                    <a  class="btn btn-outline-light btn-sm" th:href="@{'/citizen/' + ${citizen.id}}">Details</a>-->
+<!--                    <a  class="btn btn-outline-info btn-sm" th:href="@{'/student/profile/' + ${student.id}}">Profile</a>-->
+<!--                </td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(citizens)}">
+        No Citizens found!
+    </div>
+    <a href="/citizen/new" class="btn btn-primary" role="button">Create new Citizen</a>
+</div>
+</body>
+</html>
