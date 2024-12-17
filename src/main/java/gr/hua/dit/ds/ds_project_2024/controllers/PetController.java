@@ -1,11 +1,14 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
+import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -35,10 +38,17 @@ public class PetController {
         return "pet/pet";
     }
 
+    @PostMapping("/new")
+    public String savePet(@ModelAttribute("pet") Pet pet, Model model) {
+        petService.savePet(pet);
+        model.addAttribute("pets", petService.getPets());
+        return "pet/pets";
+    }
+
     @RequestMapping("/delete/{id}")
     public String deletePet(@PathVariable Integer id, Model model) {
         petService.deletePet(id);
         model.addAttribute("pets", petService.getPets());
-        return "pet/pet";
+        return "pet/pets";
     }
 }

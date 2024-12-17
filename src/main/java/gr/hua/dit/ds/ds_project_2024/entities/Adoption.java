@@ -77,4 +77,15 @@ public class Adoption {
     public void setFromShelter(Shelter fromShelter) {
         this.fromShelter = fromShelter;
     }
+
+    @Override
+    public String toString() {
+        return "Adoption{" +
+                "id=" + id +
+                ", status=" + status +
+                ", petToAdopt=" + petToAdopt +
+                ", applicant=" + applicant +
+                ", fromShelter=" + fromShelter +
+                '}';
+    }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Adoption</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+  <form action="#" th:action="@{/adoption/new}" th:object="${adoption}"
+        method="post">
+
+    <div class="form-group">
+      <label for="petToAdopt">Pet</label>
+      <select name="petToAdopt">
+        <option th:each="petToAdoptOpt" : ${T(gr.hua.dit.ds.ds_lab_2024.entities.Pet).
+      </select>
+      <input type="number" id="age" class="form-control" th:field="*{age}">
+    </div>
+
+    <div class="form-group">
+      <label for="species">Species</label>
+      <input type="text" id="species" class="form-control" th:field="*{species}">
+    </div>
+
+    <div class="form-group">
+      <label for="sex">Sex</label>
+      <input type="text" id="sex" class="form-control" th:field="*{sex}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</body>
+</html>

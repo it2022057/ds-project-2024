@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Citizens</title>
+    <title>Pets</title>
 </head>
 <body>
 <div layout:fragment="main-content">
@@ -23,11 +23,12 @@
             <tbody>
             <tr th:each="pet : ${pets}">
                 <td th:text="${pet.name}"></td>
-                <td th:text="${pet.species}"></td>
-                <td th:text="${pet.sex}"></td>
+<!--                <td th:text="${pet.species}"></td>-->
+<!--                <td th:text="${pet.sex}"></td>-->
                                 <td>
                                     <a  class="btn btn-outline-light btn-sm" th:href="@{'/pet/' + ${pet.id}}">Details</a>
-                                    <a  class="btn btn-outline-info btn-sm" th:href="@{'/pet/search/' + ${pet.id}}">Adopt</a>
+<!--                                    authorize only citizens-->
+                                    <a  class="btn btn-outline-info btn-sm" th:href="@{'/citizen/adoptionrequest/' + ${pet.id}}">Adopt</a>
                                 </td>
             </tr>
             </tbody>

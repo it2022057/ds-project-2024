@@ -1,7 +1,6 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
-import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
 import org.springframework.stereotype.Controller;
@@ -35,16 +34,16 @@ public class CitizenController {
         return "citizen/citizen";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteCitizen(@PathVariable Integer id, Model model) {
-        citizenService.deleteCitizen(id);
+    @PostMapping("/new")
+    public String saveCitizen(@ModelAttribute("citizen") Citizen citizen, Model model) {
+        citizenService.saveCitizen(citizen);
         model.addAttribute("citizens", citizenService.getCitizens());
         return "citizen/citizens";
     }
 
-    @PostMapping("/new")
-    public String saveCitizen(@ModelAttribute("citizen") Citizen citizen, Model model) {
-        citizenService.saveCitizen(citizen);
+    @GetMapping("/delete/{id}")
+    public String deleteCitizen(@PathVariable Integer id, Model model) {
+        citizenService.deleteCitizen(id);
         model.addAttribute("citizens", citizenService.getCitizens());
         return "citizen/citizens";
     }
