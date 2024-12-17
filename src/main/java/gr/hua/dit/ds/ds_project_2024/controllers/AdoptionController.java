@@ -43,7 +43,7 @@ public class AdoptionController {
     @PostMapping("/new")
     public String saveAdoption(@ModelAttribute("adoption") Adoption adoption, Model model) {
         adoption.setStatus(Status.PENDING);
-        adoption.setPetToAdopt(petService.getPet(adoption.g));
+        adoption.setFromShelter(adoption.getPetToAdopt().getOnShelter());
         adoptionService.saveAdoption(adoption);
         model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";

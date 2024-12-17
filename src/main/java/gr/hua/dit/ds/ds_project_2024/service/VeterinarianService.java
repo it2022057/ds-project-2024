@@ -27,4 +27,7 @@ public class VeterinarianService {
 
     @Transactional
     public void saveVeterinarian(Veterinarian veterinarian) { veterinarianRepository.save(veterinarian); }
+
+    @Transactional
+    public void deleteVeterinarian(Integer veterinarianId) { veterinarianRepository.deleteById(veterinarianId); }
 }

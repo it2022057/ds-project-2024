@@ -18,6 +18,11 @@ public class PetController {
     private PetService petService;
     private CitizenService citizenService;
 
+    public PetController(PetService petService, CitizenService citizenService) {
+        this.petService = petService;
+        this.citizenService = citizenService;
+    }
+
     @RequestMapping()
     public String showPets(Model model) {
         model.addAttribute("pets", petService.getPets());

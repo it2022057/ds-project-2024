@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Veterinarians</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <div th:if="${ not#lists.isEmpty(veterinarians)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="veterinarian : ${veterinarians}">
+                <td th:text="${veterinarian.firstName}"></td>
+                <td th:text="${veterinarian.lastName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(veterinarians)}">
+        No Veterinarians found!
+    </div>
+    <a href="/veterinarian/new" class="btn btn-primary" role="button">Create new Veterinarian</a>
+</div>
+</body>
+</html>

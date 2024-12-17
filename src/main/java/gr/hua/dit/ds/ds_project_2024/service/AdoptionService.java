@@ -33,18 +33,18 @@ public class AdoptionService {
     @Transactional
     public void deleteAdoption(Integer adoptionId) { adoptionRepository.deleteById(adoptionId); }
 
-    @Transactional
-    public void submitAdoptionRequest(Integer petId, Citizen citizen) {
-        Pet pet = petRepository.findById(petId).get();
-        System.out.println(citizen);
-        System.out.println(pet);
-
-        Adoption adoptionRequest = new Adoption();
-        adoptionRequest.setApplicant(citizen);
-        adoptionRequest.setPetToAdopt(pet);
-        adoptionRequest.setFromShelter(pet.getOnShelter());
-        adoptionRequest.setStatus(Status.PENDING);
-        adoptionRepository.save(adoptionRequest);
-        System.out.println(adoptionRequest);
-    }
+//    @Transactional
+//    public void submitAdoptionRequest(Integer petId, Citizen citizen) {
+//        Pet pet = petRepository.findById(petId).get();
+//        System.out.println(citizen);
+//        System.out.println(pet);
+//
+//        Adoption adoptionRequest = new Adoption();
+//        adoptionRequest.setApplicant(citizen);
+//        adoptionRequest.setPetToAdopt(pet);
+//        adoptionRequest.setFromShelter(pet.getOnShelter());
+//        adoptionRequest.setStatus(Status.PENDING);
+//        adoptionRepository.save(adoptionRequest);
+//        System.out.println(adoptionRequest);
+//    }
 }
