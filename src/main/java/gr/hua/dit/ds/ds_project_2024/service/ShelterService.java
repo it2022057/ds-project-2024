@@ -26,5 +26,8 @@ public class ShelterService {
     public Shelter getShelter(Integer shelterId) { return shelterRepository.findById(shelterId).get(); }
 
     @Transactional
-    public void savePet(Shelter shelter) { shelterRepository.save(shelter); }
+    public void saveShelter(Shelter shelter) { shelterRepository.save(shelter); }
+
+    @Transactional
+    public void deleteShelter(Integer shelterId) { shelterRepository.deleteById(shelterId); }
 }

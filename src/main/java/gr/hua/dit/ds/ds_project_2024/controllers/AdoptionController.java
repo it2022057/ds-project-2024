@@ -1,7 +1,6 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Adoption;
-import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.service.AdoptionService;
@@ -19,6 +18,11 @@ public class AdoptionController {
 
     private AdoptionService adoptionService;
     private PetService petService;
+
+    public AdoptionController(AdoptionService adoptionService, PetService petService) {
+        this.adoptionService = adoptionService;
+        this.petService = petService;
+    }
 
     @RequestMapping()
     public String showAdoptions(Model model) {
@@ -56,18 +60,13 @@ public class AdoptionController {
         return "adoption/adoptions";
     }
 
-//    @GetMapping("/adopt/{id}")
-//    public String showAdoptionRequest(@PathVariable Integer id, Model model) {
-//        Pet pet = petService.getPet(id);
-//        model.addAttribute("pet", pet);
-//        model.addAttribute("citizen", citizen);
-//        return "citizen/adoption";
-//    }
-//
-//    @PostMapping("/adopt/{id}")
-//    public String adoptionRequest(@PathVariable Integer id, @RequestParam(value = "citizen", required = true) Citizen citizen, Model model) {
-//        citizenService.submitAdoptionRequest(id, citizen);
-//        model.addAttribute("pets", citizenService.getCitizens());
-//        return "citizen/citizens";
-//    }
+    @PostMapping("/adoption/request/{id}")
+    public String adoptionRequest(@PathVariable Integer id, Model model) {
+        Pet pet = petService.getPet(id);
+        adoptionService.submitAdoptionRequest(id);
+        model.addAttribute("pet", pet);
+        model.addAttribute("citizen", citizen);
+        return "citizen/adoption";
+    }
+
 }

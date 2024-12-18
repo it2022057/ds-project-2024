@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shelters</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <div th:if="${ not#lists.isEmpty(shelters)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Address</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="shelter : ${shelters}">
+                <td th:text="${shelter.name}"></td>
+                <td th:text="${shelter.location}"></td>
+                <td th:text="${shelter.address}"></td>
+                <td th:text="${shelter.description}"></td>
+                <td>
+                    <a class="btn btn-outline-light btn-sm" th:href="@{'/shelter/' + ${shelter.id}}">Details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(shelters)}">
+        No Shelters found!
+    </div>
+    <a href="/shelter/new" class="btn btn-primary" role="button">Create new Shelter</a>
+</div>
+</body>
+</html>

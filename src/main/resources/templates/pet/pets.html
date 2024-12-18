@@ -18,18 +18,23 @@
                 <th>Age</th>
                 <th>Species</th>
                 <th>Sex</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="pet : ${pets}">
                 <td th:text="${pet.name}"></td>
-<!--                <td th:text="${pet.species}"></td>-->
-<!--                <td th:text="${pet.sex}"></td>-->
-<!--                                <td>-->
-<!--                                    <a  class="btn btn-outline-light btn-sm" th:href="@{'/pet/' + ${pet.id}}">Details</a>-->
-<!--&lt;!&ndash;                                    authorize only citizens&ndash;&gt;-->
-<!--                                    <a  class="btn btn-outline-info btn-sm" th:href="@{'/citizen/adoptionrequest/' + ${pet.id}}">Adopt</a>-->
-<!--                                </td>-->
+                <td th:text="${pet.age}"></td>
+                <td th:text="${pet.species}"></td>
+                <td th:text="${pet.sex}"></td>
+                <td>
+                    <span>
+                        <a class="btn btn-outline-light btn-sm" th:href="@{'/pet/' + ${pet.id}}">Details</a>
+                    </span>
+                    <span>
+                        <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/request/' + ${pet.id}}">Adopt</a>
+                    </span>
+                </td>
             </tr>
             </tbody>
         </table>

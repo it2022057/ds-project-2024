@@ -15,10 +15,11 @@
 
     <div class="form-group">
       <label for="petSelect">Choose a Pet</label>
-      <select id = "petSelect" name="petId" required>
+      <select id = "petSelect" name="petSelect" required>
         <option value="" disabled selected>-- Select a Pet --</option>
         <option> th:each="pet : ${pets}"
-                 th:text="|${pet.name} - ${pet.age} - ${pet.species} - ${pet.sex}|">
+                 th:value="${pet.id}"
+                 th:text="${pet.name + ' - ' + pet.species + ' (' + pet.age + ' years)'}"
         </option>
       </select>
     </div>
