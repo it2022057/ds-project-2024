@@ -24,7 +24,7 @@ public class HealthCheckService {
     public HealthCheck getHealthCheck(Integer healthCheckId) { return healthCheckRepository.findById(healthCheckId).get(); }
 
     @Transactional
-    public void savePet(HealthCheck healthCheck) { healthCheckRepository.save(healthCheck); }
+    public void saveHealthCheck(HealthCheck healthCheck) { healthCheckRepository.save(healthCheck); }
 
     @Transactional
     public void deleteHealthCheck(Integer healthCheckId) { healthCheckRepository.deleteById(healthCheckId); }

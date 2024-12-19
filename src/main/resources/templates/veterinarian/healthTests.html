@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Health Tests</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <div th:if="${ not#lists.isEmpty(healthTests)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Pet</th>
+                <th>Veterinarian</th>
+                <th>Status</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="healthTest : ${healthTests}">
+                <td th:text="${healthTest.getPetExamined().name}"></td>
+                <td th:text="${healthTest.getByVeterinarian().firstName + healthTest.getByVeterinarian().lastName}"></td>
+                <td th:text="${healthTest.status}"></td>
+                <td th:text="${healthTest.details}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(healthTests)}">
+        No Health Tests found!
+    </div>
+</div>
+</body>
+</html>

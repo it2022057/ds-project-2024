@@ -52,4 +52,11 @@ public class VeterinarianController {
         model.addAttribute("veterinarians", veterinarianService.getVeterinarians());
         return "veterinarian/veterinarians";
     }
+
+    @RequestMapping("/healthTests/{id}")
+    public String showHealthTests(@PathVariable Integer id, Model model) {
+        Veterinarian veterinarian = veterinarianService.getVeterinarian(id);
+        model.addAttribute("healthTests", veterinarian.getHealthTests());
+        return "veterinarian/healthTests";
+    }
 }

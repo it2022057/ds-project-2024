@@ -11,6 +11,10 @@ public class HealthCheck {
     @Column(name = "examination_id")
     private Integer id;
 
+    @Enumerated
+    @Column
+    private Status status;
+
     @Size(max = 100)
     @Column
     private String details;
@@ -38,6 +42,14 @@ public class HealthCheck {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getDetails() {

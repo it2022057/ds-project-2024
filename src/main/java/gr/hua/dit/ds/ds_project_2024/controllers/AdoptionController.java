@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("adoption")
 public class AdoptionController {
@@ -40,7 +42,9 @@ public class AdoptionController {
     @RequestMapping("/new")
     public String addAdoption(Model model) {
         Adoption adoption = new Adoption();
+        List<Pet> pets = petService.getPets();
         model.addAttribute("adoption", adoption);
+        model.addAttribute("pets", pets);
         return "adoption/adoption";
     }
 
@@ -65,7 +69,7 @@ public class AdoptionController {
         Pet pet = petService.getPet(id);
         adoptionService.submitAdoptionRequest(id);
         model.addAttribute("pet", pet);
-        model.addAttribute("citizen", citizen);
+        //model.addAttribute("citizen", citizen);
         return "citizen/adoption";
     }
 
