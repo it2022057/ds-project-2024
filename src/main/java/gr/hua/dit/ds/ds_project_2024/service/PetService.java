@@ -30,12 +30,4 @@ public class PetService {
 
     @Transactional
     public void deletePet(Integer petId) { petRepository.deleteById(petId); }
-
-    @Transactional
-    public void requestByCitizen(int petId, Citizen citizen) {
-        Pet pet = petRepository.findById(petId).get();
-        System.out.println(pet);
-        System.out.println(citizen);
-
-    }
 }

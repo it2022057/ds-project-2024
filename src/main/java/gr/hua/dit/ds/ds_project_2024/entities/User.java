@@ -21,23 +21,19 @@ public class User {
     @Column
     private Integer id;
 
-    @NotBlank
     @Size(max = 20)
     @Column
     private String username;
 
-    @NotBlank
     @Size(max = 15)
     @Column
     private String password;
 
-    @NotBlank
     @Size(max = 50)
     @Email
     @Column
     private String email;
 
-    @NotBlank
     @Size(max = 15)
     @Column
     private String phone;

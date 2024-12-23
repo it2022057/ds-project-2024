@@ -10,33 +10,34 @@
 </head>
 <body>
 <div layout:fragment="main-content">
-  <div th:if="${ not#lists.isEmpty(students)}">
+  <div th:if="${ not#lists.isEmpty(healthChecks)}">
     <table class="table">
       <thead>
       <tr>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Email</th>
+        <th>Pet</th>
+        <th>Vet</th>
+        <th>Status</th>
+        <th>Details</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="student : ${students}">
-        <td th:text="${student.firstName}"></td>
-        <td th:text="${student.lastName}"></td>
-        <td th:text="${student.email}"></td>
+      <tr th:each="healthCheck : ${healthChecks}">
+        <td th:text="${healthCheck.getPetExamined().name}"></td>
+        <td th:text="${healthCheck.getByVeterinarian().firstName + ' ' + healthCheck.getByVeterinarian().lastName}"></td>
+        <td th:text="${healthCheck.status}"></td>
+        <td th:text="${healthCheck.details}"></td>
         <td>
-          <a  class="btn btn-outline-light btn-sm" th:href="@{'/student/' + ${student.id}}">Details</a>
-          <a  class="btn btn-outline-info btn-sm" th:href="@{'/student/profile/' + ${student.id}}">Profile</a>
+          <a class="btn btn-outline-light btn-sm" th:href="@{'/healthCheck/' + ${healthCheck.id}}">Details</a>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div th:if="${ #lists.isEmpty(students)}">
-    No Students found!
+  <div th:if="${ #lists.isEmpty(healthChecks)}">
+    No Health Checks found!
   </div>
-  <a href="/student/new" class="btn btn-primary" role="button">Create new Student</a>
+  <a href="/healthCheck/new" class="btn btn-primary" role="button">Examine a new Pet</a>
 </div>
 </body>
 </html>

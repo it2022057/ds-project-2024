@@ -1,16 +1,15 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Adoption;
+import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.service.AdoptionService;
+import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,10 +19,12 @@ public class AdoptionController {
 
     private AdoptionService adoptionService;
     private PetService petService;
+    private CitizenService citizenService;
 
-    public AdoptionController(AdoptionService adoptionService, PetService petService) {
+    public AdoptionController(AdoptionService adoptionService, PetService petService, CitizenService citizenService) {
         this.adoptionService = adoptionService;
         this.petService = petService;
+        this.citizenService = citizenService;
     }
 
     @RequestMapping()
@@ -64,13 +65,21 @@ public class AdoptionController {
         return "adoption/adoptions";
     }
 
-    @PostMapping("/adoption/request/{id}")
+    @GetMapping("/request/{id}")
+    public String showAdoptionRequest(@PathVariable Integer id, Model model) {
+        Pet pet = petService.getPet(id);
+        List<Citizen> citizens = citizenService.getCitizens();
+        model.addAttribute("pet", pet);
+        model.addAttribute("citizens", citizens);
+        return "adoption/request";
+    }
+
+    @PostMapping("/request/{id}")
     public String adoptionRequest(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
         adoptionService.submitAdoptionRequest(id);
-        model.addAttribute("pet", pet);
-        //model.addAttribute("citizen", citizen);
-        return "citizen/adoption";
+        model.addAttribute("adoptions", adoptionService.getAdoptions());
+        return "adoption/adoptions";
     }
 
 }

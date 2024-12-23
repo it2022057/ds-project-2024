@@ -14,12 +14,11 @@
         method="post">
 
     <div class="form-group">
-      <label for="status" name="Status">
+      <label for="status">Status</label>
         <select name="status" id="status">
           <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}"
                   th:value="${statusOpt}" th:text="${statusOpt}" ></option>
         </select>
-      </label>
     </div>
 
     <div class="form-group">
