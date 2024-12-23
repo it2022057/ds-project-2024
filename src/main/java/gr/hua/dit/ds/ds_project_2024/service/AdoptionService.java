@@ -40,7 +40,7 @@ public class AdoptionService {
         System.out.println(pet);
 
         Adoption adoptionRequest = new Adoption();
-        //adoptionRequest.setApplicant(citizen); we need the one who is currently logged in
+        adoptionRequest.setApplicant(null); //we need the one who is currently logged in
         adoptionRequest.setPetToAdopt(pet);
         adoptionRequest.setFromShelter(pet.getOnShelter());
         adoptionRequest.setStatus(Status.PENDING);

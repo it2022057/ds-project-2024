@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${pet.name}"></title>
 </head>
 <body>
 
+<div layout:fragment="main-content">
+    <p th:text="'Adoption request for pet: '+ ${pet.name}"></p>
+    <form action="#" th:action="@{/adoption/request/{cid}(cid=${pet.getId()})}" th:object="${pet}"
+          method="post">
+            <p th:text="'Are you sure?'"></p>
+            <button type="submit" class="btn btn-primary">
+                <span class="icon">✔️</span> Yes
+            </button>
+            <button type="submit" class="btn btn-primary">
+                <span class="icon">❌</span> No
+            </button>
+    </form>
+</div>
 </body>
 </html>

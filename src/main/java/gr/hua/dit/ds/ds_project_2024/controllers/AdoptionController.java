@@ -19,12 +19,10 @@ public class AdoptionController {
 
     private AdoptionService adoptionService;
     private PetService petService;
-    private CitizenService citizenService;
 
-    public AdoptionController(AdoptionService adoptionService, PetService petService, CitizenService citizenService) {
+    public AdoptionController(AdoptionService adoptionService, PetService petService) {
         this.adoptionService = adoptionService;
         this.petService = petService;
-        this.citizenService = citizenService;
     }
 
     @RequestMapping()
@@ -68,9 +66,7 @@ public class AdoptionController {
     @GetMapping("/request/{id}")
     public String showAdoptionRequest(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
-        List<Citizen> citizens = citizenService.getCitizens();
         model.addAttribute("pet", pet);
-        model.addAttribute("citizens", citizens);
         return "adoption/request";
     }
 

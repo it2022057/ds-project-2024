@@ -1,7 +1,6 @@
 package gr.hua.dit.ds.ds_project_2024.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table
@@ -76,16 +75,5 @@ public class Adoption {
 
     public void setFromShelter(Shelter fromShelter) {
         this.fromShelter = fromShelter;
-    }
-
-    @Override
-    public String toString() {
-        return "Adoption{" +
-                "id=" + id +
-                ", status=" + status +
-                ", petToAdopt=" + petToAdopt +
-                ", applicant=" + applicant +
-                ", fromShelter=" + fromShelter +
-                '}';
     }
 }

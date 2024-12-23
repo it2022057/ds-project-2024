@@ -118,4 +118,18 @@ public class Pet {
     public void setInterest(List<Adoption> interest) {
         this.interest = interest;
     }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", species='" + species + '\'' +
+                ", sex='" + sex + '\'' +
+                ", health=" + health +
+                ", onShelter=" + onShelter +
+                ", interest=" + interest +
+                '}';
+    }
 }
