@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("citizen")
 public class CitizenController {
 
-    private PetService petService;
     private CitizenService citizenService;
 
-    public CitizenController(PetService petService, CitizenService citizenService) {
-        this.petService = petService;
+    public CitizenController(CitizenService citizenService) {
         this.citizenService = citizenService;
     }
 
@@ -58,20 +56,4 @@ public class CitizenController {
         model.addAttribute("pets", citizenService.searchPets());
         return "pet/search";
     }
-//
-//    @GetMapping("/adopt/{id}")
-//    public String showAdoptionRequest(@PathVariable Integer id, Model model) {
-//        Pet pet = petService.getPet(id);
-//        model.addAttribute("pet", pet);
-//        model.addAttribute("citizen", citizen);
-//        return "citizen/adoption";
-//    }
-//
-//    @PostMapping("/adopt/{id}")
-//    public String adoptionRequest(@PathVariable Integer id, @RequestParam(value = "citizen", required = true) Citizen citizen, Model model) {
-//        citizenService.submitAdoptionRequest(id, citizen);
-//        model.addAttribute("pets", citizenService.getCitizens());
-//        return "citizen/citizens";
-//    }
-
 }

@@ -19,8 +19,8 @@ import java.util.List;
 @RequestMapping("healthCheck")
 public class HealthCheckController {
 
-    private final PetService petService;
-    private final VeterinarianService veterinarianService;
+    private PetService petService;
+    private VeterinarianService veterinarianService;
     private HealthCheckService healthCheckService;
 
     public HealthCheckController(HealthCheckService healthCheckService, PetService petService, VeterinarianService veterinarianService) {

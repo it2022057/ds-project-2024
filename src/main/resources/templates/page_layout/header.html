@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -14,12 +15,19 @@
         <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="/">Home</a>
             <a class="nav-link" href="/pet" data-path="/pet">Pets</a>
-            <a class="nav-link" href="/citizen" data-path="/citizen">Citizens</a>
-            <a class="nav-link" href="/shelter" data-path="/shelter">Shelters</a>
-            <a class="nav-link" href="/veterinarian" data-path="/veterinarian">Veterinarians</a>
-            <a class="nav-link" href="/adoption" data-path="/adoption">Adoptions</a>
-            <a class="nav-link" href="/healthCheck" data-path="/healthCheck">Health Checks</a>
-            <a class="nav-link" href="#">Contact</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users" data-path="/users">Users</a>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SHELTER')" class="nav-link" href="/adoption" data-path="/adoption">Adoptions</a>
+            <a sec:authorize="hasRole('ROLE_VETERINARIAN')" class="nav-link" href="/healthCheck" data-path="/healthCheck">Health Checks</a>
+            <a sec:authorize="hasAnyRole('ROLE_CITIZEN', 'ROLE_SHELTER')" class="nav-link" href="#">Contact</a>
+            <a sec:authorize="!isAuthenticated()" class="nav-link">
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/register">Register</a>
+            </a>
+            <a sec:authorize="isAuthenticated()"  class="nav-link">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit"  class="btn btn-primary" value="Sign Out"/>
+                </form>
+            </a>
         </nav>
     </div>
 </header>
