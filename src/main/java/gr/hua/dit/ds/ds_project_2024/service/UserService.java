@@ -49,6 +49,21 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public void saveAdmin(User user) {
+        String passwd= user.getPassword();
+        String encodedPassword = passwordEncoder.encode(passwd);
+        user.setPassword(encodedPassword);
+
+        Role role = roleRepository.findByName("ROLE_ADMIN")
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
+
+        user = userRepository.save(user);
+    }
+
+    @Transactional
     public Integer updateUser(User user) {
         user = userRepository.save(user);
         return user.getId();

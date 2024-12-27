@@ -30,8 +30,8 @@ public class Veterinarian extends User {
     public Veterinarian() {
     }
 
-    public Veterinarian(String username, String email, String password, String firstName, String lastName) {
-        super(username, email, password);
+    public Veterinarian(String username, String password, String email, String phone, String firstName, String lastName) {
+        super(username, password, email, phone);
         this.firstName = firstName;
         this.lastName = lastName;
     }

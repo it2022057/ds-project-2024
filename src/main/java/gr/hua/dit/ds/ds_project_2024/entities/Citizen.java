@@ -34,8 +34,8 @@ public class Citizen extends User {
     public Citizen() {
     }
 
-    public Citizen(String username, String email, String password, String firstName, String lastName, String address) {
-        super(username, email, password);
+    public Citizen(String username, String password, String email, String phone, String firstName, String lastName, String address) {
+        super(username, password, email, phone);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

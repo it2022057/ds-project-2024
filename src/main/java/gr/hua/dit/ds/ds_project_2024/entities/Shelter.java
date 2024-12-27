@@ -39,8 +39,8 @@ public class Shelter extends User {
     public Shelter() {
     }
 
-    public Shelter(String username, String email, String password, String name, String location, String address, String description) {
-        super(username, email, password);
+    public Shelter(String username, String password, String email, String phone,  String name, String location, String address, String description) {
+        super(username, password, email, phone);
         this.name = name;
         this.location = location;
         this.address = address;

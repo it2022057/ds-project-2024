@@ -25,7 +25,6 @@ public class User {
     @Column
     private String username;
 
-    @Size(max = 15)
     @Column
     private String password;
 
@@ -47,10 +46,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String password, String email, String phone) {
         this.username = username;
-        this.email = email;
         this.password = password;
+        this.email = email;
+        this.phone = phone;
     }
 
     public Integer getId() {

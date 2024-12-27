@@ -1,7 +1,9 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Role;
+import gr.hua.dit.ds.ds_project_2024.entities.User;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
+import gr.hua.dit.ds.ds_project_2024.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AuthController {
 
     private RoleRepository roleRepository;
+    private UserService userService;
 
-    public AuthController(RoleRepository roleRepository) {
+    public AuthController(RoleRepository roleRepository, UserService userService) {
         this.roleRepository = roleRepository;
+        this.userService = userService;
     }
 
     @PostConstruct
@@ -28,6 +32,7 @@ public class AuthController {
         roleRepository.updateOrInsert(role_shelter);
         roleRepository.updateOrInsert(role_veterinarian);
         roleRepository.updateOrInsert(role_admin);
+        roleRepository.updateOrInsert(role_user);
     }
 
     @GetMapping("/login")

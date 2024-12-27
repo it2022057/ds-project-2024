@@ -5,6 +5,7 @@ import gr.hua.dit.ds.ds_project_2024.entities.Role;
 import gr.hua.dit.ds.ds_project_2024.entities.User;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
 import gr.hua.dit.ds.ds_project_2024.service.UserService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class UserController {
     @GetMapping("/user/{user_id}")
     public String showUser(@PathVariable Integer user_id, Model model) {
         model.addAttribute("user", userService.getUser(user_id));
+        model.addAttribute("roles", roleRepository.findAll());
         return "auth/user";
     }
 
@@ -79,7 +81,7 @@ public class UserController {
 
     @GetMapping("/user/role/add/{user_id}/{role_id}")
     public String addRoleToUser(@PathVariable Integer user_id, @PathVariable Integer role_id, Model model){
-        User user = (User) userService.getUser(user_id);
+        User user = userService.getUser(user_id);
         Role role = roleRepository.findById(role_id).get();
         user.getRoles().add(role);
         System.out.println("Roles: " + user.getRoles());
