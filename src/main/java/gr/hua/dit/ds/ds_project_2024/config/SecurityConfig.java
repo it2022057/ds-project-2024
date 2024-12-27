@@ -37,10 +37,11 @@ public class SecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/pet", true)
-                        .permitAll())
-                .logout((logout) -> logout.permitAll());
+                        .permitAll()
+                )
+                .logout((logout) -> logout
+                        .deleteCookies("JSESSIONID")
+                        .permitAll());
         return http.build();
     }
-
-
 }

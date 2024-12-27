@@ -4,10 +4,7 @@ import gr.hua.dit.ds.ds_project_2024.entities.Veterinarian;
 import gr.hua.dit.ds.ds_project_2024.service.VeterinarianService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("veterinarian")
@@ -19,20 +16,20 @@ public class VeterinarianController {
         this.veterinarianService = veterinarianService;
     }
 
-    @RequestMapping()
+    @GetMapping()
     public String showVeterinarians(Model model) {
         model.addAttribute("veterinarians", veterinarianService.getVeterinarians());
         return "veterinarian/veterinarians";
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public String showVeterinarian(@PathVariable Integer id, Model model) {
         Veterinarian veterinarian = veterinarianService.getVeterinarian(id);
         model.addAttribute("veterinarians", veterinarian);
         return "veterinarian/veterinarians";
     }
 
-    @RequestMapping("/new")
+    @GetMapping("/new")
     public String addVeterinarian(Model model) {
         Veterinarian veterinarian = new Veterinarian();
         model.addAttribute("veterinarian", veterinarian);
@@ -46,14 +43,14 @@ public class VeterinarianController {
         return "veterinarian/veterinarians";
     }
 
-    @RequestMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteVeterinarian(@PathVariable Integer id, Model model) {
         veterinarianService.deleteVeterinarian(id);
         model.addAttribute("veterinarians", veterinarianService.getVeterinarians());
         return "veterinarian/veterinarians";
     }
 
-    @RequestMapping("/healthTests/{id}")
+    @GetMapping("/healthTests/{id}")
     public String showHealthTests(@PathVariable Integer id, Model model) {
         Veterinarian veterinarian = veterinarianService.getVeterinarian(id);
         model.addAttribute("healthTests", veterinarian.getHealthTests());

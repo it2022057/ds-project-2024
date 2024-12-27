@@ -29,10 +29,10 @@
                 <td th:text="${pet.sex}"></td>
                 <td>
                     <span>
-                        <a class="btn btn-outline-light btn-sm" th:href="@{'/pet/' + ${pet.id}}">Details</a>
+                        <a class="btn btn-info" th:href="@{'/pet/' + ${pet.id}}">Details</a>
                     </span>
                     <span>
-                        <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/request/' + ${pet.id}}">Adopt</a>
+                        <a class="btn btn-success" th:href="@{'/adoption/request/' + ${pet.id}}">Adopt</a>
                     </span>
                 </td>
             </tr>

@@ -3,6 +3,7 @@ package gr.hua.dit.ds.ds_project_2024.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
@@ -21,18 +22,22 @@ public class User {
     @Column
     private Integer id;
 
+    @NotEmpty
     @Size(max = 20)
     @Column
     private String username;
 
+    @NotEmpty
     @Column
     private String password;
 
+    @NotEmpty
     @Size(max = 50)
     @Email
     @Column
     private String email;
 
+    @NotEmpty
     @Size(max = 15)
     @Column
     private String phone;

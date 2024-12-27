@@ -8,10 +8,7 @@ import gr.hua.dit.ds.ds_project_2024.service.PetService;
 import gr.hua.dit.ds.ds_project_2024.service.VeterinarianService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,7 +26,7 @@ public class HealthCheckController {
         this.veterinarianService = veterinarianService;
     }
 
-    @RequestMapping()
+    @GetMapping()
     public String showHealthChecks(Model model) {
         model.addAttribute("healthChecks", healthCheckService.getHealthChecks());
         return "healthCheck/healthChecks";
@@ -42,7 +39,7 @@ public class HealthCheckController {
         return "healthCheck/healthChecks";
     }
 
-    @RequestMapping("/new")
+    @GetMapping("/new")
     public String addHealthCheck(Model model) {
         HealthCheck healthCheck = new HealthCheck();
         List<Pet> pets = petService.getPets();
@@ -60,7 +57,7 @@ public class HealthCheckController {
         return "healthCheck/healthChecks";
     }
 
-    @RequestMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteHealthCheck(@PathVariable Integer id, Model model) {
         healthCheckService.deleteHealthCheck(id);
         model.addAttribute("healthChecks", healthCheckService.getHealthChecks());

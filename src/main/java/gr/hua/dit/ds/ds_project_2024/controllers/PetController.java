@@ -19,20 +19,20 @@ public class PetController {
         this.petService = petService;
     }
 
-    @RequestMapping()
+    @GetMapping()
     public String showPets(Model model) {
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public String showPet(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
         model.addAttribute("pets", pet);
         return "pet/pets";
     }
 
-    @RequestMapping("/new")
+    @GetMapping("/new")
     public String addPet(Model model) {
         Pet pet = new Pet();
         model.addAttribute("pet", pet);
@@ -46,7 +46,7 @@ public class PetController {
         return "pet/pets";
     }
 
-    @RequestMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deletePet(@PathVariable Integer id, Model model) {
         petService.deletePet(id);
         model.addAttribute("pets", petService.getPets());

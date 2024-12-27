@@ -36,6 +36,20 @@ public class UserController {
         return "auth/user";
     }
 
+    @PostMapping("/user/{user_id}")
+    public String editUser(@PathVariable Integer user_id, @ModelAttribute("user") User user, Model model) {
+        User edit_user = userService.getUser(user_id);
+        edit_user.setUsername(user.getUsername());
+        edit_user.setEmail(user.getEmail());
+        edit_user.setPhone(user.getPhone());
+        edit_user.setRoles(user.getRoles());
+        userService.updateUser(edit_user);
+
+        model.addAttribute("users", userService.getUsers());
+        model.addAttribute("roles", roleRepository.findAll());
+        return "auth/users";
+    }
+
     @GetMapping("/register")
     public String register(Model model) {
         User user = new User();
@@ -52,20 +66,13 @@ public class UserController {
         return "index";
     }
 
-//    @GetMapping("/user/new")
-//    public String addPet(Model model) {
-//        Pet pet = new Pet();
-//        model.addAttribute("pet", pet);
-//        return "pet/pet";
-//    }
-
-//    @GetMapping("/delete/{id}")
-//    public String deletePet(@PathVariable Integer id, Model model) {
-//        petService.deletePet(id);
-//        model.addAttribute("pets", petService.getPets());
-//        return "pet/pets";
-//    }
-
+    @GetMapping("/user/delete/{id}")
+    public String deleteUser(@PathVariable Integer id, Model model) {
+        userService.deleteUser(id);
+        model.addAttribute("users", userService.getUsers());
+        model.addAttribute("roles", roleRepository.findAll());
+        return "auth/users";
+    }
 
     @GetMapping("/user/role/delete/{user_id}/{role_id}")
     public String deleteRoleFromUser(@PathVariable Integer user_id, @PathVariable Integer role_id, Model model){
