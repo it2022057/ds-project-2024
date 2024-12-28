@@ -5,8 +5,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,22 +26,22 @@ public class User {
     @Column
     private Integer id;
 
-    @NotEmpty
+    @NotBlank
     @Size(max = 20)
     @Column
     private String username;
 
-    @NotEmpty
+    @NotBlank
     @Column
     private String password;
 
-    @NotEmpty
+    @NotBlank
     @Size(max = 50)
     @Email
     @Column
     private String email;
 
-    @NotEmpty
+    @NotBlank
     @Size(max = 15)
     @Column
     private String phone;

@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
         else {
             User user = opt.get();
             return new org.springframework.security.core.userdetails.User(
-                    user.getEmail(),
+                    user.getUsername(),
                     user.getPassword(),
                     user.getRoles()
                             .stream()
