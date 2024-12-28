@@ -50,10 +50,4 @@ public class CitizenController {
         model.addAttribute("citizens", citizenService.getCitizens());
         return "citizen/citizens";
     }
-
-    @GetMapping("/search")
-    public String searchPets(Model model) {
-        model.addAttribute("pets", citizenService.searchPets());
-        return "pet/search";
-    }
 }

@@ -13,6 +13,8 @@
     <form action="#" th:action="@{/veterinarian/new}" th:object="${veterinarian}"
           method="post">
 
+        <div th:replace="~{auth/register :: registerForm}"></div>
+
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text" id="firstName" class="form-control" th:field="*{firstName}">

@@ -14,29 +14,41 @@
         Invalid username and password.
     </div>
     <h3>User Registration</h3>
-    <form th:action="@{/saveUser}" method="post" th:object="${user}">
+    <form id="registerForm" th:action="@{/saveUser}" method="post" th:object="${user}">
 
-        <div class="form-group row">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" th:field="*{username}" id="username"/>
+        <div th:fragment="registerForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" th:field="*{username}" id="username"/>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" th:field="*{password}" id="password"/>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" th:field="*{email}" id="email"/>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone (30+)</label>
+                <input type="text" class="form-control" th:field="*{phone}" id="phone"/>
+            </div>
         </div>
-
-        <div class="form-group row">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" th:field="*{password}"/>
+        <div>
+            <input type="submit" class="btn btn-primary" value="Sign Up"/>
+            <span>
+            <a class="btn btn-primary" th:href="@{/citizen/new}">Register Citizen</a>
+        </span>
+            <span>
+            <a class="btn btn-primary" th:href="@{/shelter/new}">Register Shelter</a>
+        </span>
+            <span>
+            <a class="btn btn-primary" th:href="@{/veterinarian/new}">Register Veterinarian</a>
+        </span>
         </div>
-
-        <div class="form-group row">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" th:field="*{email}" id="email"/>
-        </div>
-
-        <div class="form-group row">
-            <label for="phone">Phone (30+)</label>
-            <input type="text" class="form-control" th:field="*{phone}" id="phone"/>
-        </div>
-
-        <div><input type="submit" class="btn btn-primary" value="Sign Up"/></div>
     </form>
     <div th:text="${msg}"></div>
 </div>
