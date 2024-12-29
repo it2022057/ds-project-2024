@@ -7,20 +7,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.SQLException;
+
 @Controller
 public class MyErrorController implements ErrorController {
 
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-//        Object exception = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
-//
-//        if (exception instanceof SQLException) {
-//            SQLException sqlException = (SQLException) exception;
-//            if (sqlException.getSQLState().equals("23505")) { // Unique constraint violation
-//                return "error/error-SQL";
-//            }
-//        }
+        Object exception = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+
+        if (exception instanceof SQLException sqlException) {
+            if (sqlException.getSQLState().equals("23505")) { // Unique constraint violation
+                return "error/error-SQL";
+            }
+        }
 
 
         if (status != null) {

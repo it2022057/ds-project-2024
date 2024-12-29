@@ -36,7 +36,7 @@ public class CitizenService {
 
     @Transactional
     public void saveCitizen(Citizen citizen) {
-        String passwd = passwordEncoder.encode(citizen.getPassword());
+        String passwd = citizen.getPassword();
         String encodedPassword = passwordEncoder.encode(passwd);
         citizen.setPassword(encodedPassword);
 

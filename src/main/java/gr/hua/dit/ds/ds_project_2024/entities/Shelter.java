@@ -24,7 +24,7 @@ public class Shelter extends User {
     @Column
     private String address;
 
-    @Size(max = 20)
+    @Size(max = 200)
     @Column
     private String description;
 

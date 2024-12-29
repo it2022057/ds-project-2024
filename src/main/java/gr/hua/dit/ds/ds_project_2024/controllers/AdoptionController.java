@@ -7,10 +7,13 @@ import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.service.AdoptionService;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -63,6 +66,20 @@ public class AdoptionController {
         return "adoption/adoptions";
     }
 
+    @GetMapping("/accept/{id}")
+    public String acceptAdoption(@PathVariable Integer id, Model model) {
+        Adoption adoption = adoptionService.getAdoption(id);
+        adoption.setStatus(Status.APPROVED);
+        return "adoption/adoptions";
+    }
+
+    @GetMapping("/reject/{id}")
+    public String rejectAdoption(@PathVariable Integer id, Model model) {
+        Adoption adoption = adoptionService.getAdoption(id);
+        adoption.setStatus(Status.REJECTED);
+        return "adoption/adoptions";
+    }
+
     @GetMapping("/request/{id}")
     public String showAdoptionRequest(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
@@ -71,9 +88,10 @@ public class AdoptionController {
     }
 
     @PostMapping("/request/{id}")
-    public String adoptionRequest(@PathVariable Integer id, Model model) {
+    public String adoptionRequest(@PathVariable Integer id, Model model, Principal principal) {
         Pet pet = petService.getPet(id);
-        adoptionService.submitAdoptionRequest(id);
+        String username = principal.getName();
+        adoptionService.submitAdoptionRequest(pet, username);
         model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }
