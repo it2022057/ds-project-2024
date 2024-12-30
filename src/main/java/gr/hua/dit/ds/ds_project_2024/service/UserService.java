@@ -37,23 +37,6 @@ public class UserService implements UserDetailsService {
         String encodedPassword = passwordEncoder.encode(passwd);
         user.setPassword(encodedPassword);
 
-        // I have to show all the available roles
-        Role role = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
-
-        user = userRepository.save(user);
-        return user.getId();
-    }
-
-    @Transactional
-    public void saveAdmin(User user) {
-        String passwd= user.getPassword();
-        String encodedPassword = passwordEncoder.encode(passwd);
-        user.setPassword(encodedPassword);
-
         Role role = roleRepository.findByName("ROLE_ADMIN")
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         Set<Role> roles = new HashSet<>();
@@ -61,6 +44,8 @@ public class UserService implements UserDetailsService {
         user.setRoles(roles);
 
         user = userRepository.save(user);
+
+        return user.getId();
     }
 
     @Transactional

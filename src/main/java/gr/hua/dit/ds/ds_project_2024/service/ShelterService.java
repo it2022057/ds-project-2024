@@ -3,6 +3,7 @@ package gr.hua.dit.ds.ds_project_2024.service;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.entities.Role;
 import gr.hua.dit.ds.ds_project_2024.entities.Shelter;
+import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
 import gr.hua.dit.ds.ds_project_2024.repositories.ShelterRepository;
 import jakarta.transaction.Transactional;
@@ -36,6 +37,7 @@ public class ShelterService {
 
     @Transactional
     public void saveShelter(Shelter shelter) {
+        shelter.setApprovalStatus(Status.PENDING);
         String passwd = shelter.getPassword();
         String encodedPassword = passwordEncoder.encode(passwd);
         shelter.setPassword(encodedPassword);

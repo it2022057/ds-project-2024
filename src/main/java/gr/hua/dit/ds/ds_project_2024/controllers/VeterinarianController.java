@@ -39,8 +39,9 @@ public class VeterinarianController {
     @PostMapping("/new")
     public String saveVeterinarian(@ModelAttribute("veterinarian") Veterinarian veterinarian, Model model) {
         veterinarianService.saveVeterinarian(veterinarian);
-        model.addAttribute("veterinarians", veterinarianService.getVeterinarians());
-        return "veterinarian/veterinarians";
+        String message = "Veterinarian " + veterinarian.getId() + " saved successfully!";
+        model.addAttribute("msg", message);
+        return "index";
     }
 
     @GetMapping("/delete/{id}")

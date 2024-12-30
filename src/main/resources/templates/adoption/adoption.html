@@ -15,7 +15,7 @@
 
     <div class="form-group">
       <label for="status">Status</label>
-        <select name="status" id="status">
+        <select name="status" id="status" th:field="*{status}">
           <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}"
                   th:value="${statusOpt}" th:text="${statusOpt}" ></option>
         </select>
@@ -23,20 +23,14 @@
 
     <div class="form-group">
       <label for="petSelect">Choose a Pet</label>
-      <select id = "petSelect" name="petSelect" required>
+      <select id = "petSelect" name="petSelect" th:field="*{petToAdopt}" required>
         <option value="" disabled selected>-- Select a Pet --</option>
         <option th:each="pet : ${pets}"
-                 th:value="${pet.id}"
-                 th:text="${pet.name + ' - ' + pet.species}"
+                th:value="${pet.id}"
+                th:text="${pet.name + ' - ' + pet.species}"
         ></option>
       </select>
     </div>
-
-    <div class="form-group">
-      <label for="citizen">Citizen</label>
-      <input type="text" id="citizen" class="form-control" th:field="*{applicant}">
-    </div>
-
     <button type="submit" class="btn btn-primary">Submit request</button>
   </form>
 </div>

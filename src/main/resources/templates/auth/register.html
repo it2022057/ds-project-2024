@@ -13,7 +13,7 @@
     <div th:if="${param.error}">
         Invalid username and password.
     </div>
-    <h3>User Registration</h3>
+    <h1>User Registration</h1>
     <form id="registerForm" th:action="@{/saveUser}" method="post" th:object="${user}">
 
         <div th:fragment="registerForm">
@@ -40,13 +40,13 @@
         <div>
             <input type="submit" class="btn btn-primary" value="Sign Up"/>
             <span>
-            <a class="btn btn-primary" th:href="@{/citizen/new}">Register Citizen</a>
+            <a class="btn btn-primary" th:href="@{/citizen/new}">Register as Citizen</a>
         </span>
             <span>
-            <a class="btn btn-primary" th:href="@{/shelter/new}">Register Shelter</a>
+            <a class="btn btn-primary" th:href="@{/shelter/new}">Register as Shelter</a>
         </span>
             <span>
-            <a class="btn btn-primary" th:href="@{/veterinarian/new}">Register Veterinarian</a>
+            <a class="btn btn-primary" th:href="@{/veterinarian/new}">Register as Veterinarian</a>
         </span>
         </div>
     </form>

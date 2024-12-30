@@ -40,8 +40,9 @@ public class CitizenController {
     @PostMapping("/new")
     public String saveCitizen(@ModelAttribute("citizen") Citizen citizen, Model model) {
         citizenService.saveCitizen(citizen);
-        model.addAttribute("citizens", citizenService.getCitizens());
-        return "citizen/citizens";
+        String message = "Citizen " + citizen.getId() + " saved successfully!";
+        model.addAttribute("msg", message);
+        return "index";
     }
 
     @GetMapping("/delete/{id}")

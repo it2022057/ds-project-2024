@@ -32,7 +32,17 @@ public class AdoptionService {
     public Adoption getAdoption(Integer adoptionId) { return adoptionRepository.findById(adoptionId).get(); }
 
     @Transactional
-    public void saveAdoption(Adoption adoption) { adoptionRepository.save(adoption); }
+    public void saveAdoption(Adoption adoption, String username) {
+        Optional<Citizen> opt = citizenRepository.findCitizenByUsername(username);
+        Citizen citizen = opt.orElseThrow(() -> new UsernameNotFoundException("Citizen with username: " + username +" not found !"));
+
+        adoption.setApplicant(citizen);
+        adoption.setFromShelter(adoption.getPetToAdopt().getOnShelter());
+
+        adoptionRepository.save(adoption);
+
+        adoption.getPetToAdopt().getInterest().add(adoption);
+    }
 
     @Transactional
     public void deleteAdoption(Integer adoptionId) { adoptionRepository.deleteById(adoptionId); }
@@ -40,16 +50,17 @@ public class AdoptionService {
     @Transactional
     public void submitAdoptionRequest(Pet pet, String username) {
         Optional<Citizen> opt = citizenRepository.findCitizenByUsername(username);
-        Citizen citizen = opt.orElseThrow(() -> new UsernameNotFoundException("User with username: " + username +" not found !"));
-        System.out.println(citizen);
-        System.out.println(pet);
+        Citizen citizen = opt.orElseThrow(() -> new UsernameNotFoundException("Citizen with username: " + username +" not found !"));
+
         Adoption adoptionRequest = new Adoption();
+
         adoptionRequest.setApplicant(citizen);
         adoptionRequest.setPetToAdopt(pet);
         adoptionRequest.setFromShelter(pet.getOnShelter());
         adoptionRequest.setStatus(Status.PENDING);
+
         adoptionRepository.save(adoptionRequest);
+
         pet.getInterest().add(adoptionRequest);
-        System.out.println(adoptionRequest);
     }
 }

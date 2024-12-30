@@ -2,9 +2,8 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-layout:decorate="~{page_layout/layout}">
-
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{page_layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Adoptions</title>
@@ -12,22 +11,19 @@ layout:decorate="~{page_layout/layout}">
 <body>
 <div layout:fragment="main-content">
     <div th:if="${ not#lists.isEmpty(adoptions)}">
-        <div th:if="${adoption.getStatus() == ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}}">
             <table class="table">
                 <thead>
                 <tr>
                     <th>Id</th>
                     <th>Status</th>
-                    <th>Pet adopted</th>
+                    <th>Pet</th>
                     <th>Applicant</th>
-                    <th>From Shelter</th>
+                    <th>Shelter</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-
-                <tr th:each="adoption : ${adoptions}">
-
+                <tr th:each="adoption : ${adoptions}" th:if="${adoption.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                     <td th:text="${adoption.getId()}"></td>
                     <td th:text="${adoption.getStatus()}"></td>
                     <td><a th:if="${adoption.getPetToAdopt() != null}"
@@ -44,27 +40,24 @@ layout:decorate="~{page_layout/layout}">
                         <span>
                             <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/' + ${adoption.getId()}}">Details</a>
                         </span>
-                        <span sec:authentication="hasRole('ROLE_SHELTER')">
-                            <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/accept/' + ${adoption.getId()}}">Accept</a>
+                        <span sec:authorize="hasRole('ROLE_SHELTER')">
+                            <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/approve/' + ${adoption.getId()}}">Approve</a>
                         </span>
-                        <span sec:authentication="hasRole('ROLE_SHELTER')">
+                        <span sec:authorize="hasRole('ROLE_SHELTER')">
                             <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/reject/' + ${adoption.getId()}}">Reject</a>
                         </span>
-                        <span sec:authentication="hasRole('ROLE_SHELTER')">
-                            <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/delete/' + ${adoption.getId()}}">Delete</a>
-                        </span>
+<!--                        <span th:if="${adoption.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}" sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                            <a class="btn btn-outline-light btn-sm" th:href="@{'/adoption/delete/' + ${adoption.getId()}}">Delete</a>-->
+<!--                        </span>-->
                     </td>
                 </tr>
-
                 </tbody>
             </table>
-        </div>
     </div>
     <div th:if="${ #lists.isEmpty(adoptions)}">
         No Adoption requests found!
     </div>
-    <a sec:authorize="hasRole('ROLE_CITIZEN')" href="/adoption/new" class="btn btn-primary" role="button">Create new
-        Adoption request</a>
+    <a sec:authorize="hasRole('ROLE_CITIZEN')" href="/adoption/new" class="btn btn-primary" role="button">Create new Adoption request</a>
 </div>
 </body>
 </html>

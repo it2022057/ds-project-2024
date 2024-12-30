@@ -28,6 +28,10 @@ public class Shelter extends User {
     @Column
     private String description;
 
+    @Enumerated
+    @Column
+    private Status approvalStatus;
+
     @OneToMany(mappedBy = "onShelter", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Pet> petsAvailable;
@@ -39,12 +43,13 @@ public class Shelter extends User {
     public Shelter() {
     }
 
-    public Shelter(String username, String password, String email, String phone,  String name, String location, String address, String description) {
+    public Shelter(String username, String password, String email, String phone,  String name, String location, String address, String description, Status approvalStatus) {
         super(username, password, email, phone);
         this.name = name;
         this.location = location;
         this.address = address;
         this.description = description;
+        this.approvalStatus = approvalStatus;
     }
 
     public String getName() {
@@ -77,6 +82,14 @@ public class Shelter extends User {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Status getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(Status approvalStatus) {
+        this.approvalStatus = approvalStatus;
     }
 
     public List<Pet> getPetsAvailable() {

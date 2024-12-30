@@ -32,6 +32,10 @@ public class Pet {
     @Column
     private String sex;
 
+    @Enumerated
+    @Column
+    private Status approvalStatus;
+
     @OneToMany(mappedBy = "petExamined", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<HealthCheck> health;
@@ -48,11 +52,12 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(String name, Integer age, String species, String sex) {
+    public Pet(String name, Integer age, String species, String sex, Status approvalStatus) {
         this.name = name;
         this.age = age;
         this.species = species;
         this.sex = sex;
+        this.approvalStatus = approvalStatus;
     }
 
     public Integer getId() {
@@ -93,6 +98,14 @@ public class Pet {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public Status getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(Status approvalStatus) {
+        this.approvalStatus = approvalStatus;
     }
 
     public List<HealthCheck> getHealth() {

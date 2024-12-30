@@ -1,12 +1,16 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
+import gr.hua.dit.ds.ds_project_2024.entities.Adoption;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
+import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -40,13 +44,33 @@ public class PetController {
     }
 
     @PostMapping("/new")
-    public String savePet(@ModelAttribute("pet") Pet pet, Model model) {
-        petService.savePet(pet);
+    public String savePet(@ModelAttribute("pet") Pet pet, Principal principal, Model model) {
+        String username = principal.getName();
+        petService.savePet(pet, username);
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }
 
-    @GetMapping("/delete/{id}")
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/approve/{id}")
+    public String acceptPet(@PathVariable Integer id, Model model) {
+        Pet pet = petService.getPet(id);
+        pet.setApprovalStatus(Status.APPROVED);
+        model.addAttribute("pets", petService.getPets());
+        return "pet/pets";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/reject/{id}")
+    public String rejectPet(@PathVariable Integer id, Model model) {
+        Pet pet = petService.getPet(id);
+        pet.setApprovalStatus(Status.REJECTED);
+        model.addAttribute("pets", petService.getPets());
+        return "pet/pets";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/delete/{id}")
     public String deletePet(@PathVariable Integer id, Model model) {
         petService.deletePet(id);
         model.addAttribute("pets", petService.getPets());

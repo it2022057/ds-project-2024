@@ -1,7 +1,10 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
+import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.entities.Shelter;
+import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.service.ShelterService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +42,25 @@ public class ShelterController {
     @PostMapping("/new")
     public String saveShelter(@ModelAttribute("shelter") Shelter shelter, Model model) {
         shelterService.saveShelter(shelter);
+        String message = "Shelter " + shelter.getId() + " saved successfully!";
+        model.addAttribute("msg", message);
+        return "index";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/approve/{id}")
+    public String acceptShelter(@PathVariable Integer id, Model model) {
+        Shelter shelter = shelterService.getShelter(id);
+        shelter.setApprovalStatus(Status.APPROVED);
+        model.addAttribute("shelters", shelterService.getShelters());
+        return "shelter/shelters";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/reject/{id}")
+    public String rejectShelter(@PathVariable Integer id, Model model) {
+        Shelter shelter = shelterService.getShelter(id);
+        shelter.setApprovalStatus(Status.REJECTED);
         model.addAttribute("shelters", shelterService.getShelters());
         return "shelter/shelters";
     }

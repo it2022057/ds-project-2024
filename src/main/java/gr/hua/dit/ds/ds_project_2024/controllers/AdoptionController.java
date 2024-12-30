@@ -1,14 +1,11 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Adoption;
-import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.service.AdoptionService;
-import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +38,7 @@ public class AdoptionController {
         return "adoption/adoptions";
     }
 
-    @RequestMapping("/new")
+    @GetMapping("/new")
     public String addAdoption(Model model) {
         Adoption adoption = new Adoption();
         List<Pet> pets = petService.getPets();
@@ -51,10 +48,9 @@ public class AdoptionController {
     }
 
     @PostMapping("/new")
-    public String saveAdoption(@ModelAttribute("adoption") Adoption adoption, Model model) {
-        adoption.setStatus(Status.PENDING);
-        adoption.setFromShelter(adoption.getPetToAdopt().getOnShelter());
-        adoptionService.saveAdoption(adoption);
+    public String saveAdoption(@ModelAttribute("adoption") Adoption adoption, Principal principal, Model model) {
+        String username = principal.getName();
+        adoptionService.saveAdoption(adoption, username);
         model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }
@@ -66,17 +62,21 @@ public class AdoptionController {
         return "adoption/adoptions";
     }
 
-    @GetMapping("/accept/{id}")
+    @Secured("ROLE_SHELTER")
+    @GetMapping("/approve/{id}")
     public String acceptAdoption(@PathVariable Integer id, Model model) {
         Adoption adoption = adoptionService.getAdoption(id);
         adoption.setStatus(Status.APPROVED);
+        model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }
 
+    @Secured("ROLE_SHELTER")
     @GetMapping("/reject/{id}")
     public String rejectAdoption(@PathVariable Integer id, Model model) {
         Adoption adoption = adoptionService.getAdoption(id);
         adoption.setStatus(Status.REJECTED);
+        model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }
 
@@ -88,7 +88,7 @@ public class AdoptionController {
     }
 
     @PostMapping("/request/{id}")
-    public String adoptionRequest(@PathVariable Integer id, Model model, Principal principal) {
+    public String adoptionRequestByButton(@PathVariable Integer id, Model model, Principal principal) {
         Pet pet = petService.getPet(id);
         String username = principal.getName();
         adoptionService.submitAdoptionRequest(pet, username);

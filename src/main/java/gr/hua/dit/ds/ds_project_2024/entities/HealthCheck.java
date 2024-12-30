@@ -32,8 +32,9 @@ public class HealthCheck {
     public HealthCheck() {
     }
 
-    public HealthCheck(String details) {
+    public HealthCheck(Status status, String details) {
         this.details = details;
+        this.status = status;
     }
 
     public Integer getId() {
