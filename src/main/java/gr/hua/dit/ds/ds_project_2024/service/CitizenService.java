@@ -35,6 +35,14 @@ public class CitizenService {
     public Citizen getCitizen(Integer citizenId) { return citizenRepository.findById(citizenId).get(); }
 
     @Transactional
+    public Citizen getCitizenByUsername(String username) {
+        if(citizenRepository.findCitizenByUsername(username).isPresent()) {
+            return citizenRepository.findCitizenByUsername(username).get();
+        }
+        return null;
+    }
+
+    @Transactional
     public void saveCitizen(Citizen citizen) {
         String passwd = citizen.getPassword();
         String encodedPassword = passwordEncoder.encode(passwd);

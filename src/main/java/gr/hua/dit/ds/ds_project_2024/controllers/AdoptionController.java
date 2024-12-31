@@ -1,32 +1,48 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
-import gr.hua.dit.ds.ds_project_2024.entities.Adoption;
-import gr.hua.dit.ds.ds_project_2024.entities.Pet;
-import gr.hua.dit.ds.ds_project_2024.entities.Status;
-import gr.hua.dit.ds.ds_project_2024.service.AdoptionService;
-import gr.hua.dit.ds.ds_project_2024.service.PetService;
+import gr.hua.dit.ds.ds_project_2024.entities.*;
+import gr.hua.dit.ds.ds_project_2024.repositories.CitizenRepository;
+import gr.hua.dit.ds.ds_project_2024.service.*;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("adoption")
 public class AdoptionController {
 
+    private CitizenService citizenService;
+    private ShelterService shelterService;
     private AdoptionService adoptionService;
     private PetService petService;
 
-    public AdoptionController(AdoptionService adoptionService, PetService petService) {
+    public AdoptionController(AdoptionService adoptionService, PetService petService, CitizenService citizenService, ShelterService shelterService) {
         this.adoptionService = adoptionService;
         this.petService = petService;
+        this.citizenService = citizenService;
+        this.shelterService = shelterService;
     }
 
     @RequestMapping()
-    public String showAdoptions(Model model) {
+    public String showAdoptions(Principal principal, Model model, UserDetails authenticatedPrincipal) {
+        Citizen citizen = citizenService.getCitizenByUsername(authenticatedPrincipal.getUsername());
+        Shelter shelter = shelterService.getShelterByUsername(principal.getName());
+        if (citizen != null) {
+            model.addAttribute("citizen", citizen);
+            throw new UsernameNotFoundException("You are not authorized to view this resource");
+        } else if (shelter != null) {
+            model.addAttribute("shelter", shelter);
+            throw new UsernameNotFoundException("You are not authorized to view this resource");
+        }
+
         model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }

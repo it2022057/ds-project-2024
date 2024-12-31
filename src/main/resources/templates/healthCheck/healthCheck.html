@@ -17,7 +17,7 @@
         <div class="form-group">
             <label for="status" name="Status">
                 <select name="status" id="status">
-                    <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}"
+                    <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).values()}"
                             th:value="${statusOpt}" th:text="${statusOpt}" ></option>
                 </select>
             </label>

@@ -59,7 +59,6 @@ public class UserController {
 
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute User user, Model model) {
-        System.out.println("Roles: " + user.getRoles());
         Integer id = userService.saveUser(user);
         String message = "User " + id + " saved successfully!";
         model.addAttribute("msg", message);
@@ -79,7 +78,6 @@ public class UserController {
         User user = userService.getUser(user_id);
         Role role = roleRepository.findById(role_id).get();
         user.getRoles().remove(role);
-        System.out.println("Roles: " + user.getRoles());
         userService.updateUser(user);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
@@ -91,7 +89,6 @@ public class UserController {
         User user = userService.getUser(user_id);
         Role role = roleRepository.findById(role_id).get();
         user.getRoles().add(role);
-        System.out.println("Roles: " + user.getRoles());
         userService.updateUser(user);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());

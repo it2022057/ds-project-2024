@@ -56,6 +56,7 @@ public class PetController {
     public String acceptPet(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
         pet.setApprovalStatus(Status.APPROVED);
+        pet.getOnShelter().getPetsAvailable().add(pet);
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }

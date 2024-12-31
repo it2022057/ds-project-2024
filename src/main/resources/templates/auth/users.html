@@ -32,10 +32,10 @@
                 </td>
                 <td th:if="${user.id}"><a class="btn btn-info" th:href="@{/user/{id}(id=${user.id})}">Edit</a>
                     <span th:each="role : ${user.roles}">
-                    <a class="btn btn-danger"
-                       th:href="@{/user/role/delete/{id}/{role_id}(id=${user.id},role_id=${role.id})}"
-                       th:utext="'Delete '+  ${role.name}"></a>
-                </span>
+                        <a class="btn btn-danger"
+                            th:href="@{/user/role/delete/{id}/{role_id}(id=${user.id},role_id=${role.id})}"
+                            th:utext="'Delete '+  ${role.name}"></a>
+                    </span>
                     <span th:each="role : ${roles}">
                         <a class="btn btn-success"
                            th:href="@{/user/role/add/{id}/{role_id}(id=${user.id},role_id=${role.id})}"

@@ -62,5 +62,7 @@ public class AdoptionService {
         adoptionRepository.save(adoptionRequest);
 
         pet.getInterest().add(adoptionRequest);
+        citizen.getPendingAdoptions().add(adoptionRequest);
+        pet.getOnShelter().getAdoptionRequests().add(adoptionRequest);
     }
 }

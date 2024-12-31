@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{page_layout/layout}">
 
 <head>
@@ -37,7 +38,7 @@
   <div th:if="${ #lists.isEmpty(healthChecks)}">
     No Health Checks found!
   </div>
-  <a href="/healthCheck/new" class="btn btn-primary" role="button">Examine a new Pet</a>
+  <a sec:authorize="hasRole('ROLE_VETERINARIAN')" href="/healthCheck/new" class="btn btn-primary" role="button">Examine a new Pet</a>
 </div>
 </body>
 </html>

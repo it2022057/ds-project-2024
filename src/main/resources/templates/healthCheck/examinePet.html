@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pet.name}"></title>
+</head>
+<body>
+
+<div layout:fragment="main-content">
+    <p th:text="'Display your medical opinion for pet: '+ ${pet.name}"></p>
+    <form action="#" th:action="@{/healthCheck/examine/{cid}(cid=${pet.getId()})}" th:object="${pet}"
+          method="post">
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select name="status" id="status">
+                <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).values()}"
+                        th:value="${statusOpt}" th:text="${statusOpt}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="details">Details</label>
+            <input type="text" id="details" name="details" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

@@ -36,6 +36,15 @@ public class ShelterService {
     public Shelter getShelter(Integer shelterId) { return shelterRepository.findById(shelterId).get(); }
 
     @Transactional
+    public Shelter getShelterByUsername(String username) {
+        return shelterRepository.findShelterByUsername(username).get();
+//        if(shelterRepository.findShelterByUsername(username).isPresent()) {
+//            return shelterRepository.findShelterByUsername(username).get();
+//        }
+//        return null;
+    }
+
+    @Transactional
     public void saveShelter(Shelter shelter) {
         shelter.setApprovalStatus(Status.PENDING);
         String passwd = shelter.getPassword();
