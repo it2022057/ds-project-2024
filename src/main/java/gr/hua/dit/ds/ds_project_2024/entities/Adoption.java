@@ -76,4 +76,11 @@ public class Adoption {
     public void setFromShelter(Shelter fromShelter) {
         this.fromShelter = fromShelter;
     }
+
+    @Override
+    public String toString() {
+        return "Adoption Request" +
+                " id=" + id +
+                ", from applicant=" + applicant;
+    }
 }

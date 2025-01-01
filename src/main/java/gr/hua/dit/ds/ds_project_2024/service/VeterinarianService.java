@@ -32,7 +32,15 @@ public class VeterinarianService {
     }
 
     @Transactional
-    public Veterinarian getVeterinarian(Integer veterinarianId) { return veterinarianRepository.findById(veterinarianId).get(); }
+    public Veterinarian getVeterinarian(Integer veterinarianId) { return veterinarianRepository.findById(veterinarianId).orElse(null); }
+
+    @Transactional
+    public Veterinarian getVeterinarianByUsername(String username) {
+        if(veterinarianRepository.findVeterinarianByUsername(username).isPresent()) {
+            return veterinarianRepository.findVeterinarianByUsername(username).get();
+        }
+        return null;
+    }
 
     @Transactional
     public void saveVeterinarian(Veterinarian veterinarian) {

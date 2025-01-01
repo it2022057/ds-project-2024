@@ -36,17 +36,14 @@ public class Pet {
     @Column
     private Status approvalStatus;
 
-    @OneToMany(mappedBy = "petExamined", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "petExamined", cascade = {CascadeType.ALL})
     private List<HealthCheck> health;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="shelter_id")
     private Shelter onShelter;
 
-    @OneToMany(mappedBy = "petToAdopt", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "petToAdopt", cascade = {CascadeType.ALL})
     private List<Adoption> interest;
 
     public Pet() {

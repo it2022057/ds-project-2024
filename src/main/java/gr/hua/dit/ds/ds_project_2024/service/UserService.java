@@ -1,5 +1,6 @@
 package gr.hua.dit.ds.ds_project_2024.service;
 
+import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
 import gr.hua.dit.ds.ds_project_2024.entities.Role;
 import gr.hua.dit.ds.ds_project_2024.entities.User;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
@@ -87,6 +88,13 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User getUser(Integer userId) {
         return userRepository.findById(userId).get();
+    }
+
+    @Transactional
+    public User getUserByUsername(String username) {
+        Optional<User> opt = userRepository.findByUsername(username);
+        User user = opt.orElseThrow(() -> new UsernameNotFoundException("User with username: " + username +" not found !"));
+        return user;
     }
 
     @Transactional

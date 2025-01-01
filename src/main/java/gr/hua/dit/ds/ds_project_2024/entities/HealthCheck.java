@@ -76,4 +76,12 @@ public class HealthCheck {
     public void setByVeterinarian(Veterinarian byVeterinarian) {
         this.byVeterinarian = byVeterinarian;
     }
+
+    @Override
+    public String toString() {
+        return "HealthCheck" +
+                " id=" + id +
+                ", status=" + status +
+                ", by Vet=" + byVeterinarian;
+    }
 }

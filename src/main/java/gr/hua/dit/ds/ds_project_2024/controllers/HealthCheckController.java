@@ -41,11 +41,20 @@ public class HealthCheckController {
         return "healthCheck/healthChecks";
     }
 
+    @GetMapping("/vetHealthChecks/{vet_id}")
+    public String showVetHealthChecks(@PathVariable Integer vet_id, Model model) {
+        Veterinarian veterinarian = veterinarianService.getVeterinarian(vet_id);
+        model.addAttribute("healthChecks", veterinarian.getHealthTests());
+        return "healthCheck/healthChecks";
+    }
+
     @GetMapping("/{id}")
     public String showHealthCheck(@PathVariable Integer id, Model model) {
         HealthCheck healthCheck = healthCheckService.getHealthCheck(id);
-        model.addAttribute("healthChecks", healthCheck);
-        return "healthCheck/healthCheck";
+        model.addAttribute("healthCheck", healthCheck);
+        model.addAttribute("pet", healthCheck.getPetExamined());
+        model.addAttribute("veterinarian", healthCheck.getByVeterinarian());
+        return "healthCheck/editHealthCheck";
     }
 
     @PostMapping("/{id}")
@@ -62,13 +71,12 @@ public class HealthCheckController {
     }
 
     @GetMapping("/new")
-    public String addHealthCheck(Model model) {
+    public String addHealthCheck(Principal loggedInUser, Model model) {
+        Veterinarian veterinarian = veterinarianService.getVeterinarianByUsername(loggedInUser.getName());
         HealthCheck healthCheck = new HealthCheck();
-        List<Pet> pets = petService.getPets();
-        List<Veterinarian> veterinarians = veterinarianService.getVeterinarians();
         model.addAttribute("healthCheck", healthCheck);
-        model.addAttribute("pets", pets);
-        model.addAttribute("veterinarians", veterinarians);
+        model.addAttribute("pets", petService.getPets());
+        model.addAttribute("veterinarians", veterinarian);
         return "healthCheck/healthCheck";
     }
 
@@ -94,9 +102,9 @@ public class HealthCheckController {
     }
 
     @PostMapping("/examine/{pet_id}")
-    public String examinePet(@PathVariable Integer pet_id, @ModelAttribute("status")Status status, @ModelAttribute("details")String details, Model model, Principal principal) {
+    public String examinePet(@PathVariable Integer pet_id, @ModelAttribute("status")Status status, @ModelAttribute("details")String details, Model model, Principal loggedInUser) {
         Pet pet = petService.getPet(pet_id);
-        String username = principal.getName();
+        String username = loggedInUser.getName();
         healthCheckService.examination(pet, status, details, username);
         model.addAttribute("healthChecks", healthCheckService.getHealthChecks());
         return "healthCheck/healthChecks";

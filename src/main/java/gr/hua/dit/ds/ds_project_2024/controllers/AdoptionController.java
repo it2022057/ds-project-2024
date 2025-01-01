@@ -1,11 +1,9 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.*;
-import gr.hua.dit.ds.ds_project_2024.repositories.CitizenRepository;
+import gr.hua.dit.ds.ds_project_2024.repositories.UserRepository;
 import gr.hua.dit.ds.ds_project_2024.service.*;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,37 +11,38 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("adoption")
 public class AdoptionController {
 
+    private UserService userService;
     private CitizenService citizenService;
     private ShelterService shelterService;
     private AdoptionService adoptionService;
     private PetService petService;
 
-    public AdoptionController(AdoptionService adoptionService, PetService petService, CitizenService citizenService, ShelterService shelterService) {
+    public AdoptionController(AdoptionService adoptionService, PetService petService, CitizenService citizenService, ShelterService shelterService, UserService userService) {
         this.adoptionService = adoptionService;
         this.petService = petService;
         this.citizenService = citizenService;
         this.shelterService = shelterService;
+        this.userService = userService;
     }
 
-    @RequestMapping()
-    public String showAdoptions(Principal principal, Model model, UserDetails authenticatedPrincipal) {
-        Citizen citizen = citizenService.getCitizenByUsername(authenticatedPrincipal.getUsername());
-        Shelter shelter = shelterService.getShelterByUsername(principal.getName());
+    @GetMapping()
+    public String showAdoptions(Principal loggedInUser, Model model) {
+        User user = userService.getUserByUsername(loggedInUser.getName());
+        Citizen citizen = citizenService.getCitizen(user.getId());
+        Shelter shelter = shelterService.getShelter(user.getId());
         if (citizen != null) {
-            model.addAttribute("citizen", citizen);
-            throw new UsernameNotFoundException("You are not authorized to view this resource");
+            model.addAttribute("adoptions", citizen.getPendingAdoptions());
         } else if (shelter != null) {
-            model.addAttribute("shelter", shelter);
-            throw new UsernameNotFoundException("You are not authorized to view this resource");
+            model.addAttribute("adoptions", shelter.getAdoptionRequests());
+        } else {
+            List<Adoption> adoptions = adoptionService.getAdoptions();
+            model.addAttribute("adoptions", adoptions);
         }
-
-        model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }
 
@@ -66,8 +65,8 @@ public class AdoptionController {
     @PostMapping("/new")
     public String saveAdoption(@ModelAttribute("adoption") Adoption adoption, Principal principal, Model model) {
         String username = principal.getName();
-        adoptionService.saveAdoption(adoption, username);
-        model.addAttribute("adoptions", adoptionService.getAdoptions());
+        Citizen citizen = adoptionService.saveAdoption(adoption, username);
+        model.addAttribute("citizen", citizen);
         return "adoption/adoptions";
     }
 
@@ -104,11 +103,11 @@ public class AdoptionController {
     }
 
     @PostMapping("/request/{id}")
-    public String adoptionRequestByButton(@PathVariable Integer id, Model model, Principal principal) {
+    public String adoptionRequestByButton(@PathVariable Integer id, Model model, Principal loggedInUser) {
         Pet pet = petService.getPet(id);
-        String username = principal.getName();
-        adoptionService.submitAdoptionRequest(pet, username);
-        model.addAttribute("adoptions", adoptionService.getAdoptions());
+        String username = loggedInUser.getName();
+        Citizen citizen = adoptionService.submitAdoptionRequest(pet, username);
+        model.addAttribute("adoptions", citizen.getPendingAdoptions());
         return "adoption/adoptions";
     }
 

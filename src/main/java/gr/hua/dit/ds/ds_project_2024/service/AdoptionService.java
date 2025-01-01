@@ -32,7 +32,7 @@ public class AdoptionService {
     public Adoption getAdoption(Integer adoptionId) { return adoptionRepository.findById(adoptionId).get(); }
 
     @Transactional
-    public void saveAdoption(Adoption adoption, String username) {
+    public Citizen saveAdoption(Adoption adoption, String username) {
         Optional<Citizen> opt = citizenRepository.findCitizenByUsername(username);
         Citizen citizen = opt.orElseThrow(() -> new UsernameNotFoundException("Citizen with username: " + username +" not found !"));
 
@@ -42,13 +42,17 @@ public class AdoptionService {
         adoptionRepository.save(adoption);
 
         adoption.getPetToAdopt().getInterest().add(adoption);
+        citizen.getPendingAdoptions().add(adoption);
+        adoption.getPetToAdopt().getOnShelter().getAdoptionRequests().add(adoption);
+
+        return citizen;
     }
 
     @Transactional
     public void deleteAdoption(Integer adoptionId) { adoptionRepository.deleteById(adoptionId); }
 
     @Transactional
-    public void submitAdoptionRequest(Pet pet, String username) {
+    public Citizen submitAdoptionRequest(Pet pet, String username) {
         Optional<Citizen> opt = citizenRepository.findCitizenByUsername(username);
         Citizen citizen = opt.orElseThrow(() -> new UsernameNotFoundException("Citizen with username: " + username +" not found !"));
 
@@ -64,5 +68,7 @@ public class AdoptionService {
         pet.getInterest().add(adoptionRequest);
         citizen.getPendingAdoptions().add(adoptionRequest);
         pet.getOnShelter().getAdoptionRequests().add(adoptionRequest);
+
+        return citizen;
     }
 }

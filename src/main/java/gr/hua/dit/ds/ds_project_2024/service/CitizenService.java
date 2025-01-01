@@ -4,11 +4,13 @@ import gr.hua.dit.ds.ds_project_2024.entities.*;
 import gr.hua.dit.ds.ds_project_2024.repositories.CitizenRepository;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,7 +34,7 @@ public class CitizenService {
     }
 
     @Transactional
-    public Citizen getCitizen(Integer citizenId) { return citizenRepository.findById(citizenId).get(); }
+    public Citizen getCitizen(Integer citizenId) { return citizenRepository.findById(citizenId).orElse(null); }
 
     @Transactional
     public Citizen getCitizenByUsername(String username) {

@@ -24,12 +24,22 @@
       </thead>
       <tbody>
       <tr th:each="healthCheck : ${healthChecks}">
-        <td th:text="${healthCheck.getPetExamined().name}"></td>
-        <td th:text="${healthCheck.getByVeterinarian().firstName + ' ' + healthCheck.getByVeterinarian().lastName}"></td>
+        <td><a th:if="${healthCheck.getPetExamined() != null}"
+               th:href="@{'/pet/' + ${healthCheck.getPetExamined().getId()}}"
+               th:text="${healthCheck.getPetExamined().getName()}"></a>
+        </td>
+        <td><a th:if="${healthCheck.getByVeterinarian() != null}"
+               th:href="@{'/veterinarian/' + ${healthCheck.getByVeterinarian().getId()}}"
+               th:text="${healthCheck.getByVeterinarian().firstName + ' ' + healthCheck.getByVeterinarian().lastName}"></a></td>
         <td th:text="${healthCheck.status}"></td>
         <td th:text="${healthCheck.details}"></td>
         <td>
-          <a class="btn btn-outline-light btn-sm" th:href="@{'/healthCheck/' + ${healthCheck.id}}">Details</a>
+          <span>
+            <a class="btn btn-info" th:href="@{'/healthCheck/' + ${healthCheck.getId()}}">Details</a>
+          </span>
+          <span sec:authorize="hasRole('ROLE_VETERINARIAN')">
+            <a class="btn btn-light" th:href="@{'/healthCheck/' + ${healthCheck.getId()}}">Edit</a>
+          </span>
         </td>
       </tr>
       </tbody>
