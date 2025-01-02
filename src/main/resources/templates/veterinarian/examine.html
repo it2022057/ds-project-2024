@@ -12,7 +12,7 @@
 
 <div layout:fragment="main-content">
     <p th:text="'Display your medical opinion for pet: '+ ${pet.name}"></p>
-    <form action="#" th:action="@{/healthCheck/examine/{cid}(cid=${pet.getId()})}" th:object="${pet}"
+    <form action="#" th:action="@{/veterinarian/examine/{cid}(cid=${pet.getId()})}" th:object="${pet}"
           method="post">
         <div class="form-group">
             <label for="status">Status</label>

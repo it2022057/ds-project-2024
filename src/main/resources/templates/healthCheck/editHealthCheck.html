@@ -10,7 +10,7 @@
 </head>
 <body>
 <div layout:fragment="main-content">
-    <form action="#" th:action="@{/healthCheck/{id}(id=${healthCheck.id})}" th:object="${healthCheck}"
+    <form action="#" th:action="@{/healthCheck/edit/{id}(id=${healthCheck.id})}" th:object="${healthCheck}"
           method="post">
 
         <div class="form-group">
@@ -41,6 +41,7 @@
             <input type="text" id="details" class="form-control" th:field="*{details}">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a type="button" class="btn btn-danger" th:href="@{/healthCheck/delete/{id}(id=${healthCheck.getId()})}">Delete</a>
     </form>
 </div>
 </body>

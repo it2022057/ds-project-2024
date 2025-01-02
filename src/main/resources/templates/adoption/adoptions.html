@@ -44,7 +44,7 @@
                     <span sec:authorize="hasRole('ROLE_SHELTER')"
                           th:if="${adoption.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                         <a class="btn btn-success btn-sm"
-                           th:href="@{'/adoption/approve/' + ${adoption.getId()}}">Approve</a>
+                           th:href="@{'/adoption/accept/' + ${adoption.getId()}}">Accept</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_SHELTER')"
                           th:if="${adoption.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">

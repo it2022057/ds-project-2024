@@ -31,11 +31,12 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/register", "/shelter/new", "/veterinarian/new", "/citizen/new", "/saveUser", "/pet", "/images/**", "/js/**", "/css/**").permitAll()
-                        .requestMatchers("/users/**", "/pet/delete/{id}").hasRole("ADMIN")
+                        .requestMatchers("/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .failureUrl("/login?error=true")
                         .defaultSuccessUrl("/pet", true)
                         .permitAll()
                 )

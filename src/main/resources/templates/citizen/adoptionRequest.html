@@ -12,7 +12,7 @@
 
 <div layout:fragment="main-content">
     <p th:text="'Adoption request for pet: '+ ${pet.name}"></p>
-    <form action="#" th:action="@{/adoption/request/{cid}(cid=${pet.getId()})}" th:object="${pet}"
+    <form action="#" th:action="@{/citizen/adoptionRequest/{cid}(cid=${pet.getId()})}" th:object="${pet}"
           method="post">
             <p th:text="'Are you sure?'"></p>
             <button type="submit" class="btn btn-primary">

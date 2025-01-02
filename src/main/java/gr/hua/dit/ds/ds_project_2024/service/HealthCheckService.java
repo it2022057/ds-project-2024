@@ -14,11 +14,9 @@ import java.util.Optional;
 public class HealthCheckService {
 
     private HealthCheckRepository healthCheckRepository;
-    private VeterinarianRepository veterinarianRepository;
 
-    public HealthCheckService(HealthCheckRepository healthCheckRepository, VeterinarianRepository veterinarianRepository) {
+    public HealthCheckService(HealthCheckRepository healthCheckRepository) {
         this.healthCheckRepository = healthCheckRepository;
-        this.veterinarianRepository = veterinarianRepository;
     }
 
     @Transactional
@@ -37,23 +35,5 @@ public class HealthCheckService {
     public Integer updateHealthCheck(HealthCheck healthCheck) {
         healthCheck = healthCheckRepository.save(healthCheck);
         return healthCheck.getId();
-    }
-
-    @Transactional
-    public void examination(Pet pet, Status status, String details, String username) {
-        Optional<Veterinarian> opt = veterinarianRepository.findVeterinarianByUsername(username);
-        Veterinarian veterinarian = opt.orElseThrow(() -> new UsernameNotFoundException("Veterinarian with username: " + username +" not found !"));
-
-        HealthCheck healthCheck = new HealthCheck();
-
-        healthCheck.setStatus(status);
-        healthCheck.setDetails(details);
-        healthCheck.setPetExamined(pet);
-        healthCheck.setByVeterinarian(veterinarian);
-
-        healthCheckRepository.save(healthCheck);
-
-        pet.getHealth().add(healthCheck);
-        veterinarian.getHealthTests().add(healthCheck);
     }
 }

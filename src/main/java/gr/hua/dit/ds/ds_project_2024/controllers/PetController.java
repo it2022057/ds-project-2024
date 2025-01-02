@@ -1,10 +1,7 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.*;
-import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
-import gr.hua.dit.ds.ds_project_2024.service.PetService;
-import gr.hua.dit.ds.ds_project_2024.service.ShelterService;
-import gr.hua.dit.ds.ds_project_2024.service.UserService;
+import gr.hua.dit.ds.ds_project_2024.service.*;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,16 +15,18 @@ import java.util.List;
 @RequestMapping("pet")
 public class PetController {
 
+    private final VeterinarianService veterinarianService;
     private ShelterService shelterService;
     private CitizenService citizenService;
     private UserService userService;
     private PetService petService;
 
-    public PetController(PetService petService, UserService userService, CitizenService citizenService, ShelterService shelterService) {
+    public PetController(PetService petService, UserService userService, CitizenService citizenService, ShelterService shelterService, VeterinarianService veterinarianService) {
         this.petService = petService;
         this.userService = userService;
         this.citizenService = citizenService;
         this.shelterService = shelterService;
+        this.veterinarianService = veterinarianService;
     }
 
     @GetMapping()
@@ -40,6 +39,7 @@ public class PetController {
         User user = userService.getUserByUsername(loggedInUser.getName());
         Citizen citizen = citizenService.getCitizen(user.getId());
         Shelter shelter = shelterService.getShelter(user.getId());
+        Veterinarian veterinarian = veterinarianService.getVeterinarian(user.getId());
         if (citizen != null) {
             List<Pet> approvedPets = new ArrayList<>();
             for (Pet pet : allPets) {
@@ -51,7 +51,7 @@ public class PetController {
                             break;
                         }
                     }
-                    if (!hasRejectedHealthCheck) {
+                    if (!hasRejectedHealthCheck && !pet.getHealth().isEmpty()) {
                         approvedPets.add(pet);
                     }
                 }
@@ -59,6 +59,18 @@ public class PetController {
             model.addAttribute("pets", approvedPets);
         } else if (shelter != null) {
             model.addAttribute("pets", shelter.getPetsAvailable());
+        } else if (veterinarian != null) {
+            boolean canExamine = true;
+            for (Pet pet : allPets) {
+                for(HealthCheck health : pet.getHealth()) {
+                    if (health.getByVeterinarian() == veterinarian) {
+                        canExamine = false;
+                        break;
+                    }
+                }
+            }
+            model.addAttribute("canExamine", canExamine);
+            model.addAttribute("pets", allPets);
         } else {
             model.addAttribute("pets", allPets);
         }
@@ -81,8 +93,8 @@ public class PetController {
 
     @PostMapping("/new")
     public String savePet(@ModelAttribute("pet") Pet pet, Principal loggedInUser, Model model) {
-        String username = loggedInUser.getName();
-        petService.savePet(pet, username);
+        Shelter shelter = shelterService.getShelterByUsername(loggedInUser.getName());
+        petService.savePet(pet, shelter);
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }

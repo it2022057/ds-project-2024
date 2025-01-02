@@ -1,10 +1,8 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.*;
-import gr.hua.dit.ds.ds_project_2024.repositories.UserRepository;
 import gr.hua.dit.ds.ds_project_2024.service.*;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +68,7 @@ public class AdoptionController {
         return "adoption/adoptions";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/delete/{id}")
     public String deleteAdoption(@PathVariable Integer id, Model model) {
         adoptionService.deleteAdoption(id);
@@ -78,7 +77,7 @@ public class AdoptionController {
     }
 
     @Secured("ROLE_SHELTER")
-    @GetMapping("/approve/{id}")
+    @GetMapping("/accept/{id}")
     public String acceptAdoption(@PathVariable Integer id, Model model) {
         Adoption adoption = adoptionService.getAdoption(id);
         adoption.setStatus(Status.APPROVED);
@@ -94,21 +93,4 @@ public class AdoptionController {
         model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }
-
-    @GetMapping("/request/{id}")
-    public String showAdoptionRequest(@PathVariable Integer id, Model model) {
-        Pet pet = petService.getPet(id);
-        model.addAttribute("pet", pet);
-        return "adoption/request";
-    }
-
-    @PostMapping("/request/{id}")
-    public String adoptionRequestByButton(@PathVariable Integer id, Model model, Principal loggedInUser) {
-        Pet pet = petService.getPet(id);
-        String username = loggedInUser.getName();
-        Citizen citizen = adoptionService.submitAdoptionRequest(pet, username);
-        model.addAttribute("adoptions", citizen.getPendingAdoptions());
-        return "adoption/adoptions";
-    }
-
 }

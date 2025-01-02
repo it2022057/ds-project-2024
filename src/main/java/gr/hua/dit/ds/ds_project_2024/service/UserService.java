@@ -93,8 +93,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User getUserByUsername(String username) {
         Optional<User> opt = userRepository.findByUsername(username);
-        User user = opt.orElseThrow(() -> new UsernameNotFoundException("User with username: " + username +" not found !"));
-        return user;
+        return opt.orElseThrow(() -> new UsernameNotFoundException("User with username: " + username +" not found !"));
     }
 
     @Transactional

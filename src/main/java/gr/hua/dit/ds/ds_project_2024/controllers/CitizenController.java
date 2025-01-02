@@ -1,20 +1,26 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
+import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("citizen")
 public class CitizenController {
 
     private CitizenService citizenService;
+    private PetService petService;
 
-    public CitizenController(CitizenService citizenService) {
+    public CitizenController(CitizenService citizenService, PetService petService) {
         this.citizenService = citizenService;
+        this.petService = petService;
     }
 
     @RequestMapping()
@@ -45,10 +51,27 @@ public class CitizenController {
         return "index";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String deleteCitizen(@PathVariable Integer id, Model model) {
         citizenService.deleteCitizen(id);
         model.addAttribute("citizens", citizenService.getCitizens());
         return "citizen/citizens";
+    }
+
+    @GetMapping("/adoptionRequest/{id}")
+    public String showAdoptionRequest(@PathVariable Integer id, Model model) {
+        Pet pet = petService.getPet(id);
+        model.addAttribute("pet", pet);
+        return "citizen/adoptionRequest";
+    }
+
+    @PostMapping("/adoptionRequest/{id}")
+    public String adoptionRequest(@PathVariable Integer id, Model model, Principal loggedInUser) {
+        Pet pet = petService.getPet(id);
+        Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
+        citizenService.submitAdoptionRequest(pet, citizen);
+        model.addAttribute("adoptions", citizen.getPendingAdoptions());
+        return "adoption/adoptions";
     }
 }

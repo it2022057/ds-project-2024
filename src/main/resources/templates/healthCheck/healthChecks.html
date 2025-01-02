@@ -38,7 +38,7 @@
             <a class="btn btn-info" th:href="@{'/healthCheck/' + ${healthCheck.getId()}}">Details</a>
           </span>
           <span sec:authorize="hasRole('ROLE_VETERINARIAN')">
-            <a class="btn btn-light" th:href="@{'/healthCheck/' + ${healthCheck.getId()}}">Edit</a>
+            <a class="btn btn-light" th:href="@{'/healthCheck/edit/' + ${healthCheck.getId()}}">Edit</a>
           </span>
         </td>
       </tr>

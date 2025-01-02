@@ -50,25 +50,4 @@ public class AdoptionService {
 
     @Transactional
     public void deleteAdoption(Integer adoptionId) { adoptionRepository.deleteById(adoptionId); }
-
-    @Transactional
-    public Citizen submitAdoptionRequest(Pet pet, String username) {
-        Optional<Citizen> opt = citizenRepository.findCitizenByUsername(username);
-        Citizen citizen = opt.orElseThrow(() -> new UsernameNotFoundException("Citizen with username: " + username +" not found !"));
-
-        Adoption adoptionRequest = new Adoption();
-
-        adoptionRequest.setApplicant(citizen);
-        adoptionRequest.setPetToAdopt(pet);
-        adoptionRequest.setFromShelter(pet.getOnShelter());
-        adoptionRequest.setStatus(Status.PENDING);
-
-        adoptionRepository.save(adoptionRequest);
-
-        pet.getInterest().add(adoptionRequest);
-        citizen.getPendingAdoptions().add(adoptionRequest);
-        pet.getOnShelter().getAdoptionRequests().add(adoptionRequest);
-
-        return citizen;
-    }
 }

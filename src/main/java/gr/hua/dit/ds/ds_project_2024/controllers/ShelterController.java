@@ -41,8 +41,9 @@ public class ShelterController {
 
     @PostMapping("/new")
     public String saveShelter(@ModelAttribute("shelter") Shelter shelter, Model model) {
+        shelter.setApprovalStatus(Status.PENDING);
         shelterService.saveShelter(shelter);
-        String message = "Shelter " + shelter.getId() + " saved successfully!";
+        String message = "Shelter " + shelter.getId() + " waits for approval!";
         model.addAttribute("msg", message);
         return "index";
     }
@@ -52,6 +53,7 @@ public class ShelterController {
     public String acceptShelter(@PathVariable Integer id, Model model) {
         Shelter shelter = shelterService.getShelter(id);
         shelter.setApprovalStatus(Status.APPROVED);
+        shelterService.saveShelter(shelter);
         model.addAttribute("shelters", shelterService.getShelters());
         return "shelter/shelters";
     }
@@ -61,6 +63,7 @@ public class ShelterController {
     public String rejectShelter(@PathVariable Integer id, Model model) {
         Shelter shelter = shelterService.getShelter(id);
         shelter.setApprovalStatus(Status.REJECTED);
+        shelterService.saveShelter(shelter);
         model.addAttribute("shelters", shelterService.getShelters());
         return "shelter/shelters";
     }

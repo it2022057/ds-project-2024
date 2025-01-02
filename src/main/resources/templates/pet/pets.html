@@ -26,8 +26,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="pet : ${pets}"
-                th:if="${pet.approvalStatus == T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
+            <tr th:each="pet : ${pets}">
                 <td th:text="${pet.getName}"></td>
                 <td th:text="${pet.getAge()}"></td>
                 <td th:text="${pet.getSpecies()}"></td>
@@ -40,7 +39,7 @@
                        style="display: inline-block"></a></td>
                 <td th:text="${pet.getApprovalStatus()}"></td>
                 <td sec:authorize="hasRole('ROLE_VETERINARIAN')"><a th:if="${not#lists.isEmpty(pet.getHealth())}"
-                                                                    th:href="@{'/healthCheck/petHealth/' + ${health.getId()}}"
+                                                                    th:href="@{'/healthCheck/' + ${health.getId()}}"
                                                                     th:each="health : ${pet.getHealth()}"
                                                                     th:text="${health.toString()}"
                                                                     style="display: inline-block"></a></td>
@@ -49,7 +48,7 @@
                         <a class="btn btn-info" th:href="@{'/pet/' + ${pet.id}}">Details</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_CITIZEN')">
-                        <a class="btn btn-outline-warning" th:href="@{'/adoption/request/' + ${pet.id}}">Adopt</a>
+                        <a class="btn btn-outline-warning" th:href="@{'/citizen/adoptionRequest/' + ${pet.id}}">Adopt</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_ADMIN')"
                           th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
@@ -60,17 +59,12 @@
                         <a class="btn btn-danger" th:href="@{'/pet/reject/' + ${pet.id}}">Reject</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_VETERINARIAN')"
-                          th:if="${ #lists.isEmpty(pet.getHealth())}">
-                        <a class="btn btn-light" th:href="@{'/healthCheck/examine/' + ${pet.id}}">Examine</a>
+                          th:if="${ #lists.isEmpty(pet.getHealth())} or ${canExamine}">
+                        <a class="btn btn-light" th:href="@{'/veterinarian/examine/' + ${pet.id}}">Examine</a>
                     </span>
-<!--                    <span sec:authorize="hasRole('ROLE_VETERINARIAN')"-->
-<!--                          th:each="health : ${pet.getHealth()}"-->
-<!--                          th:if="${health.getByVeterinarian().getUsername() != principal.getUsername()} or ${#lists.isEmpty(pet.getHealth())}">-->
-<!--                        <a class="btn btn-light" th:href="@{'/healthCheck/examine/' + ${pet.id}}">Examine</a>-->
-<!--                    </span>-->
                     <span sec:authorize="hasRole('ROLE_VETERINARIAN')"
                           th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING} and ${ not#lists.isEmpty(pet.getHealth())}">
-                        <a class="btn btn-dark" th:href="@{'/healthCheck/examine/' + ${pet.id}}">Edit</a>
+                        <a class="btn btn-dark" th:href="@{'/veterinarian/examine/' + ${pet.id}}">Edit</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_ADMIN')"
                           th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}">

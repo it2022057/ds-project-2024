@@ -32,7 +32,7 @@
                 <td th:text="${shelter.getApprovalStatus()}"></td>
                 <td>
                     <span>
-                        <a class="btn btn-outline-light btn-sm" th:href="@{'/shelter/' + ${shelter.id}}">Details</a>
+                        <a class="btn btn-info" th:href="@{'/shelter/' + ${shelter.id}}">Details</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_ADMIN')"
                           th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">

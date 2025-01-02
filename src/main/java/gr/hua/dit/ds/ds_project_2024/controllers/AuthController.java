@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AuthController {
 
     private RoleRepository roleRepository;
-    private UserService userService;
 
-    public AuthController(RoleRepository roleRepository, UserService userService) {
+    public AuthController(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-        this.userService = userService;
     }
 
     @PostConstruct

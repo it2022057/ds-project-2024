@@ -24,19 +24,16 @@ public class PetService {
     }
 
     @Transactional
-    public List<Pet> getPets() {
-        return petRepository.findAll();
-    }
+    public List<Pet> getPets() { return petRepository.findAll(); }
 
     @Transactional
     public Pet getPet(Integer petId) { return petRepository.findById(petId).get(); }
 
     @Transactional
-    public void savePet(Pet pet, String username) {
+    public void savePet(Pet pet, Shelter shelter) {
         pet.setApprovalStatus(Status.PENDING);
-        Optional<Shelter> opt = shelterRepository.findShelterByUsername(username);
-        Shelter shelter =  opt.orElseThrow(() -> new UsernameNotFoundException("Shelter with username: " + username +" not found !"));
         pet.setOnShelter(shelter);
+        shelter.getPetsAvailable().add(pet);
         petRepository.save(pet);
     }
 

@@ -1,17 +1,16 @@
 package gr.hua.dit.ds.ds_project_2024.service;
 
-import gr.hua.dit.ds.ds_project_2024.entities.Pet;
-import gr.hua.dit.ds.ds_project_2024.entities.Role;
-import gr.hua.dit.ds.ds_project_2024.entities.Shelter;
-import gr.hua.dit.ds.ds_project_2024.entities.Status;
+import gr.hua.dit.ds.ds_project_2024.entities.*;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
 import gr.hua.dit.ds.ds_project_2024.repositories.ShelterRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -37,26 +36,23 @@ public class ShelterService {
 
     @Transactional
     public Shelter getShelterByUsername(String username) {
-        if(shelterRepository.findShelterByUsername(username).isPresent()) {
-            return shelterRepository.findShelterByUsername(username).get();
-        }
-        return null;
+        Optional<Shelter> opt = shelterRepository.findShelterByUsername(username);
+        return opt.orElseThrow(() -> new UsernameNotFoundException("Shelter with username: " + username +" not found !"));
     }
 
     @Transactional
     public void saveShelter(Shelter shelter) {
-        shelter.setApprovalStatus(Status.PENDING);
-        String passwd = shelter.getPassword();
-        String encodedPassword = passwordEncoder.encode(passwd);
-        shelter.setPassword(encodedPassword);
+        if(shelter.getApprovalStatus() == Status.APPROVED) {
+            String passwd = shelter.getPassword();
+            String encodedPassword = passwordEncoder.encode(passwd);
+            shelter.setPassword(encodedPassword);
 
-        // I have to show all the available roles
-        Role role = roleRepository.findByName("ROLE_SHELTER")
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        shelter.setRoles(roles);
-
+            Role role = roleRepository.findByName("ROLE_SHELTER")
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            Set<Role> roles = new HashSet<>();
+            roles.add(role);
+            shelter.setRoles(roles);
+        }
         shelterRepository.save(shelter);
     }
 
