@@ -21,7 +21,7 @@
                 <th>Shelter</th>
                 <th>Interest</th>
                 <th>Approval</th>
-                <th sec:authorize="hasRole('ROLE_VETERINARIAN')">Health Checks</th>
+                <th>Health Checks</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -38,11 +38,11 @@
                        th:each="interest : ${pet.getInterest()}" th:text="${interest.toString()}"
                        style="display: inline-block"></a></td>
                 <td th:text="${pet.getApprovalStatus()}"></td>
-                <td sec:authorize="hasRole('ROLE_VETERINARIAN')"><a th:if="${not#lists.isEmpty(pet.getHealth())}"
-                                                                    th:href="@{'/healthCheck/' + ${health.getId()}}"
-                                                                    th:each="health : ${pet.getHealth()}"
-                                                                    th:text="${health.toString()}"
-                                                                    style="display: inline-block"></a></td>
+                <td><a th:if="${not#lists.isEmpty(pet.getHealth())}"
+                       th:href="@{'/healthCheck/' + ${health.getId()}}"
+                       th:each="health : ${pet.getHealth()}"
+                       th:text="${health.toString()}"
+                       style="display: inline-block"></a></td>
                 <td>
                     <span>
                         <a class="btn btn-info" th:href="@{'/pet/' + ${pet.id}}">Details</a>
@@ -59,7 +59,7 @@
                         <a class="btn btn-danger" th:href="@{'/pet/reject/' + ${pet.id}}">Reject</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_VETERINARIAN')"
-                          th:if="${ #lists.isEmpty(pet.getHealth())} or ${canExamine}">
+                          th:if="${ #lists.isEmpty(pet.getHealth())} or ${pet.getLoggedInVetHasNotExamined()}">
                         <a class="btn btn-light" th:href="@{'/veterinarian/examine/' + ${pet.id}}">Examine</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_VETERINARIAN')"

@@ -7,9 +7,12 @@ import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
 import gr.hua.dit.ds.ds_project_2024.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -54,6 +57,7 @@ public class UserController {
     public String register(Model model) {
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("foundAdmin", userService.adminExists());
         return "auth/register";
     }
 

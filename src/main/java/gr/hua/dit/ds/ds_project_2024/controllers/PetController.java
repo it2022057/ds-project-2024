@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,44 +31,18 @@ public class PetController {
     @GetMapping()
     public String showPets(Principal loggedInUser, Model model) {
         List<Pet> allPets = petService.getPets();
-        if(loggedInUser == null) {
-            model.addAttribute("pets", allPets);
-            return "pet/pets";
-        }
+
         User user = userService.getUserByUsername(loggedInUser.getName());
         Citizen citizen = citizenService.getCitizen(user.getId());
         Shelter shelter = shelterService.getShelter(user.getId());
         Veterinarian veterinarian = veterinarianService.getVeterinarian(user.getId());
+
         if (citizen != null) {
-            List<Pet> approvedPets = new ArrayList<>();
-            for (Pet pet : allPets) {
-                boolean hasRejectedHealthCheck = false;
-                if(pet.getApprovalStatus() == Status.APPROVED) {
-                    for(HealthCheck health : pet.getHealth()) {
-                        if(health.getStatus() == Status.REJECTED) {
-                            hasRejectedHealthCheck = true;
-                            break;
-                        }
-                    }
-                    if (!hasRejectedHealthCheck && !pet.getHealth().isEmpty()) {
-                        approvedPets.add(pet);
-                    }
-                }
-            }
-            model.addAttribute("pets", approvedPets);
+            model.addAttribute("pets", petService.getApprovedPets(allPets));
         } else if (shelter != null) {
             model.addAttribute("pets", shelter.getPetsAvailable());
-        } else if (veterinarian != null) {
-            boolean canExamine = true;
-            for (Pet pet : allPets) {
-                for(HealthCheck health : pet.getHealth()) {
-                    if (health.getByVeterinarian() == veterinarian) {
-                        canExamine = false;
-                        break;
-                    }
-                }
-            }
-            model.addAttribute("canExamine", canExamine);
+        } else if(veterinarian != null) {
+            veterinarianService.canExamine(allPets, veterinarian);
             model.addAttribute("pets", allPets);
         } else {
             model.addAttribute("pets", allPets);

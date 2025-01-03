@@ -38,8 +38,7 @@ public class AdoptionController {
         } else if (shelter != null) {
             model.addAttribute("adoptions", shelter.getAdoptionRequests());
         } else {
-            List<Adoption> adoptions = adoptionService.getAdoptions();
-            model.addAttribute("adoptions", adoptions);
+            model.addAttribute("adoptions", adoptionService.getAdoptions());
         }
         return "adoption/adoptions";
     }
@@ -51,20 +50,22 @@ public class AdoptionController {
         return "adoption/adoptions";
     }
 
+    @Secured("ROLE_CITIZEN")
     @GetMapping("/new")
     public String addAdoption(Model model) {
         Adoption adoption = new Adoption();
         List<Pet> pets = petService.getPets();
         model.addAttribute("adoption", adoption);
-        model.addAttribute("pets", pets);
+        model.addAttribute("pets", petService.getApprovedPets(pets));
         return "adoption/adoption";
     }
 
+    @Secured("ROLE_CITIZEN")
     @PostMapping("/new")
     public String saveAdoption(@ModelAttribute("adoption") Adoption adoption, Principal principal, Model model) {
         String username = principal.getName();
         Citizen citizen = adoptionService.saveAdoption(adoption, username);
-        model.addAttribute("citizen", citizen);
+        model.addAttribute("adoptions", citizen.getPendingAdoptions());
         return "adoption/adoptions";
     }
 
@@ -81,6 +82,14 @@ public class AdoptionController {
     public String acceptAdoption(@PathVariable Integer id, Model model) {
         Adoption adoption = adoptionService.getAdoption(id);
         adoption.setStatus(Status.APPROVED);
+
+
+
+        // need to remove the pet and add it maybe
+        // to a list in Citizen to show adopted pets
+
+
+
         model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }

@@ -26,7 +26,7 @@ public class VeterinarianController {
         this.petService = petService;
     }
 
-    @GetMapping()
+    @RequestMapping()
     public String showVeterinarians(Model model) {
         model.addAttribute("veterinarians", veterinarianService.getVeterinarians());
         return "veterinarian/veterinarians";

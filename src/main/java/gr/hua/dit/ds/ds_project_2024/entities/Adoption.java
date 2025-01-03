@@ -25,8 +25,7 @@ public class Adoption {
     @JoinColumn(name="citizen_id")
     private Citizen applicant;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="shelter_id")
     private Shelter fromShelter;
 

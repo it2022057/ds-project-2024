@@ -1,14 +1,13 @@
 package gr.hua.dit.ds.ds_project_2024.service;
 
-import gr.hua.dit.ds.ds_project_2024.entities.Pet;
-import gr.hua.dit.ds.ds_project_2024.entities.Shelter;
-import gr.hua.dit.ds.ds_project_2024.entities.Status;
+import gr.hua.dit.ds.ds_project_2024.entities.*;
 import gr.hua.dit.ds.ds_project_2024.repositories.PetRepository;
 import gr.hua.dit.ds.ds_project_2024.repositories.ShelterRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +29,30 @@ public class PetService {
     public Pet getPet(Integer petId) { return petRepository.findById(petId).get(); }
 
     @Transactional
+    public List<Pet> getApprovedPets(List<Pet> allPets) {
+        List<Pet> approvedPets = new ArrayList<>();
+        for (Pet pet : allPets) {
+            boolean hasRejectedHealthCheck = false;
+            if (pet.getApprovalStatus() == Status.APPROVED) {
+                for (HealthCheck health : pet.getHealth()) {
+                    if (health.getStatus() != Status.APPROVED) {
+                        hasRejectedHealthCheck = true;
+                        break;
+                    }
+                }
+                if (!hasRejectedHealthCheck && !pet.getHealth().isEmpty()) {
+                    approvedPets.addLast(pet);
+                }
+            }
+        }
+        return approvedPets;
+    }
+
+    @Transactional
     public void savePet(Pet pet, Shelter shelter) {
         pet.setApprovalStatus(Status.PENDING);
         pet.setOnShelter(shelter);
-        shelter.getPetsAvailable().add(pet);
+        shelter.getPetsAvailable().addLast(pet);
         petRepository.save(pet);
     }
 

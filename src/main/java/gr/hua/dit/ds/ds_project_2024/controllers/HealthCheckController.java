@@ -46,14 +46,12 @@ public class HealthCheckController {
     public String showEditHealthCheck(@PathVariable Integer id, Model model) {
         HealthCheck healthCheck = healthCheckService.getHealthCheck(id);
         model.addAttribute("healthCheck", healthCheck);
-        model.addAttribute("pet", healthCheck.getPetExamined());
-        model.addAttribute("veterinarian", healthCheck.getByVeterinarian());
         return "healthCheck/editHealthCheck";
     }
 
     @Secured("ROLE_VETERINARIAN")
     @PostMapping("/edit/{id}")
-    public String editHealthCheck(@PathVariable Integer id, @ModelAttribute("healthCheck") HealthCheck healthCheck, Model model) {
+    public String editHealthCheck(@PathVariable Integer id, @ModelAttribute("healthCheck") HealthCheck healthCheck, Principal loggedInUser, Model model) {
         HealthCheck edit_healthCheck = healthCheckService.getHealthCheck(id);
         edit_healthCheck.setStatus(healthCheck.getStatus());
         edit_healthCheck.setDetails(healthCheck.getDetails());
@@ -68,11 +66,10 @@ public class HealthCheckController {
     @Secured("ROLE_VETERINARIAN")
     @GetMapping("/new")
     public String addHealthCheck(Principal loggedInUser, Model model) {
-        Veterinarian veterinarian = veterinarianService.getVeterinarianByUsername(loggedInUser.getName());
         HealthCheck healthCheck = new HealthCheck();
         model.addAttribute("healthCheck", healthCheck);
         model.addAttribute("pets", petService.getPets());
-        model.addAttribute("veterinarians", veterinarian);
+        model.addAttribute("veterinarians", veterinarianService.getVeterinarians());
         return "healthCheck/healthCheck";
     }
 

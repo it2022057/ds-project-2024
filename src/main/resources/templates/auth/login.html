@@ -10,7 +10,7 @@
 </head>
 <body>
 <div layout:fragment="main-content">
-    <div th:if="${param.error}" th:text="${param.error}">
+    <div th:if="${param.error}">
         Invalid username and password.
     </div>
     <div th:if="${param.logout}">

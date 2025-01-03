@@ -15,42 +15,43 @@
     </div>
     <h1>User Registration</h1>
     <form id="registerForm" th:action="@{/saveUser}" method="post" th:object="${user}">
+        <div th:if="${!foundAdmin}">
+            <div th:fragment="registerForm">
 
-        <div th:fragment="registerForm">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" th:field="*{username}" id="username"/>
-            </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" th:field="*{username}" id="username"/>
+                </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" th:field="*{password}" id="password"/>
-            </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" th:field="*{password}" id="password"/>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" th:field="*{email}" id="email"/>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" th:field="*{email}" id="email"/>
+                </div>
 
-            <div class="form-group">
-                <label for="phone">Phone (30+)</label>
-                <input type="text" class="form-control" th:field="*{phone}" id="phone"/>
+                <div class="form-group">
+                    <label for="phone">Phone (30+)</label>
+                    <input type="text" class="form-control" th:field="*{phone}" id="phone"/>
+                </div>
             </div>
         </div>
-        <div>
-            <input type="submit" class="btn btn-primary" value="Sign Up"/>
+            <input th:if="${!foundAdmin}" type="submit" class="btn btn-primary" value="Sign Up"/>
+        <div style="display: flex; gap: 10px; margin-top: 10px">
             <span>
-            <a class="btn btn-primary" th:href="@{/citizen/new}">Register as Citizen</a>
-        </span>
+                <a class="btn btn-primary" th:href="@{/citizen/new}">Register as Citizen</a>
+            </span>
             <span>
-            <a class="btn btn-primary" th:href="@{/shelter/new}">Register as Shelter</a>
-        </span>
+                <a class="btn btn-primary" th:href="@{/shelter/new}">Register as Shelter</a>
+            </span>
             <span>
-            <a class="btn btn-primary" th:href="@{/veterinarian/new}">Register as Veterinarian</a>
-        </span>
+                <a class="btn btn-primary" th:href="@{/veterinarian/new}">Register as Veterinarian</a>
+            </span>
         </div>
     </form>
-    <div th:text="${msg}"></div>
 </div>
 </body>
 </html>

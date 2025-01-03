@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class AdoptionService {
 
-    private final CitizenRepository citizenRepository;
+    private CitizenRepository citizenRepository;
     private AdoptionRepository adoptionRepository;
 
     public AdoptionService(AdoptionRepository adoptionRepository, CitizenRepository citizenRepository) {
@@ -41,9 +41,9 @@ public class AdoptionService {
 
         adoptionRepository.save(adoption);
 
-        adoption.getPetToAdopt().getInterest().add(adoption);
-        citizen.getPendingAdoptions().add(adoption);
-        adoption.getPetToAdopt().getOnShelter().getAdoptionRequests().add(adoption);
+        adoption.getPetToAdopt().getInterest().addLast(adoption);
+        citizen.getPendingAdoptions().addLast(adoption);
+        adoption.getPetToAdopt().getOnShelter().getAdoptionRequests().addLast(adoption);
 
         return citizen;
     }

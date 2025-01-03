@@ -23,8 +23,7 @@ public class Veterinarian extends User {
     @Column
     private String lastName;
 
-    @OneToMany(mappedBy = "byVeterinarian", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-    CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "byVeterinarian", cascade = {CascadeType.ALL})
     private List<HealthCheck> healthTests;
 
     public Veterinarian() {

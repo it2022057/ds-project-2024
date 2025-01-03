@@ -68,6 +68,7 @@ public class ShelterController {
         return "shelter/shelters";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String deleteShelter(@PathVariable Integer id, Model model) {
         shelterService.deleteShelter(id);

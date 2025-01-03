@@ -62,6 +62,20 @@ public class VeterinarianService {
     public void deleteVeterinarian(Integer veterinarianId) { veterinarianRepository.deleteById(veterinarianId); }
 
     @Transactional
+    public void canExamine(List<Pet> allPets, Veterinarian veterinarian) {
+        boolean canExamine = true;
+        for (Pet pet : allPets) {
+            for(HealthCheck health : pet.getHealth()) {
+                if (health.getByVeterinarian() == veterinarian) {
+                    canExamine = false;
+                    break;
+                }
+            }
+            pet.setLoggedInVetHasNotExamined(canExamine);
+        }
+    }
+
+    @Transactional
     public void examination(Pet pet, Status status, String details, Veterinarian veterinarian) {
         HealthCheck healthCheck = new HealthCheck();
 
@@ -72,7 +86,7 @@ public class VeterinarianService {
 
         healthCheckRepository.save(healthCheck);
 
-        pet.getHealth().add(healthCheck);
-        veterinarian.getHealthTests().add(healthCheck);
+        pet.getHealth().addLast(healthCheck);
+        veterinarian.getHealthTests().addLast(healthCheck);
     }
 }

@@ -87,7 +87,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User getUser(Integer userId) {
-        return userRepository.findById(userId).get();
+        return userRepository.findById(userId).orElse(null);
     }
 
     @Transactional
@@ -97,8 +97,21 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public boolean adminExists() {
+        boolean foundAdmin = false;
+        for(User user : userRepository.findAll()) {
+            for(Role role : user.getRoles()) {
+                if("ROLE_ADMIN".equalsIgnoreCase(role.getName())) {
+                    foundAdmin = true;
+                    break;
+                }
+            }
+        }
+        return foundAdmin;
+    }
+
+    @Transactional
     public void updateOrInsertRole(Role role) {
         roleRepository.updateOrInsert(role);
     }
-
 }

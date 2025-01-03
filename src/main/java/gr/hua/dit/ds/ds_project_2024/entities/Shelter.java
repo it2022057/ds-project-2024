@@ -32,12 +32,10 @@ public class Shelter extends User {
     @Column
     private Status approvalStatus;
 
-    @OneToMany(mappedBy = "onShelter", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "onShelter", cascade = {CascadeType.ALL})
     private List<Pet> petsAvailable;
 
-    @OneToMany(mappedBy = "fromShelter", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "fromShelter", cascade = {CascadeType.ALL})
     private List<Adoption> adoptionRequests;
 
     public Shelter() {

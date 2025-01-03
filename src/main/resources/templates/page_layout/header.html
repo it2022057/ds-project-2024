@@ -14,8 +14,8 @@
         <h3 class="masthead-brand">Cover</h3>
         <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="/pet" data-path="/pet">Pets</a>
             <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users" data-path="/users">Users</a>
+            <a sec:authorize="isAuthenticated()" class="nav-link" href="/pet" data-path="/pet">Pets</a>
             <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/shelter" data-path="/shelter">Shelters</a>
             <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CITIZEN', 'ROLE_SHELTER')" class="nav-link" href="/adoption" data-path="/adoption">Adoptions</a>
             <a sec:authorize="hasRole('ROLE_VETERINARIAN')" class="nav-link" href="/healthCheck" data-path="/healthCheck">Health Checks</a>

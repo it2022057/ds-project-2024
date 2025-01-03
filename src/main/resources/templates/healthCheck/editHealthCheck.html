@@ -16,14 +16,14 @@
         <div class="form-group">
             <label for="petSelect">Pet</label>
             <select id="petSelect" name="petSelect" th:field="*{petExamined}" required>
-                <option th:value="${pet.id}" th:text="${pet.name + ' - ' + pet.species}"></option>
+                <option th:value="${healthCheck.getPetExamined().getId()}" th:text="${healthCheck.getPetExamined().getName() + ' - ' + healthCheck.getPetExamined().getSpecies()}" readonly></option>
             </select>
         </div>
 
         <div class="form-group">
             <label for="veterinarianSelect">Veterinarian</label>
             <select id="veterinarianSelect" name="veterinarianSelect" th:field="*{byVeterinarian}" required>
-                <option th:value="${veterinarian.id}" th:text="${veterinarian.firstName + '  ' + veterinarian.lastName}"></option>
+                <option th:value="${healthCheck.getByVeterinarian().getId()}" th:text="${healthCheck.getByVeterinarian().getFirstName() + '  ' + healthCheck.getByVeterinarian().getLastName()}" readonly></option>
             </select>
         </div>
 

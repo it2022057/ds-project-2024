@@ -39,12 +39,16 @@ public class Pet {
     @OneToMany(mappedBy = "petExamined", cascade = {CascadeType.ALL})
     private List<HealthCheck> health;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="shelter_id")
     private Shelter onShelter;
 
     @OneToMany(mappedBy = "petToAdopt", cascade = {CascadeType.ALL})
     private List<Adoption> interest;
+
+    @Transient
+    private boolean loggedInVetHasNotExamined;
 
     public Pet() {
     }
@@ -127,6 +131,14 @@ public class Pet {
 
     public void setInterest(List<Adoption> interest) {
         this.interest = interest;
+    }
+
+    public boolean getLoggedInVetHasNotExamined() {
+        return loggedInVetHasNotExamined;
+    }
+
+    public void setLoggedInVetHasNotExamined(boolean loggedInVetHasNotExamined) {
+        this.loggedInVetHasNotExamined = loggedInVetHasNotExamined;
     }
 
     @Override
