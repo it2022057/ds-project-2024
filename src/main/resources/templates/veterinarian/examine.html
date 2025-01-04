@@ -17,8 +17,12 @@
         <div class="form-group">
             <label for="status">Status</label>
             <select name="status" id="status">
-                <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).values()}"
-                        th:value="${statusOpt}" th:text="${statusOpt}"></option>
+                <option th:value="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}"
+                        th:text="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
+                </option>
+                <option th:value="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}"
+                        th:text="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}">
+                </option>
             </select>
         </div>
 

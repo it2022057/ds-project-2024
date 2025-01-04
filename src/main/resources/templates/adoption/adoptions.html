@@ -39,7 +39,7 @@
                        th:text="${adoption.getFromShelter().getName()}"></a></td>
                 <td>
                     <span>
-                            <a class="btn btn-outline-info btn-sm" th:href="@{'/adoption/' + ${adoption.getId()}}">Details</a>
+                            <a class="btn btn-info btn-sm" th:href="@{'/adoption/' + ${adoption.getId()}}">Details</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_SHELTER')"
                           th:if="${adoption.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">

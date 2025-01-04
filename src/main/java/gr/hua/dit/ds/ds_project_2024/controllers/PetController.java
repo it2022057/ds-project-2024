@@ -57,6 +57,7 @@ public class PetController {
         return "pet/pets";
     }
 
+    @Secured("ROLE_SHELTER")
     @GetMapping("/new")
     public String addPet(Model model) {
         Pet pet = new Pet();
@@ -64,10 +65,19 @@ public class PetController {
         return "pet/pet";
     }
 
+    @Secured("ROLE_SHELTER")
     @PostMapping("/new")
     public String savePet(@ModelAttribute("pet") Pet pet, Principal loggedInUser, Model model) {
         Shelter shelter = shelterService.getShelterByUsername(loggedInUser.getName());
         petService.savePet(pet, shelter);
+        model.addAttribute("pets", shelter.getPetsAvailable());
+        return "pet/pets";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @RequestMapping("/delete/{id}")
+    public String deletePet(@PathVariable Integer id, Model model) {
+        petService.deletePet(petService.getPet(id));
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }
@@ -87,14 +97,6 @@ public class PetController {
     public String rejectPet(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
         pet.setApprovalStatus(Status.REJECTED);
-        model.addAttribute("pets", petService.getPets());
-        return "pet/pets";
-    }
-
-    @Secured("ROLE_ADMIN")
-    @RequestMapping("/delete/{id}")
-    public String deletePet(@PathVariable Integer id, Model model) {
-        petService.deletePet(petService.getPet(id));
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }

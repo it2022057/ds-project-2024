@@ -15,7 +15,7 @@ public class HealthCheck {
     @Column
     private Status status;
 
-    @Size(max = 100)
+    @Size(max = 200)
     @Column
     private String details;
 

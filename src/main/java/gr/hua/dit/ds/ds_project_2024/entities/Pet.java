@@ -15,10 +15,11 @@ public class Pet {
     private Integer id;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 30)
     @Column
     private String name;
 
+    @NotBlank
     @Column
     private Integer age;
 
@@ -46,6 +47,11 @@ public class Pet {
 
     @OneToMany(mappedBy = "petToAdopt", cascade = {CascadeType.ALL})
     private List<Adoption> interest;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="citizen_id")
+    private Citizen owner;
 
     @Transient
     private boolean loggedInVetHasNotExamined;
@@ -133,6 +139,14 @@ public class Pet {
         this.interest = interest;
     }
 
+    public Citizen getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Citizen owner) {
+        this.owner = owner;
+    }
+
     public boolean getLoggedInVetHasNotExamined() {
         return loggedInVetHasNotExamined;
     }
@@ -149,9 +163,11 @@ public class Pet {
                 ", age=" + age +
                 ", species='" + species + '\'' +
                 ", sex='" + sex + '\'' +
+                ", approvalStatus=" + approvalStatus +
                 ", health=" + health +
                 ", onShelter=" + onShelter +
                 ", interest=" + interest +
+                ", owner=" + owner +
                 '}';
     }
 }

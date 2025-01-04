@@ -12,24 +12,28 @@ import java.util.List;
         @UniqueConstraint(columnNames = "lastName")
 })
 public class Citizen extends User {
+
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 30)
     @Column
     private String firstName;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 30)
     @Column
     private String lastName;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 30)
     @Column
     private String address;
 
-    @OneToMany(mappedBy = "applicant", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "applicant", cascade = {CascadeType.ALL})
     private List<Adoption> pendingAdoptions;
+
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Pet> adoptedPets;
 
     public Citizen() {
     }
@@ -72,6 +76,12 @@ public class Citizen extends User {
     public void setPendingAdoptions(List<Adoption> pendingAdoptions) {
         this.pendingAdoptions = pendingAdoptions;
     }
+
+    public List<Pet> getAdoptedPets() {
+        return adoptedPets;
+    }
+
+    public void setAdoptedPets(List<Pet> pets) {
+        this.adoptedPets = pets;
+    }
 }
-
-

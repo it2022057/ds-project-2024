@@ -14,12 +14,12 @@ import java.util.List;
 public class Veterinarian extends User {
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 30)
     @Column
     private String firstName;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 30)
     @Column
     private String lastName;
 

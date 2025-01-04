@@ -36,15 +36,15 @@
             <div th:each="role : ${roles}">
                 <label>
                     <input type="checkbox" style="display: inline-block"
-                           th:value="${role.id}"
+                           th:value="${role.getId()}"
                            th:field="*{roles}" />
                 </label>
-                <span th:text="${role.name}"></span>
+                <span th:text="${role.getName()}"></span>
             </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
-        <a type="button" class="btn btn-danger" th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
+        <a type="button" class="btn btn-danger" th:href="@{/user/delete/{id}(id=${user.getId()})}">Delete</a>
     </form>
 </div>
 </body>

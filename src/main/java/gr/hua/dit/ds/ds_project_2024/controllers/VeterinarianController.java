@@ -6,6 +6,7 @@ import gr.hua.dit.ds.ds_project_2024.entities.Veterinarian;
 import gr.hua.dit.ds.ds_project_2024.service.HealthCheckService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
 import gr.hua.dit.ds.ds_project_2024.service.VeterinarianService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,7 @@ public class VeterinarianController {
         return "index";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String deleteVeterinarian(@PathVariable Integer id, Model model) {
         veterinarianService.deleteVeterinarian(id);
@@ -61,6 +63,7 @@ public class VeterinarianController {
         return "veterinarian/veterinarians";
     }
 
+    @Secured("ROLE_VETERINARIAN")
     @GetMapping("/examine/{pet_id}")
     public String showExamine(@PathVariable Integer pet_id, Model model) {
         Pet pet = petService.getPet(pet_id);
@@ -68,6 +71,7 @@ public class VeterinarianController {
         return "veterinarian/examine";
     }
 
+    @Secured("ROLE_VETERINARIAN")
     @PostMapping("/examine/{pet_id}")
     public String examine(@PathVariable Integer pet_id, @ModelAttribute("status") Status status, @ModelAttribute("details")String details, Model model, Principal loggedInUser) {
         Pet pet = petService.getPet(pet_id);
@@ -77,6 +81,7 @@ public class VeterinarianController {
         return "healthCheck/healthChecks";
     }
 
+    @Secured("ROLE_VETERINARIAN")
     @GetMapping("/{vet_id}/healthChecks")
     public String showHealthChecks(@PathVariable Integer vet_id, Model model) {
         Veterinarian veterinarian = veterinarianService.getVeterinarian(vet_id);

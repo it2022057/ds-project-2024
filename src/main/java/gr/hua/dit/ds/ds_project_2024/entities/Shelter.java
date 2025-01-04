@@ -9,8 +9,9 @@ import java.util.List;
 @Entity
 @Table
 public class Shelter extends User {
+
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 30)
     @Column
     private String name;
 
@@ -20,7 +21,7 @@ public class Shelter extends User {
     private String location;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 30)
     @Column
     private String address;
 

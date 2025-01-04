@@ -82,14 +82,10 @@ public class AdoptionController {
     public String acceptAdoption(@PathVariable Integer id, Model model) {
         Adoption adoption = adoptionService.getAdoption(id);
         adoption.setStatus(Status.APPROVED);
-
-
-
-        // need to remove the pet and add it maybe
-        // to a list in Citizen to show adopted pets
-
-
-
+        adoption.getPetToAdopt().setApprovalStatus(Status.ADOPTED);
+        Citizen citizen = citizenService.getCitizen(adoption.getApplicant().getId());
+        adoption.getPetToAdopt().setOwner(citizen);
+        citizen.getAdoptedPets().addLast(adoption.getPetToAdopt());
         model.addAttribute("adoptions", adoptionService.getAdoptions());
         return "adoption/adoptions";
     }

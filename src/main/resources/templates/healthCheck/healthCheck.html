@@ -18,8 +18,8 @@
             <select id="petSelect" name="petSelect" th:field="*{petExamined}" required>
                 <option value="" disabled selected>Select a Pet</option>
                 <option th:each="pet : ${pets}"
-                        th:value="${pet.id}"
-                        th:text="${pet.name + ' - ' + pet.species}">
+                        th:value="${pet.getId()}"
+                        th:text="${pet.getName() + ' - ' + pet.getSpecies()}">
                 </option>
             </select>
         </div>
@@ -29,8 +29,8 @@
             <select id="veterinarianSelect" name="veterinarianSelect" th:field="*{byVeterinarian}" required>
                 <option value="" disabled selected>Select a Vet</option>
                 <option th:each="veterinarian : ${veterinarians}"
-                        th:value="${veterinarian.id}"
-                        th:text="${veterinarian.firstName + '  ' + veterinarian.lastName}">
+                        th:value="${veterinarian.getId()}"
+                        th:text="${veterinarian.getFirstName() + '  ' + veterinarian.getLastName()}">
                 </option>
             </select>
         </div>
@@ -38,8 +38,11 @@
         <div class="form-group">
             <label for="status">Status</label>
             <select name="status" id="status" th:field="*{status}">
-                <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).values()}"
-                        th:value="${statusOpt}" th:text="${statusOpt}">
+                <option th:value="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}"
+                        th:text="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
+                </option>
+                <option th:value="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}"
+                        th:text="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}">
                 </option>
             </select>
         </div>

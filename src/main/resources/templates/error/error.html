@@ -3,14 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{page_layout/layout}">
-
 <head>
     <meta charset="UTF-8">
-    <title>Error⚠️</title>
+    <title>Validation Error🚫</title>
 </head>
 <body>
 <div layout:fragment="main-content">
-    <h1>Something went wrong!</h1>
+    <h1>Please fill out the fields correctly!</h1>
     <a type="button" class="btn btn-primary" th:href="@{/}">Home🏠</a>
 </div>
 </body>

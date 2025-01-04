@@ -30,9 +30,9 @@
         </td>
         <td><a th:if="${healthCheck.getByVeterinarian() != null}"
                th:href="@{'/veterinarian/' + ${healthCheck.getByVeterinarian().getId()}}"
-               th:text="${healthCheck.getByVeterinarian().firstName + ' ' + healthCheck.getByVeterinarian().lastName}"></a></td>
-        <td th:text="${healthCheck.status}"></td>
-        <td th:text="${healthCheck.details}"></td>
+               th:text="${healthCheck.getByVeterinarian().getFirstName() + ' ' + healthCheck.getByVeterinarian().getLastName()}"></a></td>
+        <td th:text="${healthCheck.getStatus()}"></td>
+        <td th:text="${healthCheck.getDetails()}"></td>
         <td>
           <span>
             <a class="btn btn-info" th:href="@{'/healthCheck/' + ${healthCheck.getId()}}">Details</a>

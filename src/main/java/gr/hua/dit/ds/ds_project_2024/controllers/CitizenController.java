@@ -59,6 +59,15 @@ public class CitizenController {
         return "citizen/citizens";
     }
 
+    @Secured("ROLE_CITIZEN")
+    @GetMapping("/adoptedPets")
+    public String showAdoptedPets(Principal loggedInUser, Model model) {
+        Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
+        model.addAttribute("pets", citizen.getAdoptedPets());
+        return "pet/pets";
+    }
+
+    @Secured("ROLE_CITIZEN")
     @GetMapping("/adoptionRequest/{id}")
     public String showAdoptionRequest(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
@@ -66,6 +75,7 @@ public class CitizenController {
         return "citizen/adoptionRequest";
     }
 
+    @Secured("ROLE_CITIZEN")
     @PostMapping("/adoptionRequest/{id}")
     public String adoptionRequest(@PathVariable Integer id, Model model, Principal loggedInUser) {
         Pet pet = petService.getPet(id);

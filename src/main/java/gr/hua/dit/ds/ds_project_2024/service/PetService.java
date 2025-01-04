@@ -59,6 +59,7 @@ public class PetService {
     @Transactional
     public void deletePet(Pet pet) {
         pet.getOnShelter().getPetsAvailable().remove(pet);
+        pet.getOwner().getAdoptedPets().remove(pet);
         petRepository.delete(pet);
     }
 }

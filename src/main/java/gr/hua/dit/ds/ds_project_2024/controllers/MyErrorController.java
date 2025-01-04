@@ -27,16 +27,16 @@ public class MyErrorController implements ErrorController {
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
 
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error/error-404";
+            if (statusCode == HttpStatus.BAD_REQUEST.value()) {
+                return "error/error-400";
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 return "error/error-403";
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "error/error-500";
-            } else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
-                return "error/error-400";
+            } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
+                return "error/error-404";
             } else if (statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()) {
                 return "error/error-405";
+            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                return "error/error-500";
             }
         }
         return "error/error";

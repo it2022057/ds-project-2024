@@ -10,7 +10,7 @@
 </head>
 <body>
 <div layout:fragment="main-content">
-    <form action="#" th:action="@{/healthCheck/edit/{id}(id=${healthCheck.id})}" th:object="${healthCheck}"
+    <form action="#" th:action="@{/healthCheck/edit/{id}(id=${healthCheck.getId()})}" th:object="${healthCheck}"
           method="post">
 
         <div class="form-group">
@@ -30,8 +30,11 @@
         <div class="form-group">
             <label for="status">Status</label>
             <select name="status" id="status" th:field="*{status}">
-                <option th:each="statusOpt : ${T(gr.hua.dit.ds.ds_project_2024.entities.Status).values()}"
-                        th:value="${statusOpt}" th:text="${statusOpt}">
+                <option th:value="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}"
+                        th:text="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
+                </option>
+                <option th:value="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}"
+                        th:text="${T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}">
                 </option>
             </select>
         </div>

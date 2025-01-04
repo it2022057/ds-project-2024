@@ -59,13 +59,16 @@ public class VeterinarianService {
     }
 
     @Transactional
-    public void deleteVeterinarian(Integer veterinarianId) { veterinarianRepository.deleteById(veterinarianId); }
+    public void deleteVeterinarian(Integer veterinarianId) {
+        veterinarianRepository.deleteById(veterinarianId);
+    }
 
     @Transactional
     public void canExamine(List<Pet> allPets, Veterinarian veterinarian) {
-        boolean canExamine = true;
+        boolean canExamine;
         for (Pet pet : allPets) {
-            for(HealthCheck health : pet.getHealth()) {
+            canExamine = true;
+            for (HealthCheck health : pet.getHealth()) {
                 if (health.getByVeterinarian() == veterinarian) {
                     canExamine = false;
                     break;

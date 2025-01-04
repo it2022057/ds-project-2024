@@ -1,8 +1,7 @@
 package gr.hua.dit.ds.ds_project_2024.entities;
 
 import jakarta.persistence.*;
-
-import java.util.Set;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "roles")
@@ -12,11 +11,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 20)
+    @NotNull
+    @Column
     private String name;
-
-//    @ManyToMany(mappedBy = "role")
-//    private Set<User> users;
 
     public Role() {
     }

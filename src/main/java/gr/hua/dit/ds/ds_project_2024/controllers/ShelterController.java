@@ -1,6 +1,5 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
-import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.entities.Shelter;
 import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.service.ShelterService;
@@ -49,6 +48,14 @@ public class ShelterController {
     }
 
     @Secured("ROLE_ADMIN")
+    @GetMapping("/delete/{id}")
+    public String deleteShelter(@PathVariable Integer id, Model model) {
+        shelterService.deleteShelter(id);
+        model.addAttribute("shelters", shelterService.getShelters());
+        return "shelter/shelters";
+    }
+
+    @Secured("ROLE_ADMIN")
     @GetMapping("/approve/{id}")
     public String acceptShelter(@PathVariable Integer id, Model model) {
         Shelter shelter = shelterService.getShelter(id);
@@ -64,14 +71,6 @@ public class ShelterController {
         Shelter shelter = shelterService.getShelter(id);
         shelter.setApprovalStatus(Status.REJECTED);
         shelterService.saveShelter(shelter);
-        model.addAttribute("shelters", shelterService.getShelters());
-        return "shelter/shelters";
-    }
-
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/delete/{id}")
-    public String deleteShelter(@PathVariable Integer id, Model model) {
-        shelterService.deleteShelter(id);
         model.addAttribute("shelters", shelterService.getShelters());
         return "shelter/shelters";
     }

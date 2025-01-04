@@ -2,8 +2,8 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{page_layout/layout}">
-
 <head>
     <meta charset="UTF-8">
     <title>Citizens</title>
@@ -17,17 +17,25 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Address</th>
+                <th>Adoption Requests</th>
+                <th>Adopted Pets</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="citizen : ${citizens}">
-                <td th:text="${citizen.firstName}"></td>
-                <td th:text="${citizen.lastName}"></td>
-                <td th:text="${citizen.address}"></td>
-<!--                <td>-->
-<!--                    <a  class="btn btn-outline-light btn-sm" th:href="@{'/citizen/' + ${citizen.id}}">Details</a>-->
-<!--                    <a  class="btn btn-outline-info btn-sm" th:href="@{'/student/profile/' + ${student.id}}">Profile</a>-->
-<!--                </td>-->
+                <td th:text="${citizen.getFirstName()}"></td>
+                <td th:text="${citizen.getLastName()}"></td>
+                <td th:text="${citizen.getAddress()}"></td>
+                <td><a th:if="${ not#lists.isEmpty(citizen.getPendingAdoptions())}" th:href="@{'/adoption/' + ${adoption.getId()}}"
+                       th:each="adoption : ${citizen.getPendingAdoptions()}" th:text="${adoption.toString()}"
+                       style="display: inline-block"></a></td>
+                <td><a th:if="${ not#lists.isEmpty(citizen.getAdoptedPets())}"
+                       th:each="pet : ${citizen.getAdoptedPets()}" th:text="${pet.getName()}"
+                       th:href="@{'/pet/' + ${pet.getId()}}"></a></td>
+                <td>
+                    <a  class="btn btn-info btn-sm" th:href="@{'/citizen/' + ${citizen.getId()}}">Details</a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -35,7 +43,7 @@
     <div th:if="${ #lists.isEmpty(citizens)}">
         No Citizens found!
     </div>
-    <a href="/citizen/new" class="btn btn-primary" role="button">Create new Citizen</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/citizen/new" class="btn btn-primary" role="button">Create new Citizen</a>
 </div>
 </body>
 </html>

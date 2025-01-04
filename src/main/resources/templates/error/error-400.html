@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
 <head>
-    <title>Validation Error🚫</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Error⚠️</title>
 </head>
 <body>
-<div class="container">
-    <h1>Please fill out the fields correctly!</h1>
+<div layout:fragment="main-content">
+    <h1>Something went wrong!</h1>
     <a type="button" class="btn btn-primary" th:href="@{/}">Home🏠</a>
 </div>
 </body>
