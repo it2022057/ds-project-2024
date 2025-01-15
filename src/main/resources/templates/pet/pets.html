@@ -20,7 +20,7 @@
                 <th>Sex</th>
                 <th>Shelter</th>
                 <th sec:authorize="hasAnyRole('ROLE_SHELTER', 'ROLE_ADMIN')">Interest</th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')">Approval</th>
+                <th sec:authorize="!hasRole('ROLE_CITIZEN')">Status</th>
                 <th sec:authorize="hasAnyRole('ROLE_VETERINARIAN', 'ROLE_ADMIN')">Health Checks</th>
                 <th>Actions</th>
             </tr>
@@ -38,7 +38,7 @@
                     <a th:if="${ not#lists.isEmpty(pet.getInterest())}" th:href="@{'/adoption/' + ${interest.getId()}}"
                        th:each="interest : ${pet.getInterest()}" th:text="${interest.toString()}"
                        style="display: inline-block"></a></td>
-                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${pet.getApprovalStatus()}"></td>
+                <td sec:authorize="!hasRole('ROLE_CITIZEN')" th:text="${pet.getApprovalStatus()}"></td>
                 <td sec:authorize="hasAnyRole('ROLE_VETERINARIAN', 'ROLE_ADMIN')">
                     <a th:if="${not#lists.isEmpty(pet.getHealth())}"
                        th:href="@{'/healthCheck/' + ${health.getId()}}"
@@ -49,7 +49,8 @@
                     <span>
                         <a class="btn btn-info" th:href="@{'/pet/' + ${pet.getId()}}">Details</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_CITIZEN')">
+                    <span sec:authorize="hasRole('ROLE_CITIZEN')"
+                          th:if="${pet.getApprovalStatus() != T(gr.hua.dit.ds.ds_project_2024.entities.Status).ADOPTED}">
                         <a class="btn btn-outline-warning" th:href="@{'/citizen/adoptionRequest/' + ${pet.getId()}}">Adopt</a>
                     </span>
                     <span sec:authorize="hasRole('ROLE_ADMIN')"

@@ -15,10 +15,10 @@
     <form action="#" th:action="@{/citizen/adoptionRequest/{cid}(cid=${pet.getId()})}" th:object="${pet}"
           method="post">
             <p th:text="'Are you sure?'"></p>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" name="action" value="Yes" class="btn btn-primary">
                 <span class="icon">✔️</span> Yes
             </button>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" name="action" value="No" class="btn btn-primary">
                 <span class="icon">❌</span> No
             </button>
     </form>

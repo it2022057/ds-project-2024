@@ -77,11 +77,15 @@ public class CitizenController {
 
     @Secured("ROLE_CITIZEN")
     @PostMapping("/adoptionRequest/{id}")
-    public String adoptionRequest(@PathVariable Integer id, Model model, Principal loggedInUser) {
-        Pet pet = petService.getPet(id);
-        Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
-        citizenService.submitAdoptionRequest(pet, citizen);
-        model.addAttribute("adoptions", citizen.getPendingAdoptions());
-        return "adoption/adoptions";
+    public String adoptionRequest(@PathVariable Integer id, @RequestParam("action") String action, Model model, Principal loggedInUser) {
+        if (action.equalsIgnoreCase("Yes")) {
+            Pet pet = petService.getPet(id);
+            Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
+            citizenService.submitAdoptionRequest(pet, citizen);
+            model.addAttribute("adoptions", citizen.getPendingAdoptions());
+            return "adoption/adoptions";
+        }
+        model.addAttribute("pets", petService.getApprovedPets(petService.getPets()));
+        return "pet/pets";
     }
 }

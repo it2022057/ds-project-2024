@@ -55,8 +55,7 @@
     <div th:if="${ #lists.isEmpty(shelters)}">
         No Shelters found!
     </div>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/shelter/new" class="btn btn-primary" role="button">Create new
-        Shelter</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/shelter/new" class="btn btn-primary" role="button">Create new Shelter</a>
 </div>
 </body>
 </html>

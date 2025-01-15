@@ -19,7 +19,6 @@ public class Pet {
     @Column
     private String name;
 
-    @NotBlank
     @Column
     private Integer age;
 
