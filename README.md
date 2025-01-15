@@ -14,25 +14,17 @@ git clone https://gitlab.hua.gr/it2022057/ds-project-2024.git
 ```
 ## Database
 * you can create a free postgres database on [https://render.com/](https://render.com/)
-* we created a free render database, which we connected to our app, but you can 
-also use starter sql files
-* you can run a postgres with docker
+* we created a free render database, which we connected to our app, with a starter sql file if you want to use
   ```bash
-  docker run --name ds-lab-pg --rm \
-    -e POSTGRES_PASSWORD=pass123 \
-    -e POSTGRES_USER=dbuser \
-    -e POSTGRES_DB=students \
-    -d --net=host \
-    -v pgdata:/var/lib/postgresql/data \
-    postgres:16
+  src/main/resources/sql/starter_data.sql
   ```
 
-## Fix database connection in application.properties
+## Ensure you have our render database connection in application.properties
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/students
-spring.datasource.username=dbuser
-spring.datasource.password=pass123
+spring.datasource.username=dsuser
+spring.datasource.password=lj33d71c8EdGxXEHaRlO0fyAqoEA2nFZ
+spring.datasource.url=jdbc:postgresql://dpg-cu3d2l1u0jms73divuf0-a.oregon-postgres.render.com:5432/dsdb_b3ln
 ```
 ## Run the project
 * make sure you have set correctly ``JAVA_HOME`` and ``M2_HOME`` environmental variables
