@@ -15,9 +15,9 @@ git clone https://gitlab.hua.gr/it2022057/ds-project-2024.git
 ## Database
 * you can create a free postgres database on [https://render.com/](https://render.com/)
 * we created a free render database, which we connected to our app, with a starter sql file if you want to use
-  ```bash
-  src/main/resources/sql/starter_data.sql
-  ```
+```bash
+src/main/resources/sql/starter_data.sql
+ ```
 
 ## Ensure you have our render database connection in application.properties
 
