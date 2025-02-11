@@ -3,8 +3,8 @@
 * This code is the project for the Distributed Systems 
 course at Harokopio University of Athens, Dept. of Informatics and Telematics.
 
-* Team 33: **Καρακατσανιδη Αριάδνη - it2022029, 
-             Λουκιδέλης Βύρωνας - it2022057, 
+* Team 33: **Καρακατσανίδη Αριάδνη - it2022029,
+             Λουκιδέλης Βύρωνας - it2022057,
              Δημήτρης Σαρανταυγάς - it2021090**
 
 ## Clone project
@@ -23,8 +23,8 @@ src/main/resources/sql/starter_data.sql
 
 ```properties
 spring.datasource.username=dsuser
-spring.datasource.password=lj33d71c8EdGxXEHaRlO0fyAqoEA2nFZ
-spring.datasource.url=jdbc:postgresql://dpg-cu3d2l1u0jms73divuf0-a.oregon-postgres.render.com:5432/dsdb_b3ln
+spring.datasource.password=IyKAFW5Mfv5SihITYauqz8FM4DpQJ7Fb
+spring.datasource.url=jdbc:postgresql://dpg-culmr6qn91rc73efb730-a.oregon-postgres.render.com:5432/dsdb_hy60
 ```
 ## Run the project
 * make sure you have set correctly ``JAVA_HOME`` and ``M2_HOME`` environmental variables
