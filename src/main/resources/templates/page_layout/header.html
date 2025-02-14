@@ -10,7 +10,6 @@
 <body>
 <header class="masthead mb-auto" th:fragment="header">
     <div class="inner">
-        <h3 class="masthead-brand">Cover</h3>
         <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="/">Home</a>
             <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users" data-path="/users">Users</a>
@@ -18,7 +17,8 @@
             <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/shelter" data-path="/shelter">Shelters</a>
             <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CITIZEN', 'ROLE_SHELTER')" class="nav-link" href="/adoption" data-path="/adoption">Adoptions</a>
             <a sec:authorize="hasRole('ROLE_VETERINARIAN')" class="nav-link" href="/healthCheck" data-path="/healthCheck">Health Checks</a>
-            <a sec:authorize="hasAnyRole('ROLE_CITIZEN', 'ROLE_SHELTER')" class="nav-link" href="#">Contact</a>
+            <a sec:authorize="hasRole('ROLE_CITIZEN')" class="nav-link" href="/contact">Contact</a>
+            <a sec:authorize="hasRole('ROLE_SHELTER')" class="nav-link" href="/contact/inbox">Inbox</a>
             <a sec:authorize="!isAuthenticated()" class="nav-link">
                 <a class="nav-link" href="/login">Login</a>
                 <a class="nav-link" href="/register">Register</a>
@@ -30,9 +30,10 @@
             </a>
         </nav>
     </div>
-    <div class="align-content-end">
+    <h3 class="align-content-sm-center" style="display: table-cell">
         <a sec:authorize="hasRole('ROLE_CITIZEN')" class="btn-secondary btn-sm" href="/citizen/adoptedPets" data-path="/citizen/adoptedPets">My pets</a>
-    </div>
+        <a sec:authorize="hasRole('ROLE_CITIZEN')" class="btn-secondary btn-sm" href="/citizen/visits" data-path="/citizen/visits">Visits</a>
+    </h3>
 </header>
 </body>
 </html>

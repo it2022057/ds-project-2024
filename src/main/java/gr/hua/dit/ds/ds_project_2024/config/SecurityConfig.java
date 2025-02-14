@@ -30,15 +30,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "error/**", "/register", "/shelter/new", "/veterinarian/new", "/citizen/new", "/saveUser", "/images/**", "/js/**", "/css/**").permitAll()
-                        .requestMatchers("/users/**", "/user/**", "citizen", "shelter", "veterinarian", "healthCheck/").hasRole("ADMIN")
+                        .requestMatchers("/", "/home", "/error/**", "/register", "/shelter/new", "/veterinarian/new", "/citizen/new", "/saveUser", "/images/**", "/js/**", "/css/**").permitAll()
+                        .requestMatchers("/users/**", "/user/**", "/citizen", "/shelter", "/veterinarian", "/healthCheck/").hasRole("ADMIN")
                         .requestMatchers("healthCheck/").hasRole("VETERINARIAN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .failureUrl("/login?error=true")
-                        .defaultSuccessUrl("/pet", true)
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout

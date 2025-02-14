@@ -88,3 +88,30 @@ INSERT INTO adoption (request_id, status, pet_id, citizen_id, shelter_id) VALUES
     (3, 3, 13, 6, 5),
     (4, 3, 15, 6, 5),
     (5, 2, 7, 1, 3);
+
+
+
+
+-- INSERT INTO contact (id, message, scheduled_visit, notified_citizen, notified_shelter) VALUES
+--                                                                                            (1, 'Reminder: Visit scheduled for adoption center.', '2025-02-15 10:00:00', false, false),
+--                                                                                            (2, 'Don\'t forget about your visit to see the pets!', '2025-02-15 11:30:00', false, false),
+-- (3, 'You have a scheduled visit for your pet adoption!', '2025-02-15 12:00:00', false, false),
+-- (4, 'Shelter visit confirmation for adoption.', '2025-02-15 14:00:00', true, false),
+-- (5, 'Reminder: Visit to see your potential pet today.', '2025-02-15 15:00:00', false, true),
+-- (6, 'Final reminder for your upcoming shelter visit.', '2025-02-15 16:30:00', false, false),
+-- (7, 'Visit reminder: Shelter waiting for your arrival.', '2025-02-15 17:45:00', true, true);
+
+-- Insert Contacts
+INSERT INTO contact (id, message, scheduled_visit, status, citizen_id, shelter_id) VALUES (1, 'I would really like to visit your shelter sometime.', '2025-03-14 21:00:00.00', 1, 1, 3),
+                                                                                          (2, 'Can i come in your adoption center?', '2025-02-15 14:00:00', 2, 1, 5),
+                                                                                          (3, 'Visit to see your potential pet today.', '2025-02-28 15:00:00', 1, 7, 5),
+                                                                                          (4, 'Can i come tomorrow?', '2025-02-20 20:00:00', 0, 7, 5),
+                                                                                          (5, 'Are you open at the following date?', '2025-03-02 09:00:00', 0, 6, 5);
+
+-- Syncs the id sequences
+SELECT setval('adoption_request_id_seq', COALESCE((SELECT MAX(request_id) FROM adoption), 0) + 1, false);
+SELECT setval('contact_id_seq', COALESCE((SELECT MAX(id) FROM contact), 0) + 1, false);
+SELECT setval('health_check_examination_id_seq', COALESCE((SELECT MAX(examination_id) FROM health_check), 0) + 1, false);
+SELECT setval('pet_id_seq', COALESCE((SELECT MAX(id) FROM pet), 0) + 1, false);
+SELECT setval('roles_id_seq', COALESCE((SELECT MAX(id) FROM roles), 0) + 1, false);
+SELECT setval('users_id_seq', COALESCE((SELECT MAX(id) FROM users), 0) + 1, false);

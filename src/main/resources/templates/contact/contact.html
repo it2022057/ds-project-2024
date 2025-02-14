@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{page_layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <h1 th:text="${shelter.getName()}"></h1>
+
+    <form action="#" th:action="@{/contact/planVisit}" th:object="${contact}" method="post">
+        <label for="dateTime">Pick a date:</label>
+        <input type="datetime-local" id="dateTime" th:field="*{scheduledVisit}"/>
+        <br><br>
+
+        <label for="message">Message:</label>
+        <input type="text" id="message" th:field="*{message}"/>
+        <br><br>
+
+        <label for="shelter"></label>
+        <input type="hidden" id="shelter" th:value="${shelter}" th:field="*{shelter}"/>
+
+        <button type="submit" class="btn-primary">Send</button>
+    </form>
+</div>
+</body>
+</html>

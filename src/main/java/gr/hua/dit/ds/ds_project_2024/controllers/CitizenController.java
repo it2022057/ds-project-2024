@@ -1,6 +1,7 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
+import gr.hua.dit.ds.ds_project_2024.entities.Contact;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
@@ -48,7 +49,7 @@ public class CitizenController {
         citizenService.saveCitizen(citizen);
         String message = "Citizen " + citizen.getId() + " saved successfully!";
         model.addAttribute("msg", message);
-        return "index";
+        return "home";
     }
 
     @Secured("ROLE_ADMIN")
@@ -65,6 +66,15 @@ public class CitizenController {
         Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
         model.addAttribute("pets", citizen.getAdoptedPets());
         return "pet/pets";
+    }
+
+    @Secured("ROLE_CITIZEN")
+    @GetMapping("/visits")
+    public String showVisits(Principal loggedInUser, Model model) {
+        Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
+
+        model.addAttribute("contacts", citizenService.getVisits(citizen));
+        return "contact/inbox";
     }
 
     @Secured("ROLE_CITIZEN")

@@ -35,6 +35,9 @@ public class Citizen extends User {
             CascadeType.DETACH, CascadeType.REFRESH})
     private List<Pet> adoptedPets;
 
+    @OneToMany(mappedBy = "citizen", cascade = {CascadeType.ALL})
+    private List<Contact> visits;
+
     public Citizen() {
     }
 
@@ -83,5 +86,13 @@ public class Citizen extends User {
 
     public void setAdoptedPets(List<Pet> pets) {
         this.adoptedPets = pets;
+    }
+
+    public List<Contact> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(List<Contact> visits) {
+        this.visits = visits;
     }
 }

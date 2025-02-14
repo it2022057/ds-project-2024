@@ -44,7 +44,7 @@ public class ShelterController {
         shelterService.saveShelter(shelter);
         String message = "Shelter " + shelter.getId() + " waits for approval!";
         model.addAttribute("msg", message);
-        return "index";
+        return "home";
     }
 
     @Secured("ROLE_ADMIN")

@@ -9,10 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CitizenService {
@@ -77,9 +74,15 @@ public class CitizenService {
         pet.getOnShelter().getAdoptionRequests().add(adoptionRequest);
     }
 
-//    @Transactional
-//    public List<Pet> searchPets() {
-//        // Later we can add some filters, like search based on species, name, age, etc., but we will see
-//        return petRepository.findAll();
-//    }
+    @Transactional
+    public List<Contact> getVisits(Citizen citizen) {
+        List<Contact> visits = new ArrayList<>();
+
+        for(Contact contact : citizen.getVisits()) {
+            if(contact.getStatus() == Status.APPROVED) {
+                visits.add(contact);
+            }
+        }
+        return visits;
+    }
 }

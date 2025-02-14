@@ -39,6 +39,9 @@ public class Shelter extends User {
     @OneToMany(mappedBy = "fromShelter", cascade = {CascadeType.ALL})
     private List<Adoption> adoptionRequests;
 
+    @OneToMany(mappedBy = "shelter", cascade = {CascadeType.ALL})
+    private List<Contact> contacts;
+
     public Shelter() {
     }
 
@@ -107,4 +110,11 @@ public class Shelter extends User {
         this.adoptionRequests = adoptionRequests;
     }
 
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
 }

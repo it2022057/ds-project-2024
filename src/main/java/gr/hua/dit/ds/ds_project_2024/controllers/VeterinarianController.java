@@ -52,7 +52,7 @@ public class VeterinarianController {
         veterinarianService.saveVeterinarian(veterinarian);
         String message = "Veterinarian " + veterinarian.getId() + " saved successfully!";
         model.addAttribute("msg", message);
-        return "index";
+        return "home";
     }
 
     @Secured("ROLE_ADMIN")
