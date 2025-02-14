@@ -9,6 +9,15 @@ INSERT INTO users (id, username, password, email, phone) VALUES
                                                             (7, 'Byronlouki21', '$2a$10$1KOmsGyaqiVbiJmaFYwq1eiscK31u/qwyzLX8vHmaYTQokSOMDqjO', 'byronlouki21@gmail.com', '6945668184'),
                                                             (8, 'admin', '$2a$10$COmoVZkTRb.F9LNCFPAPpO6KEhi/PWq0.rueZ/zvERWFjhVqppVoe', 'admin@example.com', '6971106222');
 
+-- User's password - > 1: citizen
+--                     2: vet
+--                     3: shelter1
+--                     4: ariadni
+--                     5: shelter2
+--                     6: D40augas
+--                     7: 12Byronlouki!
+--                     8: admin
+
 -- Insert Roles
 --INSERT INTO roles (id, name) VALUES
                                  --(1, 'ROLE_CITIZEN'),
@@ -56,10 +65,9 @@ INSERT INTO pet (id, name, age, species, sex, approval_status, shelter_id, citiz
                                                                                            (9, 'Lucy', 1, 'Parrot', 'Female', 1, 5, NULL),
                                                                                            (10, 'Rocky', 6, 'Dog', 'Male', 2, 5, NULL),
                                                                                            (11, 'Milo', 3, 'Hamster', 'Male', 1, 5, NULL),
-                                                                                           (12, 'Luna', 5, 'Cat', 'Female', 1, 5, NULL),
-                                                                                           (13, 'Daisy', 7, 'Turtle', 'Female', 3, 5, 6),
-                                                                                           (14, 'Rex', 4, 'Dog', 'Male', 1, 3, NULL),
-                                                                                           (15, 'Coco', 2, 'Parrot', 'Female', 3, 5, 6);
+                                                                                           (12, 'Daisy', 7, 'Turtle', 'Female', 3, 5, 6),
+                                                                                           (13, 'Rex', 4, 'Dog', 'Male', 1, 3, NULL),
+                                                                                           (14, 'Coco', 2, 'Parrot', 'Female', 3, 5, 6);
 
 -- Insert Health Checks
 INSERT INTO health_check (examination_id, details, status, pet_id, veterinarian_id) VALUES
@@ -76,10 +84,9 @@ INSERT INTO health_check (examination_id, details, status, pet_id, veterinarian_
                                                                             (11, 'Pending annual exam',0,  9, 4),
                                                                             (12, 'Failed orthopedic assessment',2,  10, 4),
                                                                             (13, 'Successful grooming inspection',1,  11, 4),
-                                                                            (14, 'Scheduled for allergy testing',0,  12, 2),
-                                                                            (15, 'Passed routine blood test',1,  13, 4),
-                                                                            (16, 'Routine vaccination completed', 1, 14, 4),
-                                                                            (17, 'Passed health assessment',1,  15, 2);
+                                                                            (15, 'Passed routine blood test',1,  12, 4),
+                                                                            (16, 'Routine vaccination completed', 1, 13, 4),
+                                                                            (17, 'Passed health assessment',1,  14, 2);
 
 -- Insert Adoption Requests
 INSERT INTO adoption (request_id, status, pet_id, citizen_id, shelter_id) VALUES
@@ -87,7 +94,10 @@ INSERT INTO adoption (request_id, status, pet_id, citizen_id, shelter_id) VALUES
     (2, 3, 5,  7, 5),
     (3, 3, 13, 6, 5),
     (4, 3, 15, 6, 5),
-    (5, 2, 7, 1, 3);
+    (5, 2, 7, 1, 3),
+    (6, 0, 11, 1, 5),
+    (7, 0, 10, 1, 5),
+    (8, 0, 6, 6, 3);
 
 
 

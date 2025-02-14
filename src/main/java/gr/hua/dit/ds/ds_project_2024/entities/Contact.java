@@ -45,7 +45,7 @@ public class Contact {
 
         return dateTime.format(formatter);
     }
-    
+
     public Integer getId() {
         return id;
     }
