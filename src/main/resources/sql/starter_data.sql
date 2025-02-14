@@ -92,24 +92,13 @@ INSERT INTO health_check (examination_id, details, status, pet_id, veterinarian_
 INSERT INTO adoption (request_id, status, pet_id, citizen_id, shelter_id) VALUES
     (1, 3, 4,  7, 5),
     (2, 3, 5,  7, 5),
-    (3, 3, 13, 6, 5),
-    (4, 3, 15, 6, 5),
+    (3, 3, 12, 6, 5),
+    (4, 3, 14, 6, 5),
     (5, 2, 7, 1, 3),
     (6, 0, 11, 1, 5),
     (7, 0, 10, 1, 5),
     (8, 0, 6, 6, 3);
 
-
-
-
--- INSERT INTO contact (id, message, scheduled_visit, notified_citizen, notified_shelter) VALUES
---                                                                                            (1, 'Reminder: Visit scheduled for adoption center.', '2025-02-15 10:00:00', false, false),
---                                                                                            (2, 'Don\'t forget about your visit to see the pets!', '2025-02-15 11:30:00', false, false),
--- (3, 'You have a scheduled visit for your pet adoption!', '2025-02-15 12:00:00', false, false),
--- (4, 'Shelter visit confirmation for adoption.', '2025-02-15 14:00:00', true, false),
--- (5, 'Reminder: Visit to see your potential pet today.', '2025-02-15 15:00:00', false, true),
--- (6, 'Final reminder for your upcoming shelter visit.', '2025-02-15 16:30:00', false, false),
--- (7, 'Visit reminder: Shelter waiting for your arrival.', '2025-02-15 17:45:00', true, true);
 
 -- Insert Contacts
 INSERT INTO contact (id, message, scheduled_visit, status, citizen_id, shelter_id) VALUES (1, 'I would really like to visit your shelter sometime.', '2025-03-14 21:00:00.00', 1, 1, 3),
