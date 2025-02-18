@@ -86,7 +86,7 @@ public class AdoptionController {
         Citizen citizen = citizenService.getCitizen(adoption.getApplicant().getId());
         adoption.getPetToAdopt().setOwner(citizen);
         citizen.getAdoptedPets().addLast(adoption.getPetToAdopt());
-        model.addAttribute("adoptions", adoptionService.getAdoptions());
+        model.addAttribute("adoptions", adoption.getFromShelter().getAdoptionRequests());
         return "adoption/adoptions";
     }
 
@@ -95,7 +95,7 @@ public class AdoptionController {
     public String rejectAdoption(@PathVariable Integer id, Model model) {
         Adoption adoption = adoptionService.getAdoption(id);
         adoption.setStatus(Status.REJECTED);
-        model.addAttribute("adoptions", adoptionService.getAdoptions());
+        model.addAttribute("adoptions", adoption.getFromShelter().getAdoptionRequests());
         return "adoption/adoptions";
     }
 }

@@ -9,31 +9,86 @@
 </head>
 <body>
 <header class="masthead mb-auto" th:fragment="header">
-    <div class="inner">
-        <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="/">Home</a>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users" data-path="/users">Users</a>
-            <a sec:authorize="isAuthenticated()" class="nav-link" href="/pet" data-path="/pet">Pets</a>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/shelter" data-path="/shelter">Shelters</a>
-            <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CITIZEN', 'ROLE_SHELTER')" class="nav-link" href="/adoption" data-path="/adoption">Adoptions</a>
-            <a sec:authorize="hasRole('ROLE_VETERINARIAN')" class="nav-link" href="/healthCheck" data-path="/healthCheck">Health Checks</a>
-            <a sec:authorize="hasRole('ROLE_CITIZEN')" class="nav-link" href="/contact">Contact</a>
-            <a sec:authorize="hasRole('ROLE_SHELTER')" class="nav-link" href="/contact/inbox">Inbox</a>
-            <a sec:authorize="!isAuthenticated()" class="nav-link">
-                <a class="nav-link" href="/login">Login</a>
-                <a class="nav-link" href="/register">Register</a>
-            </a>
-            <a sec:authorize="isAuthenticated()"  class="nav-link">
+    <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" style="font-weight: bold" href="#">NavBar:</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02"
+                aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" href="/users" data-path="/users">Users</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="/pet" data-path="/pet">Pets</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" href="/shelter" data-path="/shelter">Shelters</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_CITIZEN', 'ROLE_SHELTER')">
+                    <a class="nav-link" href="/adoption" data-path="/adoption">Adoptions</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_VETERINARIAN')">
+                    <a class="nav-link" href="/healthCheck" data-path="/healthCheck">Health Checks</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_CITIZEN')">
+                    <a class="nav-link" href="/contact" data-path="/contact">Contact</a>
+                </li>
+                <li th:class="nav-item" sec:authorize="hasRole('ROLE_CITIZEN')">
+                    <a class="nav-link" href="/citizen/adoptedPets" data-path="/citizen/adoptedPets">My pets</a>
+                </li>
+                <li th:class="nav-item" sec:authorize="hasRole('ROLE_CITIZEN')">
+                    <a class="nav-link" href="/citizen/visits" data-path="/citizen/visits">Visits</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_SHELTER')">
+                    <a class="nav-link" href="/contact/inbox" data-path="/contact/inbox">Inbox</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+            </ul>
+            <a sec:authorize="isAuthenticated()" class="nav-link">
                 <form th:action="@{/logout}" method="post">
-                    <input type="submit"  class="btn btn-primary" value="Sign Out"/>
+                    <input type="submit" class="btn btn-primary" value="Sign Out"/>
                 </form>
             </a>
-        </nav>
-    </div>
-    <h3 class="align-content-sm-center" style="display: table-cell">
-        <a sec:authorize="hasRole('ROLE_CITIZEN')" class="btn-secondary btn-sm" href="/citizen/adoptedPets" data-path="/citizen/adoptedPets">My pets</a>
-        <a sec:authorize="hasRole('ROLE_CITIZEN')" class="btn-secondary btn-sm" href="/citizen/visits" data-path="/citizen/visits">Visits</a>
-    </h3>
+        </div>
+    </nav>
+
+<!--    <div sec:authorize="hasRole('ROLE_CITIZEN')" class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <nav class="col-md-2 d-none d-md-block bg-light sidebar">-->
+<!--                <div class="sidebar-sticky">-->
+<!--                    <ul class="nav flex-column">-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">-->
+<!--                                <span data-feather="home"></span>-->
+<!--                                Dashboard <span class="sr-only">(current)</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a sec:authorize="hasRole('ROLE_CITIZEN')" class="nav-link"-->
+<!--                               href="/citizen/adoptedPets"-->
+<!--                               data-path="/citizen/adoptedPets"><span data-feather="users"></span>My pets</a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a sec:authorize="hasRole('ROLE_CITIZEN')" class="nav-link"-->
+<!--                               href="/citizen/visits"-->
+<!--                               data-path="/citizen/visits">Visits</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </nav>-->
+<!--        </div>-->
+<!--    </div>-->
 </header>
 </body>
 </html>

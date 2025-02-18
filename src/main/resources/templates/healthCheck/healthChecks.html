@@ -6,49 +6,57 @@
       layout:decorate="~{page_layout/layout}">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Health Checks</title>
+    <meta charset="UTF-8">
+    <title>Health Checks</title>
 </head>
 <body>
 <div layout:fragment="main-content">
-  <div th:if="${ not#lists.isEmpty(healthChecks)}">
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Pet</th>
-        <th>Vet</th>
-        <th>Status</th>
-        <th>Details</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="healthCheck : ${healthChecks}">
-        <td><a th:if="${healthCheck.getPetExamined() != null}"
-               th:href="@{'/pet/' + ${healthCheck.getPetExamined().getId()}}"
-               th:text="${healthCheck.getPetExamined().getName()}"></a>
-        </td>
-        <td><a th:if="${healthCheck.getByVeterinarian() != null}"
-               th:href="@{'/veterinarian/' + ${healthCheck.getByVeterinarian().getId()}}"
-               th:text="${healthCheck.getByVeterinarian().getFirstName() + ' ' + healthCheck.getByVeterinarian().getLastName()}"></a></td>
-        <td th:text="${healthCheck.getStatus()}"></td>
-        <td th:text="${healthCheck.getDetails()}"></td>
-        <td>
+    <div th:if="${ not#lists.isEmpty(healthChecks)}">
+        <div class="content">
+            <div class="container">
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                        <tr>
+                            <th>Pet</th>
+                            <th>Vet</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="healthCheck : ${healthChecks}">
+                            <td><a th:if="${healthCheck.getPetExamined() != null}"
+                                   th:href="@{'/pet/' + ${healthCheck.getPetExamined().getId()}}"
+                                   th:text="${healthCheck.getPetExamined().getName()}"></a>
+                            </td>
+                            <td><a th:if="${healthCheck.getByVeterinarian() != null}"
+                                   th:href="@{'/veterinarian/' + ${healthCheck.getByVeterinarian().getId()}}"
+                                   th:text="${healthCheck.getByVeterinarian().getFirstName() + ' ' + healthCheck.getByVeterinarian().getLastName()}"></a>
+                            </td>
+                            <td th:text="${healthCheck.getStatus()}"></td>
+                            <td th:text="${healthCheck.getDetails()}"></td>
+                            <td>
           <span>
             <a class="btn btn-info" th:href="@{'/healthCheck/' + ${healthCheck.getId()}}">Details</a>
           </span>
-          <span sec:authorize="hasRole('ROLE_VETERINARIAN')">
+                                <span sec:authorize="hasRole('ROLE_VETERINARIAN')">
             <a class="btn btn-light" th:href="@{'/healthCheck/edit/' + ${healthCheck.getId()}}">Edit</a>
           </span>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div th:if="${ #lists.isEmpty(healthChecks)}">
-    No Health Checks found!
-  </div>
-  <a sec:authorize="hasRole('ROLE_VETERINARIAN')" href="/healthCheck/new" class="btn btn-primary" role="button">Examine a new Pet</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${ #lists.isEmpty(healthChecks)}">
+        No Health Checks found!
+    </div>
+    <a sec:authorize="hasRole('ROLE_VETERINARIAN')" href="/healthCheck/new" class="btn btn-primary" role="button">Examine
+        a new Pet</a>
 </div>
 </body>
 </html>

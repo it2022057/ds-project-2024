@@ -11,25 +11,34 @@
 <body>
 <div layout:fragment="main-content">
     <div th:if="${ not#lists.isEmpty(veterinarians)}">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="veterinarian : ${veterinarians}">
-                <td th:text="${veterinarian.getFirstName()}"></td>
-                <td th:text="${veterinarian.getLastName()}"></td>
-                <td>
-                    <a  class="btn btn-outline-light btn-sm" th:href="@{'/veterinarian/' + ${veterinarian.getId()}}">Details</a>
-                    <a  class="btn btn-outline-info btn-sm" th:href="@{'/veterinarian/' + ${veterinarian.getId()} + '/healthChecks' }">Health Tests</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="content">
+            <div class="container">
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="veterinarian : ${veterinarians}">
+                            <td th:text="${veterinarian.getFirstName()}"></td>
+                            <td th:text="${veterinarian.getLastName()}"></td>
+                            <td>
+                                <a class="btn btn-outline-light btn-sm"
+                                   th:href="@{'/veterinarian/' + ${veterinarian.getId()}}">Details</a>
+                                <a class="btn btn-outline-info btn-sm"
+                                   th:href="@{'/veterinarian/' + ${veterinarian.getId()} + '/healthChecks' }">Health
+                                    Tests</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:if="${ #lists.isEmpty(veterinarians)}">
         No Veterinarians found!

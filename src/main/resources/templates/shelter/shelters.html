@@ -12,50 +12,58 @@
 <body>
 <div layout:fragment="main-content">
     <div th:if="${ not#lists.isEmpty(shelters)}">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Address</th>
-                <th>Description</th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')">Approval</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="shelter : ${shelters}">
-                <td th:text="${shelter.getName()}"></td>
-                <td th:text="${shelter.getLocation()}"></td>
-                <td th:text="${shelter.getAddress()}"></td>
-                <td th:text="${shelter.getDescription()}"></td>
-                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${shelter.getApprovalStatus()}"></td>
-                <td>
+        <div class="content">
+            <div class="container">
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Address</th>
+                            <th>Description</th>
+                            <th sec:authorize="hasRole('ROLE_ADMIN')">Approval</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="shelter : ${shelters}">
+                            <td th:text="${shelter.getName()}"></td>
+                            <td th:text="${shelter.getLocation()}"></td>
+                            <td th:text="${shelter.getAddress()}"></td>
+                            <td th:text="${shelter.getDescription()}"></td>
+                            <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${shelter.getApprovalStatus()}"></td>
+                            <td>
                     <span>
                         <a class="btn btn-info" th:href="@{'/shelter/' + ${shelter.getId()}}">Details</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_ADMIN')"
-                          th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
+                                <span sec:authorize="hasRole('ROLE_ADMIN')"
+                                      th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                         <a class="btn btn-success" th:href="@{'/shelter/approve/' + ${shelter.getId()}}">Approve</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_ADMIN')"
-                          th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
+                                <span sec:authorize="hasRole('ROLE_ADMIN')"
+                                      th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                         <a class="btn btn-danger" th:href="@{'/shelter/reject/' + ${shelter.getId()}}">Reject</a>
                     </span>
-                    <span>
+                                <span>
                         <a sec:authorize="hasRole('ROLE_ADMIN')"
                            th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}"
-                           class="btn btn-outline-danger" th:href="@{'/shelter/delete/' + ${shelter.getId()}}">Delete</a>
+                           class="btn btn-outline-danger"
+                           th:href="@{'/shelter/delete/' + ${shelter.getId()}}">Delete</a>
                     </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:if="${ #lists.isEmpty(shelters)}">
         No Shelters found!
     </div>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/shelter/new" class="btn btn-primary" role="button">Create new Shelter</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/shelter/new" class="btn btn-primary" role="button">Create new
+        Shelter</a>
 </div>
 </body>
 </html>

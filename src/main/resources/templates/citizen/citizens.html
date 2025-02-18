@@ -11,39 +11,48 @@
 <body>
 <div layout:fragment="main-content">
     <div th:if="${ not#lists.isEmpty(citizens)}">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Address</th>
-                <th>Adoption Requests</th>
-                <th>Adopted Pets</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="citizen : ${citizens}">
-                <td th:text="${citizen.getFirstName()}"></td>
-                <td th:text="${citizen.getLastName()}"></td>
-                <td th:text="${citizen.getAddress()}"></td>
-                <td><a th:if="${ not#lists.isEmpty(citizen.getPendingAdoptions())}" th:href="@{'/adoption/' + ${adoption.getId()}}"
-                       th:each="adoption : ${citizen.getPendingAdoptions()}" th:text="${adoption.toString()}"
-                       style="display: inline-block"></a></td>
-                <td><a th:if="${ not#lists.isEmpty(citizen.getAdoptedPets())}"
-                       th:each="pet : ${citizen.getAdoptedPets()}" th:text="${pet.getName()}"
-                       th:href="@{'/pet/' + ${pet.getId()}}"></a></td>
-                <td>
-                    <a  class="btn btn-info btn-sm" th:href="@{'/citizen/' + ${citizen.getId()}}">Details</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="content">
+            <div class="container">
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Address</th>
+                            <th>Adoption Requests</th>
+                            <th>Adopted Pets</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="citizen : ${citizens}">
+                            <td th:text="${citizen.getFirstName()}"></td>
+                            <td th:text="${citizen.getLastName()}"></td>
+                            <td th:text="${citizen.getAddress()}"></td>
+                            <td><a th:if="${ not#lists.isEmpty(citizen.getPendingAdoptions())}"
+                                   th:href="@{'/adoption/' + ${adoption.getId()}}"
+                                   th:each="adoption : ${citizen.getPendingAdoptions()}"
+                                   th:text="${adoption.toString()}"
+                                   style="display: inline-block"></a></td>
+                            <td><a th:if="${ not#lists.isEmpty(citizen.getAdoptedPets())}"
+                                   th:each="pet : ${citizen.getAdoptedPets()}" th:text="${pet.getName()}"
+                                   th:href="@{'/pet/' + ${pet.getId()}}"></a></td>
+                            <td>
+                                <a class="btn btn-info btn-sm" th:href="@{'/citizen/' + ${citizen.getId()}}">Details</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:if="${ #lists.isEmpty(citizens)}">
         No Citizens found!
     </div>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/citizen/new" class="btn btn-primary" role="button">Create new Citizen</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/citizen/new" class="btn btn-primary" role="button">Create new
+        Citizen</a>
 </div>
 </body>
 </html>

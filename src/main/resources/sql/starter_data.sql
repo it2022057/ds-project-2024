@@ -5,18 +5,16 @@ INSERT INTO users (id, username, password, email, phone) VALUES
                                                             (3, 'shelter1', '$2a$10$GpALHQdK510GEUhqhIEeH.pEfg5q2G.l1sk/lXbFgIbdqwpNDqjLG', 'shelter1@example.com', '6933818407'),
                                                             (4, 'ariadni', '$2a$10$wWHTt98INEwXiln64kVK3el8vYyKtfE2xcBsWRgE4njYha0mYA1na', 'akarakatsanidi@gmail.com', '6934689124'),
                                                             (5, 'shelter2', '$2a$10$Z.bvhLa3VE.qcCSl6/SYJudP99Fufz/e.znatoH8Q0WrIB4cmhsDG', 'shelter2@example.com', '6941074299'),
-                                                            (6, 'D40augas', '$2a$10$3vmvwTjGkcOYe4Z1VbAZZ.8qKbnadYysNy.urWE0fLM45QF3kHm8G', 'dimitris40augas@gmail.com', '6976908151'),
-                                                            (7, 'Byronlouki21', '$2a$10$1KOmsGyaqiVbiJmaFYwq1eiscK31u/qwyzLX8vHmaYTQokSOMDqjO', 'byronlouki21@gmail.com', '6945668184'),
-                                                            (8, 'admin', '$2a$10$COmoVZkTRb.F9LNCFPAPpO6KEhi/PWq0.rueZ/zvERWFjhVqppVoe', 'admin@example.com', '6971106222');
+                                                            (6, 'Byronlouki21', '$2a$10$1KOmsGyaqiVbiJmaFYwq1eiscK31u/qwyzLX8vHmaYTQokSOMDqjO', 'byronlouki21@gmail.com', '6945668184'),
+                                                            (7, 'admin', '$2a$10$COmoVZkTRb.F9LNCFPAPpO6KEhi/PWq0.rueZ/zvERWFjhVqppVoe', 'admin@example.com', '6971106222');
 
 -- User's password - > 1: citizen
 --                     2: vet
 --                     3: shelter1
 --                     4: ariadni
 --                     5: shelter2
---                     6: D40augas
---                     7: 12Byronlouki!
---                     8: admin
+--                     6: 12Byronlouki!
+--                     7: admin
 
 -- Insert Roles
 --INSERT INTO roles (id, name) VALUES
@@ -33,14 +31,12 @@ INSERT INTO user_roles (user_id, role_id) VALUES
                                               (4, 3),
                                               (5, 2),
                                               (6, 1),
-                                              (7, 1),
-                                              (8, 4);
+                                              (7, 4);
 
 -- Insert Citizens
 INSERT INTO citizen (id, first_name, last_name, address) VALUES
     (1, 'Giorgos', 'Xelakis', 'Maiandrou 67'),
-    (6, 'Dimitrios', 'Sarantaugas', 'Cappadocia 80'),
-    (7, 'Vyronas', 'Loukidelis', 'Tyannon 18');
+    (6, 'Vyronas', 'Loukidelis', 'Tyannon 18');
 
 -- Insert Veterinarians
 INSERT INTO veterinarian (id, first_name, last_name) VALUES
@@ -57,55 +53,39 @@ INSERT INTO pet (id, name, age, species, sex, approval_status, shelter_id, citiz
                                                                                            (1, 'Buddy', 3, 'Dog', 'Male', 1, 3, NULL),
                                                                                            (2, 'Mittens', 2, 'Cat', 'Female', 0, 3, NULL),
                                                                                            (3, 'Rocky', 1, 'Dog', 'Male', 1, 5, NULL),
-                                                                                           (4, 'Lara', 8, 'Dog', 'Female', 3, 5, 7),
-                                                                                           (5, 'Silver', 4, 'Dog', 'Male', 3, 5, 7),
-                                                                                           (6, 'Bella', 3, 'Dog', 'Female', 1, 3, NULL),
-                                                                                           (7, 'Max', 2, 'Cat', 'Male', 1, 3, NULL),
-                                                                                           (8, 'Charlie', 4, 'Rabbit', 'Male', 0, 3, NULL),
-                                                                                           (9, 'Lucy', 1, 'Parrot', 'Female', 1, 5, NULL),
-                                                                                           (10, 'Rocky', 6, 'Dog', 'Male', 2, 5, NULL),
-                                                                                           (11, 'Milo', 3, 'Hamster', 'Male', 1, 5, NULL),
-                                                                                           (12, 'Daisy', 7, 'Turtle', 'Female', 3, 5, 6),
-                                                                                           (13, 'Rex', 4, 'Dog', 'Male', 1, 3, NULL),
-                                                                                           (14, 'Coco', 2, 'Parrot', 'Female', 3, 5, 6);
+                                                                                           (4, 'Silver', 4, 'Dog', 'Male', 3, 5, 6),
+                                                                                           (5, 'Bella', 3, 'Dog', 'Female', 1, 3, NULL),
+                                                                                           (6, 'Max', 2, 'Cat', 'Male', 1, 3, NULL),
+                                                                                           (7, 'Coco', 2, 'Parrot', 'Female', 3, 5, 1),
+                                                                                           (8, 'Daisy', 7, 'Turtle', 'Female', 2, 5, NULL);
 
 -- Insert Health Checks
 INSERT INTO health_check (examination_id, details, status, pet_id, veterinarian_id) VALUES
                                                                             (1,  'Routine checkup - healthy', 1, 1, 2),
-                                                                            (2,  'Vaccination - scheduled', 0, 2, 2),
+                                                                            (2,  'Vaccination completed',1, 3, 2),
                                                                             (3,  'Routine check-up completed', 1, 1, 4),
-                                                                            (4,  'Vaccination completed',1, 2, 2),
-                                                                            (5,  'Scheduled for heartworm test',0,  3, 4),
-                                                                            (6,  'Dental cleaning completed',1,  4, 4),
-                                                                            (7,  'Passed general health test',1,  5, 2),
-                                                                            (8,  'General health check-up passed', 1, 6, 2),
-                                                                            (9,  'Pending routine vaccination',0,  7, 2),
-                                                                            (10, 'Ear infection treatment completed',1,  8, 4),
-                                                                            (11, 'Pending annual exam',0,  9, 4),
-                                                                            (12, 'Failed orthopedic assessment',2,  10, 4),
-                                                                            (13, 'Successful grooming inspection',1,  11, 4),
-                                                                            (15, 'Passed routine blood test',1,  12, 4),
-                                                                            (16, 'Routine vaccination completed', 1, 13, 4),
-                                                                            (17, 'Passed health assessment',1,  14, 2);
+                                                                            (4,  'Scheduled for heartworm test',0, 2, 4),
+                                                                            (5,  'Dental cleaning completed',1, 4, 4),
+                                                                            (6,  'Passed general health test',1, 5, 2),
+                                                                            (7,  'General health check-up passed', 1, 6, 2),
+                                                                            (8,  'Passed routine blood test',1, 7, 2),
+                                                                            (9,  'Failed orthopedic assessment', 2, 8, 4);
 
 -- Insert Adoption Requests
 INSERT INTO adoption (request_id, status, pet_id, citizen_id, shelter_id) VALUES
-    (1, 3, 4,  7, 5),
-    (2, 3, 5,  7, 5),
-    (3, 3, 12, 6, 5),
-    (4, 3, 14, 6, 5),
-    (5, 2, 7, 1, 3),
-    (6, 0, 11, 1, 5),
-    (7, 0, 10, 1, 5),
-    (8, 0, 6, 6, 3);
+    (1, 3, 4, 6, 5),
+    (2, 2, 5, 6, 3),
+    (3, 0, 6, 1, 3),
+    (4, 0, 3, 1, 5),
+    (5, 2, 1, 1, 3),
+    (6, 3, 7, 1, 5);
 
 
 -- Insert Contacts
 INSERT INTO contact (id, message, scheduled_visit, status, citizen_id, shelter_id) VALUES (1, 'I would really like to visit your shelter sometime.', '2025-03-14 21:00:00.00', 1, 1, 3),
                                                                                           (2, 'Can i come in your adoption center?', '2025-02-15 14:00:00', 2, 1, 5),
-                                                                                          (3, 'Visit to see your potential pet today.', '2025-02-28 15:00:00', 1, 7, 5),
-                                                                                          (4, 'Can i come tomorrow?', '2025-02-20 20:00:00', 0, 7, 5),
-                                                                                          (5, 'Are you open at the following date?', '2025-03-02 09:00:00', 0, 6, 5);
+                                                                                          (3, 'Visit to see your potential pet today.', '2025-02-28 15:00:00', 1, 6, 5),
+                                                                                          (4, 'Can i come tomorrow?', '2025-02-20 20:00:00', 0, 6, 5);
 
 -- Syncs the id sequences
 SELECT setval('adoption_request_id_seq', COALESCE((SELECT MAX(request_id) FROM adoption), 0) + 1, false);

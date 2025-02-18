@@ -7,72 +7,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Pets</title>
+    </style>
 </head>
 <body>
 <div layout:fragment="main-content">
     <div th:if="${ not#lists.isEmpty(pets)}">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Species</th>
-                <th>Sex</th>
-                <th>Shelter</th>
-                <th sec:authorize="hasAnyRole('ROLE_SHELTER', 'ROLE_ADMIN')">Interest</th>
-                <th sec:authorize="!hasRole('ROLE_CITIZEN')">Status</th>
-                <th sec:authorize="hasAnyRole('ROLE_VETERINARIAN', 'ROLE_ADMIN')">Health Checks</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="pet : ${pets}">
-                <td th:text="${pet.getName}"></td>
-                <td th:text="${pet.getAge()}"></td>
-                <td th:text="${pet.getSpecies()}"></td>
-                <td th:text="${pet.getSex()}"></td>
-                <td><a th:if="${pet.getOnShelter()!=null}" th:href="@{'/shelter/' + ${pet.getOnShelter().getId()}}"
-                       th:text="${pet.getOnShelter().getName()}"></a>
-                </td>
-                <td sec:authorize="hasAnyRole('ROLE_SHELTER', 'ROLE_ADMIN')">
-                    <a th:if="${ not#lists.isEmpty(pet.getInterest())}" th:href="@{'/adoption/' + ${interest.getId()}}"
-                       th:each="interest : ${pet.getInterest()}" th:text="${interest.toString()}"
-                       style="display: inline-block"></a></td>
-                <td sec:authorize="!hasRole('ROLE_CITIZEN')" th:text="${pet.getApprovalStatus()}"></td>
-                <td sec:authorize="hasAnyRole('ROLE_VETERINARIAN', 'ROLE_ADMIN')">
-                    <a th:if="${not#lists.isEmpty(pet.getHealth())}"
-                       th:href="@{'/healthCheck/' + ${health.getId()}}"
-                       th:each="health : ${pet.getHealth()}"
-                       th:text="${health.toString()}"
-                       style="display: inline-block"></a></td>
-                <td>
+        <div class="content">
+            <div class="container">
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Species</th>
+                            <th>Sex</th>
+                            <th>Shelter</th>
+                            <th sec:authorize="hasAnyRole('ROLE_SHELTER', 'ROLE_ADMIN')">Interest</th>
+                            <th sec:authorize="!hasRole('ROLE_CITIZEN')">Status</th>
+                            <th sec:authorize="hasAnyRole('ROLE_VETERINARIAN', 'ROLE_ADMIN')">Health Checks</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pet : ${pets}">
+                            <td th:text="${pet.getName}"></td>
+                            <td th:text="${pet.getAge()}"></td>
+                            <td th:text="${pet.getSpecies()}"></td>
+                            <td th:text="${pet.getSex()}"></td>
+                            <td><a th:if="${pet.getOnShelter()!=null}"
+                                   th:href="@{'/shelter/' + ${pet.getOnShelter().getId()}}"
+                                   th:text="${pet.getOnShelter().getName()}"></a>
+                            </td>
+                            <td sec:authorize="hasAnyRole('ROLE_SHELTER', 'ROLE_ADMIN')">
+                                <a th:if="${ not#lists.isEmpty(pet.getInterest())}"
+                                   th:href="@{'/adoption/' + ${interest.getId()}}"
+                                   th:each="interest : ${pet.getInterest()}" th:text="${interest.toString()}"
+                                   style="display: inline-block"></a></td>
+                            <td sec:authorize="!hasRole('ROLE_CITIZEN')" th:text="${pet.getApprovalStatus()}"></td>
+                            <td sec:authorize="hasAnyRole('ROLE_VETERINARIAN', 'ROLE_ADMIN')">
+                                <a th:if="${not#lists.isEmpty(pet.getHealth())}"
+                                   th:href="@{'/healthCheck/' + ${health.getId()}}"
+                                   th:each="health : ${pet.getHealth()}"
+                                   th:text="${health.toString()}"
+                                   style="display: inline-block"></a></td>
+                            <td>
                     <span>
                         <a class="btn btn-info" th:href="@{'/pet/' + ${pet.getId()}}">Details</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_CITIZEN')"
-                          th:if="${pet.getApprovalStatus() != T(gr.hua.dit.ds.ds_project_2024.entities.Status).ADOPTED}">
+                                <span sec:authorize="hasRole('ROLE_CITIZEN')"
+                                      th:if="${pet.getApprovalStatus() != T(gr.hua.dit.ds.ds_project_2024.entities.Status).ADOPTED}">
                         <a class="btn btn-outline-warning" th:href="@{'/citizen/adoptionRequest/' + ${pet.getId()}}">Adopt</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_ADMIN')"
-                          th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
+                                <span sec:authorize="hasRole('ROLE_ADMIN')"
+                                      th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                         <a class="btn btn-success" th:href="@{'/pet/approve/' + ${pet.getId()}}">Approve</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_ADMIN')"
-                          th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
+                                <span sec:authorize="hasRole('ROLE_ADMIN')"
+                                      th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                         <a class="btn btn-danger" th:href="@{'/pet/reject/' + ${pet.getId()}}">Reject</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_VETERINARIAN')"
-                          th:if="${pet.getLoggedInVetHasNotExamined()} and ${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
+                                <span sec:authorize="hasRole('ROLE_VETERINARIAN')"
+                                      th:if="${pet.getLoggedInVetHasNotExamined()} and ${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
                         <a class="btn btn-light" th:href="@{'/veterinarian/examine/' + ${pet.getId()}}">Examine</a>
                     </span>
-                    <span sec:authorize="hasRole('ROLE_ADMIN')"
-                          th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}">
+                                <span sec:authorize="hasRole('ROLE_ADMIN')"
+                                      th:if="${pet.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).REJECTED}">
                         <a class="btn btn-danger" th:href="@{'/pet/delete/' + ${pet.getId()}}">Delete</a>
                     </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:if="${ #lists.isEmpty(pets)}">
         No pets found!

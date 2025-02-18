@@ -17,37 +17,45 @@
                                                    style="font-size: 36px;color:darkred">inbox</i>Inbox</h1>
 
     <div th:if="${ not#lists.isEmpty(contacts)}">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Message</th>
-                <th sec:authorize="hasRole('ROLE_SHELTER')">Citizen</th>
-                <th sec:authorize="hasRole('ROLE_CITIZEN')">Shelter</th>
-                <th sec:authorize="hasRole('ROLE_SHELTER')">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="contact : ${contacts}">
-                <td th:text="${contact.getDateFormatted()}"></td>
-                <td th:text="${contact.getMessage()}"></td>
-                <td sec:authorize="hasRole('ROLE_SHELTER')"><a th:if="${contact.getCitizen() != null}"
-                                                               th:href="@{'/citizen/' + ${contact.getCitizen().getId()}}"
-                                                               th:text="${contact.getCitizen().getFirstName() + contact.getCitizen().getLastName()}"></a></td>
-                <td sec:authorize="hasRole('ROLE_CITIZEN')"><a th:if="${contact.getShelter() != null}"
-                                                               th:href="@{'/shelter/' + ${contact.getShelter().getId()}}"
-                                                               th:text="${contact.getShelter().getName()}"></a></td>
-                <td sec:authorize="hasRole('ROLE_SHELTER')">
+        <div class="content">
+            <div class="container">
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Message</th>
+                            <th sec:authorize="hasRole('ROLE_SHELTER')">Citizen</th>
+                            <th sec:authorize="hasRole('ROLE_CITIZEN')">Shelter</th>
+                            <th sec:authorize="hasRole('ROLE_SHELTER')">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="contact : ${contacts}">
+                            <td th:text="${contact.getDateFormatted()}"></td>
+                            <td th:text="${contact.getMessage()}"></td>
+                            <td sec:authorize="hasRole('ROLE_SHELTER')"><a th:if="${contact.getCitizen() != null}"
+                                                                           th:href="@{'/citizen/' + ${contact.getCitizen().getId()}}"
+                                                                           th:text="${contact.getCitizen().getFirstName() + contact.getCitizen().getLastName()}"></a>
+                            </td>
+                            <td sec:authorize="hasRole('ROLE_CITIZEN')"><a th:if="${contact.getShelter() != null}"
+                                                                           th:href="@{'/shelter/' + ${contact.getShelter().getId()}}"
+                                                                           th:text="${contact.getShelter().getName()}"></a>
+                            </td>
+                            <td sec:authorize="hasRole('ROLE_SHELTER')">
                     <span th:if="${contact.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                         <a class="btn btn-success" th:href="@{'/contact/confirm/' + ${contact.getId()}}">Confirm</a>
                     </span>
-                    <span th:if="${contact.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
+                                <span th:if="${contact.getStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).PENDING}">
                         <a class="btn btn-danger" th:href="@{'/contact/deny/' + ${contact.getId()}}">Deny</a>
                     </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:if="${ #lists.isEmpty(contacts)}">
         No contacts found!

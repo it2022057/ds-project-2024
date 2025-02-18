@@ -13,28 +13,35 @@
     <h1>Contact Us</h1>
 
     <div th:if="${ not#lists.isEmpty(shelters)}">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="shelter : ${shelters}" th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
-                <td th:text="${shelter.getName()}"></td>
-                <td th:text="${shelter.getEmail()}"></td>
-                <td th:text="${shelter.getPhone()}"></td>
-                <td>
+        <div class="content">
+            <div class="container">
+                <div class="table-responsive custom-table-responsive">
+                    <table class="table custom-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="shelter : ${shelters}"
+                            th:if="${shelter.getApprovalStatus() == T(gr.hua.dit.ds.ds_project_2024.entities.Status).APPROVED}">
+                            <td th:text="${shelter.getName()}"></td>
+                            <td th:text="${shelter.getEmail()}"></td>
+                            <td th:text="${shelter.getPhone()}"></td>
+                            <td>
                     <span sec:authorize="hasRole('ROLE_CITIZEN')">
                         <a class="btn btn-outline-warning" th:href="@{'/contact/' + ${shelter.getId()}}">Plan Visit</a>
                     </span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div th:if="${ #lists.isEmpty(shelters)}">
         No Shelters found!
