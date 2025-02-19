@@ -57,6 +57,11 @@ public class PetService {
     }
 
     @Transactional
+    public void updatePet(Pet pet) {
+        petRepository.save(pet);
+    }
+
+    @Transactional
     public void deletePet(Pet pet) {
         pet.getOnShelter().getPetsAvailable().remove(pet);
         pet.getOwner().getAdoptedPets().remove(pet);

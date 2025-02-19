@@ -86,6 +86,7 @@ public class AdoptionController {
         Citizen citizen = citizenService.getCitizen(adoption.getApplicant().getId());
         adoption.getPetToAdopt().setOwner(citizen);
         citizen.getAdoptedPets().addLast(adoption.getPetToAdopt());
+        petService.updatePet(adoption.getPetToAdopt());
         model.addAttribute("adoptions", adoption.getFromShelter().getAdoptionRequests());
         return "adoption/adoptions";
     }
