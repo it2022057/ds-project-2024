@@ -73,12 +73,12 @@ INSERT INTO health_check (examination_id, details, status, pet_id, veterinarian_
 
 -- Insert Adoption Requests
 INSERT INTO adoption (request_id, status, pet_id, citizen_id, shelter_id) VALUES
-    (1, 3, 4, 6, 5),
+    (1, 1, 4, 6, 5),
     (2, 2, 5, 6, 3),
     (3, 0, 6, 1, 3),
     (4, 0, 3, 1, 5),
     (5, 2, 1, 1, 3),
-    (6, 3, 7, 1, 5);
+    (6, 1, 7, 1, 5);
 
 
 -- Insert Contacts
