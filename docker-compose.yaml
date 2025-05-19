@@ -1,0 +1,59 @@
+services:
+  db:
+    restart: always
+    image: postgres:16
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=dsuser
+      - POSTGRES_PASSWORD=EorKXkq57k0pizvuWw7H0FXKVnI16hiI
+      - POSTGRES_DB=ds_project_2024_xxp6
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      #        - CMD-SHELL
+      #        - pg_isready -U postgres
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - 'dslabdb:/var/lib/postgresql/data/'
+  spring:
+    restart: always
+    image: sp
+    build:
+      context: .
+      dockerfile: nonroot-multistage.Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-d0lm80idbo4c73apqqmg-a.oregon-postgres.render.com:5432/ds_project_2024_xxp6
+      - SPRING_DATASOURCE_USERNAME=dsuser
+      - SPRING_DATASOURCE_PASSWORD=EorKXkq57k0pizvuWw7H0FXKVnI16hiI
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  frontend:
+    #image: front
+    build:
+      context: https://github.com/gkoulis/ds-lab-2023-frontend.git#main
+      #context: git@github.com:gkoulis/ds-lab-2023-frontend.git#env
+      #dockerfile: node.Dockerfile
+    #    environment:
+    #      - VITE_BACKEND=http://spring:9090
+    ports:
+      - 9000:80
+    depends_on:
+      spring:
+        condition: service_healthy
+
+
+volumes:
+  dslabdb:
