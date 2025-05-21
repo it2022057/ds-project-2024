@@ -1,7 +1,7 @@
 # Distributed Systems 
 
 * This code is the project for the Distributed Systems 
-course at Harokopio University of Athens, Dept. of Informatics and Telematics.
+course at Harokopio University of Athens, Department of Informatics and Telematics.
 
 * Team 33: **Καρακατσανίδη Αριάδνη - it2022029,
              Λουκιδέλης Βύρωνας - it2022057,
