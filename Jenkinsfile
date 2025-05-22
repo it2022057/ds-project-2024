@@ -3,7 +3,7 @@ pipeline {
 agent any
 
 environment {
-        DOCKER_TOKEN=credentials('github-ssh')
+        DOCKER_TOKEN=credentials('github-token')
         DOCKER_USER='it2022057'
         DOCKER_SERVER='ghcr.io'
         DOCKER_PREFIX='ghcr.io/it2022057/ds-project-2024'
