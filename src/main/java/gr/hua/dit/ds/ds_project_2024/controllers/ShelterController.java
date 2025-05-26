@@ -2,6 +2,7 @@ package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Shelter;
 import gr.hua.dit.ds.ds_project_2024.entities.Status;
+import gr.hua.dit.ds.ds_project_2024.service.MailService;
 import gr.hua.dit.ds.ds_project_2024.service.ShelterService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class ShelterController {
 
     private ShelterService shelterService;
+    private MailService mailService;
 
-    public ShelterController(ShelterService shelterService) {
+    public ShelterController(ShelterService shelterService, MailService mailService) {
         this.shelterService = shelterService;
+        this.mailService = mailService;
     }
 
     @GetMapping()
@@ -50,6 +53,7 @@ public class ShelterController {
     @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String deleteShelter(@PathVariable Integer id, Model model) {
+        mailService.sendMail(shelterService.getShelter(id).getEmail(), "Account delete", "Hi, we just want to inform you that your account got deleted from our webpage");
         shelterService.deleteShelter(id);
         model.addAttribute("shelters", shelterService.getShelters());
         return "shelter/shelters";
@@ -61,6 +65,7 @@ public class ShelterController {
         Shelter shelter = shelterService.getShelter(id);
         shelter.setApprovalStatus(Status.APPROVED);
         shelterService.saveShelter(shelter);
+        mailService.sendMail(shelter.getEmail(), "Shelter approval", "Your registration has just been accepted and you can now log in with your credentials. Welcome to our pet adoption family!");
         model.addAttribute("shelters", shelterService.getShelters());
         return "shelter/shelters";
     }
@@ -71,6 +76,7 @@ public class ShelterController {
         Shelter shelter = shelterService.getShelter(id);
         shelter.setApprovalStatus(Status.REJECTED);
         shelterService.saveShelter(shelter);
+        mailService.sendMail(shelter.getEmail(), "Shelter rejection", "Unfortunately your registration has just been rejected. Please do not hesitate to try again soon!");
         model.addAttribute("shelters", shelterService.getShelters());
         return "shelter/shelters";
     }

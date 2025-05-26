@@ -3,6 +3,7 @@ package gr.hua.dit.ds.ds_project_2024.controllers;
 import gr.hua.dit.ds.ds_project_2024.entities.*;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.ContactService;
+import gr.hua.dit.ds.ds_project_2024.service.MailService;
 import gr.hua.dit.ds.ds_project_2024.service.ShelterService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,13 @@ public class ContactController {
     private  CitizenService citizenService;
     private ContactService contactService;
     private ShelterService shelterService;
+    private MailService mailService;
 
-    public ContactController(ContactService contactService, ShelterService shelterService, CitizenService citizenService) {
+    public ContactController(ContactService contactService, ShelterService shelterService, CitizenService citizenService, MailService mailService) {
         this.contactService = contactService;
         this.shelterService = shelterService;
         this.citizenService = citizenService;
+        this.mailService = mailService;
     }
 
     @Secured("ROLE_SHELTER")
@@ -40,6 +43,7 @@ public class ContactController {
         Contact contact = contactService.getContact(id);
         contact.setStatus(Status.APPROVED);
         contactService.updateContact(contact);
+        mailService.sendMail(contact.getCitizen().getEmail(), "Visit", "Your visit scheduled for " + contact.getDateFormatted() + " was just accepted from the shelter. Can't wait to meet you in person!");
 
         model.addAttribute("contacts", shelter.getContacts());
         return "contact/inbox";
@@ -50,6 +54,7 @@ public class ContactController {
     public String denyVisit(@PathVariable int id, Principal loggedInUser, Model model) {
         Shelter shelter = shelterService.getShelterByUsername(loggedInUser.getName());
         contactService.deleteContact(id);
+        mailService.sendMail(contactService.getContact(id).getCitizen().getEmail(), "Visit", "Your visit scheduled for " + contactService.getContact(id).getDateFormatted() + " was just rejected from the shelter. Do not hesitate to contact again!");
 
         model.addAttribute("contacts", shelter.getContacts());
         return "contact/inbox";
@@ -80,6 +85,7 @@ public class ContactController {
         Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
         Shelter shelter = contact.getShelter();
         contactService.saveContact(contact, citizen, shelter);
+        mailService.sendMail(shelter.getEmail(), "Visit request", "Someone is interested to pay a visit in your shelter. Don't keep him waiting!");
 
         model.addAttribute("msg", "Your message has been sent successfully!\n\tWait for response...");
         return "home";

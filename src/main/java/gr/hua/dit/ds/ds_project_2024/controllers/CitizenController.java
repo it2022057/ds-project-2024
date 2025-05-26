@@ -4,6 +4,7 @@ import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
 import gr.hua.dit.ds.ds_project_2024.entities.Contact;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
+import gr.hua.dit.ds.ds_project_2024.service.MailService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,12 @@ public class CitizenController {
 
     private CitizenService citizenService;
     private PetService petService;
+    private MailService mailService;
 
-    public CitizenController(CitizenService citizenService, PetService petService) {
+    public CitizenController(CitizenService citizenService, PetService petService, MailService mailService) {
         this.citizenService = citizenService;
         this.petService = petService;
+        this.mailService = mailService;
     }
 
     @RequestMapping()
@@ -48,6 +51,7 @@ public class CitizenController {
     public String saveCitizen(@ModelAttribute("citizen") Citizen citizen, Model model) {
         citizenService.saveCitizen(citizen);
         String message = "Citizen " + citizen.getId() + " saved successfully!";
+        mailService.sendMail(citizen.getEmail(), "Citizen registration", "Welcome to our pet adoption family!");
         model.addAttribute("msg", message);
         return "home";
     }
@@ -55,6 +59,7 @@ public class CitizenController {
     @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String deleteCitizen(@PathVariable Integer id, Model model) {
+        mailService.sendMail(citizenService.getCitizen(id).getEmail(), "Account delete", "Hi, we just want to inform you that your account got deleted from our webpage");
         citizenService.deleteCitizen(id);
         model.addAttribute("citizens", citizenService.getCitizens());
         return "citizen/citizens";
@@ -92,6 +97,8 @@ public class CitizenController {
             Pet pet = petService.getPet(id);
             Citizen citizen = citizenService.getCitizenByUsername(loggedInUser.getName());
             citizenService.submitAdoptionRequest(pet, citizen);
+            mailService.sendMail(citizen.getEmail(), "Adoption request", "Your adoption request to shelter " + pet.getOnShelter().getName() + " has been sent. Wait for their answer!");
+            mailService.sendMail(pet.getOnShelter().getEmail(), "Adoption request", "User " + citizen.getFirstName() + " " + citizen.getLastName() + " has made a new adoption request. Go check it out!");
             model.addAttribute("adoptions", citizen.getPendingAdoptions());
             return "adoption/adoptions";
         }

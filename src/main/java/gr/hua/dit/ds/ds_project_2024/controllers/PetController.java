@@ -14,18 +14,20 @@ import java.util.List;
 @RequestMapping("pet")
 public class PetController {
 
-    private final VeterinarianService veterinarianService;
+    private VeterinarianService veterinarianService;
     private ShelterService shelterService;
     private CitizenService citizenService;
     private UserService userService;
     private PetService petService;
+    private MailService mailService;
 
-    public PetController(PetService petService, UserService userService, CitizenService citizenService, ShelterService shelterService, VeterinarianService veterinarianService) {
+    public PetController(PetService petService, UserService userService, CitizenService citizenService, ShelterService shelterService, VeterinarianService veterinarianService, MailService  mailService) {
         this.petService = petService;
         this.userService = userService;
         this.citizenService = citizenService;
         this.shelterService = shelterService;
         this.veterinarianService = veterinarianService;
+        this.mailService =  mailService;
     }
 
     @GetMapping()
@@ -77,6 +79,7 @@ public class PetController {
     @Secured("ROLE_ADMIN")
     @RequestMapping("/delete/{id}")
     public String deletePet(@PathVariable Integer id, Model model) {
+        mailService.sendMail(petService.getPet(id).getOnShelter().getEmail(), "Pet deleted", "Hi, we just want to inform you that a pet with name " + petService.getPet(id).getName() + " got deleted");
         petService.deletePet(petService.getPet(id));
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
@@ -88,6 +91,7 @@ public class PetController {
         Pet pet = petService.getPet(id);
         pet.setApprovalStatus(Status.APPROVED);
         pet.getOnShelter().getPetsAvailable().add(pet);
+        mailService.sendMail(pet.getOnShelter().getEmail(), "Pet " + id, "Your pet with name " + pet.getName() + " has been approved");
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }
@@ -97,6 +101,7 @@ public class PetController {
     public String rejectPet(@PathVariable Integer id, Model model) {
         Pet pet = petService.getPet(id);
         pet.setApprovalStatus(Status.REJECTED);
+        mailService.sendMail(pet.getOnShelter().getEmail(), "Pet " + id, "Your pet with name " + pet.getName() + " has been rejected");
         model.addAttribute("pets", petService.getPets());
         return "pet/pets";
     }

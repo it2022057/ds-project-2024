@@ -3,7 +3,9 @@ package gr.hua.dit.ds.ds_project_2024.controllers;
 import gr.hua.dit.ds.ds_project_2024.entities.Role;
 import gr.hua.dit.ds.ds_project_2024.entities.User;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
+import gr.hua.dit.ds.ds_project_2024.service.MailService;
 import gr.hua.dit.ds.ds_project_2024.service.UserService;
+import jakarta.validation.constraints.Email;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +15,12 @@ public class UserController {
 
     private UserService userService;
     private RoleRepository roleRepository;
+    private MailService mailService;
 
-    public UserController(UserService userService, RoleRepository roleRepository) {
+    public UserController(UserService userService, RoleRepository roleRepository, MailService mailService) {
         this.userService = userService;
         this.roleRepository = roleRepository;
+        this.mailService = mailService;
     }
 
     @GetMapping("/users")
@@ -41,6 +45,7 @@ public class UserController {
         edit_user.setPhone(user.getPhone());
         edit_user.setRoles(user.getRoles());
         userService.updateUser(edit_user);
+        mailService.sendMail(edit_user.getEmail(), "Personal information change", "Hi, you or the admin just changed some of your personal information. Keep your eyes open!");
 
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
@@ -59,12 +64,14 @@ public class UserController {
     public String saveUser(@ModelAttribute User user, Model model) {
         Integer id = userService.saveUser(user);
         String message = "User " + id + " saved successfully!";
+        mailService.sendMail(user.getEmail(), "Admin registration", "Successfully registered as our new admin, so let's get started!");
         model.addAttribute("msg", message);
         return "home";
     }
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable Integer id, Model model) {
+        mailService.sendMail(userService.getUser(id).getEmail(), "Account Delete", "Hi, we just want to inform you that your account got deleted from our webpage");
         userService.deleteUser(id);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
@@ -77,6 +84,7 @@ public class UserController {
         Role role = roleRepository.findById(role_id).get();
         user.getRoles().remove(role);
         userService.updateUser(user);
+        mailService.sendMail(user.getEmail(), "Role change", "Hi, we just want to inform you that your account no longer has the role: " + role.getName());
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
         return "auth/users";
@@ -88,6 +96,7 @@ public class UserController {
         Role role = roleRepository.findById(role_id).get();
         user.getRoles().add(role);
         userService.updateUser(user);
+        mailService.sendMail(user.getEmail(), "Role change", "Hi, we just want to inform you that your account has a new role: " + role.getName());
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
         return "auth/users";
