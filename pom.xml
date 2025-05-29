@@ -85,7 +85,11 @@
 			<artifactId>mariadb-java-client</artifactId>
 			<version>3.1.4</version> <!-- or latest -->
 		</dependency>
-
+		<dependency>
+			<groupId>io.minio</groupId>
+			<artifactId>minio</artifactId>
+			<version>8.5.17</version>
+		</dependency>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>

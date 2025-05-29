@@ -12,14 +12,11 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-//    public MailService(JavaMailSender mailSender) {
-//        this.mailSender = mailSender;
-//    }
-
     @Async
     public void sendMail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
+        message.setFrom("noreply.springboot@gmail.com");
         message.setSubject(subject);
         message.setText(text);
 
