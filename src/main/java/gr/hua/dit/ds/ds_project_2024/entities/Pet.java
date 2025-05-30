@@ -52,6 +52,9 @@ public class Pet {
     @JoinColumn(name="citizen_id")
     private Citizen owner;
 
+    @Column
+    private String imagePath;
+
     @Transient
     private boolean loggedInVetHasNotExamined;
 
@@ -152,6 +155,14 @@ public class Pet {
 
     public void setLoggedInVetHasNotExamined(boolean loggedInVetHasNotExamined) {
         this.loggedInVetHasNotExamined = loggedInVetHasNotExamined;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override

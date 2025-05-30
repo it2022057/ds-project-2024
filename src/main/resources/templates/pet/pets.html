@@ -9,7 +9,7 @@
     <title>Pets</title>
 </head>
 <body>
-<div layout:fragment="main-content">
+<div layout:fragment="main-content" th:object="${bucketName}">
     <div th:if="${ not#lists.isEmpty(pets)}">
         <div class="content">
             <div class="container">
@@ -17,6 +17,7 @@
                     <table class="table custom-table">
                         <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Name</th>
                             <th>Age</th>
                             <th>Species</th>
@@ -30,6 +31,9 @@
                         </thead>
                         <tbody>
                         <tr th:each="pet : ${pets}">
+                            <td>
+                                <img th:src="${pet.getImagePath()}" alt="Pet Image" width="80" height="80">
+                            </td>
                             <td th:text="${pet.getName}"></td>
                             <td th:text="${pet.getAge()}"></td>
                             <td th:text="${pet.getSpecies()}"></td>

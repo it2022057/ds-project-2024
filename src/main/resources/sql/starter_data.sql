@@ -49,15 +49,15 @@ INSERT INTO shelter (id, name, location, address, description, approval_status) 
     (5, 'Pet family', 'Athens', 'Anakous 2', 'Welcome to our brand new adoption website', 1);
 
 -- Insert Pets
-INSERT INTO pet (id, name, age, species, sex, approval_status, shelter_id, citizen_id) VALUES
-                                                                                           (1, 'Buddy', 3, 'Dog', 'Male', 1, 3, NULL),
-                                                                                           (2, 'Mittens', 2, 'Cat', 'Female', 0, 3, NULL),
-                                                                                           (3, 'Rocky', 1, 'Dog', 'Male', 1, 5, NULL),
-                                                                                           (4, 'Silver', 4, 'Dog', 'Male', 3, 5, 6),
-                                                                                           (5, 'Bella', 3, 'Dog', 'Female', 1, 3, NULL),
-                                                                                           (6, 'Max', 2, 'Cat', 'Male', 1, 3, NULL),
-                                                                                           (7, 'Coco', 2, 'Parrot', 'Female', 3, 5, 1),
-                                                                                           (8, 'Daisy', 7, 'Turtle', 'Female', 2, 5, NULL);
+INSERT INTO pet (id, name, age, species, sex, approval_status, shelter_id, citizen_id, image_path) VALUES
+                                                                                           (1, 'Buddy', 3, 'Dog', 'Male', 1, 3, NULL, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Buddy.jpg'),
+                                                                                           (2, 'Mittens', 2, 'Cat', 'Female', 0, 3, NULL, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Mittens.jpg'),
+                                                                                           (3, 'Rocky', 1, 'Dog', 'Male', 1, 5, NULL, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Rocky.jpg'),
+                                                                                           (4, 'Silver', 4, 'Dog', 'Male', 3, 5, 6, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Silver.jpg'),
+                                                                                           (5, 'Bella', 3, 'Dog', 'Female', 1, 3, NULL, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Bella.jpg'),
+                                                                                           (6, 'Max', 2, 'Cat', 'Male', 1, 3, NULL, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Max.jpg'),
+                                                                                           (7, 'Coco', 2, 'Parrot', 'Female', 3, 5, 1, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Coco.jpg'),
+                                                                                           (8, 'Daisy', 7, 'Turtle', 'Female', 2, 5, NULL, 'http://135.225.114.238:9000/pet-adoption-app/pet-photos/Daisy.jpg');
 
 -- Insert Health Checks
 INSERT INTO health_check (examination_id, details, status, pet_id, veterinarian_id) VALUES
