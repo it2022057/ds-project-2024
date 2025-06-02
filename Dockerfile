@@ -9,7 +9,7 @@ RUN mvn clean package -DskipTests
 # Stage 2: Create the runtime image
 FROM eclipse-temurin:21-alpine-3.21
 
-MAINTAINER louki
+LABEL maintainer="it2022057"
 WORKDIR /app
 
 RUN apk update && apk add curl
