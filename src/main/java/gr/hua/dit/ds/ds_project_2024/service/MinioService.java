@@ -153,7 +153,7 @@ public class MinioService {
         try {
             return minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
         } catch (Exception e) {
-            throw new RuntimeException("Bucket does not exist: " + e.getMessage());
+            return Boolean.FALSE;
         }
     }
 }
