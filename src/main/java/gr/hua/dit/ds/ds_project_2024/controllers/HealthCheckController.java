@@ -1,9 +1,6 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.HealthCheck;
-import gr.hua.dit.ds.ds_project_2024.entities.Pet;
-import gr.hua.dit.ds.ds_project_2024.entities.Status;
-import gr.hua.dit.ds.ds_project_2024.entities.Veterinarian;
 import gr.hua.dit.ds.ds_project_2024.service.HealthCheckService;
 import gr.hua.dit.ds.ds_project_2024.service.PetService;
 import gr.hua.dit.ds.ds_project_2024.service.VeterinarianService;

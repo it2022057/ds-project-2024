@@ -5,7 +5,6 @@ import gr.hua.dit.ds.ds_project_2024.entities.User;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;
 import gr.hua.dit.ds.ds_project_2024.service.MailService;
 import gr.hua.dit.ds.ds_project_2024.service.UserService;
-import jakarta.validation.constraints.Email;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

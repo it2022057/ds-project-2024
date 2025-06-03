@@ -1,6 +1,5 @@
 package gr.hua.dit.ds.ds_project_2024.service;
 
-import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
 import gr.hua.dit.ds.ds_project_2024.entities.Role;
 import gr.hua.dit.ds.ds_project_2024.entities.User;
 import gr.hua.dit.ds.ds_project_2024.repositories.RoleRepository;

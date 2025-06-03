@@ -2,11 +2,8 @@ package gr.hua.dit.ds.ds_project_2024.service;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Adoption;
 import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
-import gr.hua.dit.ds.ds_project_2024.entities.Pet;
-import gr.hua.dit.ds.ds_project_2024.entities.Status;
 import gr.hua.dit.ds.ds_project_2024.repositories.AdoptionRepository;
 import gr.hua.dit.ds.ds_project_2024.repositories.CitizenRepository;
-import gr.hua.dit.ds.ds_project_2024.repositories.PetRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

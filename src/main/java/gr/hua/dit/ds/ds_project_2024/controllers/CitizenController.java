@@ -1,7 +1,6 @@
 package gr.hua.dit.ds.ds_project_2024.controllers;
 
 import gr.hua.dit.ds.ds_project_2024.entities.Citizen;
-import gr.hua.dit.ds.ds_project_2024.entities.Contact;
 import gr.hua.dit.ds.ds_project_2024.entities.Pet;
 import gr.hua.dit.ds.ds_project_2024.service.CitizenService;
 import gr.hua.dit.ds.ds_project_2024.service.MailService;
