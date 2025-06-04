@@ -21,12 +21,13 @@ public class MinioService {
     @Value("${minio.bucket.name}")
     private String bucketName;
 
+    // Uploads a menu image to MinIO storage. If the bucket doesn't exist, it is created and a public read policy is applied
     public void uploadMenuImages(String objectName, InputStream inputStream, String contentType) {
         try {
             if (!bucketExists(bucketName)) {
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
             }
-            setPublicReadPolicy();
+            setPublicReadPolicy(); // Ensures uploaded files are publicly readable
             minioClient.putObject(PutObjectArgs
                             .builder()
                             .bucket(bucketName)
@@ -39,6 +40,7 @@ public class MinioService {
         }
     }
 
+    // Uploads an image file (mostly) to a specific folder inside the bucket
     public void uploadFile(String folderName, String objectName, MultipartFile file) {
         try {
             if (!bucketExists(bucketName)) {
@@ -57,9 +59,11 @@ public class MinioService {
         }
     }
 
+    // Deletes a file (object) from a specific folder in the bucket
     public void deleteFile(String folderName, String objectName) {
         try {
             if (bucketExists(bucketName)) {
+                // List objects matching the prefix
                 Iterable<Result<Item>> results = minioClient.listObjects(
                         ListObjectsArgs.builder()
                                 .bucket(bucketName)
@@ -68,7 +72,7 @@ public class MinioService {
                 );
                 String item = "";
                 for (Result<Item> result : results) {
-                    item = result.get().objectName();  // like "silver.jpg"
+                    item = result.get().objectName();  // Get full object name
                 }
 
                 minioClient.removeObject(RemoveObjectArgs.builder()
@@ -81,6 +85,7 @@ public class MinioService {
         }
     }
 
+    // Downloads a file from MinIO and saves it to a given local path
     public void downloadFile(String objectName, String destinationPath) {
         if (bucketExists(objectName)) {
             try (InputStream stream = minioClient.getObject(
@@ -96,8 +101,8 @@ public class MinioService {
         }
     }
 
+    // Applies a public read-only policy to the bucket so files can be accessed via public URLs
     public void setPublicReadPolicy() {
-
         String readOnlyPolicy = "{\n" +
                 "  \"Version\": \"2012-10-17\",\n" +
                 "  \"Statement\": [\n" +
@@ -126,6 +131,7 @@ public class MinioService {
         }
     }
 
+    // Gets a file from MinIO and returns its content as a byte array
     public byte[] getFile(String objectName) {
         try (InputStream stream =
                      minioClient.getObject(GetObjectArgs
@@ -139,6 +145,7 @@ public class MinioService {
         }
     }
 
+    // Deletes a bucket by name (only if it exists)
     public void deleteBucket(String bucketName) {
         try {
             if (bucketExists(bucketName)) {
@@ -149,6 +156,7 @@ public class MinioService {
         }
     }
 
+    // Checks whether a bucket with the specified name exists.
     public boolean bucketExists(String bucketName) {
         try {
             return minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());

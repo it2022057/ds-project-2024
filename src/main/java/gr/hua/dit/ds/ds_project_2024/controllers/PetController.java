@@ -24,11 +24,8 @@ public class PetController {
     private MailService mailService;
     private MinioService minioService;
 
-    @Value("${minio.bucket.name}")
-    private String bucketName;
-
-    @Value("${minio.url}")
-    private String minioUrl;
+    @Value("${minio.bucket.path}")
+    private String bucketPath;
 
     public PetController(PetService petService, UserService userService, CitizenService citizenService, ShelterService shelterService, VeterinarianService veterinarianService, MailService  mailService, MinioService minioService) {
         this.petService = petService;
@@ -107,7 +104,7 @@ public class PetController {
             }
         }
         if (petNow != null) {
-            petNow.setImagePath(minioUrl + "/" + bucketName + "/" + "pet-photos/" + petName + extension);
+            petNow.setImagePath(bucketPath + "/" + "pet-photos/" + petName + extension);
             petService.updatePet(petNow);
         }
         model.addAttribute("pets", shelter.getPetsAvailable());

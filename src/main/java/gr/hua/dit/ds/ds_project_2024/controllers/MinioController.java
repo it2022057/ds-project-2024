@@ -17,6 +17,8 @@ public class MinioController {
     @Autowired
     private MinioService minioService;
 
+    // Uploads all the background images we use in our project in the MinIO storage,
+    // before starting the app (PostConstruct)
     @PostConstruct
     public ResponseEntity<String> run() {
         String[] filenames = {"dog1.jpg", "dog2.jpg", "dog3.jpg", "dog4.jpg"};
