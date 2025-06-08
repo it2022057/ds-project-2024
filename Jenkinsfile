@@ -36,7 +36,12 @@ pipeline {
 
     post {
         always {
-            mail  to: "byronlouki21@gmail.com", from: "byronlouki21@gmail.com", body: "Project ${env.JOB_NAME} <br>, Build status ${currentBuild.currentResult} <br> Build Number: ${env.BUILD_NUMBER} <br> Build URL: ${env.BUILD_URL}", subject: "JENKINS: Project name -> ${env.JOB_NAME}, Build -> ${currentBuild.currentResult}"
+            mail(
+                to: 'byronlouki21@gmail.com',
+                from: 'byronlouki21@gmail.com',
+                body: "Project ${env.JOB_NAME} <br> Build status ${currentBuild.currentResult} <br> Build Number: ${env.BUILD_NUMBER} <br> Build URL: ${env.BUILD_URL}", subject: "JENKINS: Project name -> ${env.JOB_NAME}, Build -> ${currentBuild.currentResult}",
+                mimeType: 'text/html'
+            )
         }
     }
 }
