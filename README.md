@@ -23,11 +23,16 @@ src/main/resources/sql/starter_data.sql
 
 ```properties
 spring.datasource.username=dsuser
-spring.datasource.password=IyKAFW5Mfv5SihITYauqz8FM4DpQJ7Fb
-spring.datasource.url=jdbc:postgresql://dpg-culmr6qn91rc73efb730-a.oregon-postgres.render.com:5432/dsdb_hy60
+spring.datasource.password=88h6NBea9KnsXQKWdNTtm8roh7QpgMdw
+spring.datasource.url=jdbc:postgresql://dpg-d14oovgdl3ps738g9j1g-a.oregon-postgres.render.com:5432/dsdb_iklh
 ```
 ## Run the project
 * make sure you have set correctly ``JAVA_HOME`` and ``M2_HOME`` environmental variables
 ```bash
 mvn spring-boot:run
+```
+
+## Test the project
+```bash
+./mvnw test
 ```
