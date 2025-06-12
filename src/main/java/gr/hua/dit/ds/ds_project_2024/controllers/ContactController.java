@@ -53,8 +53,8 @@ public class ContactController {
     @GetMapping("/deny/{id}")
     public String denyVisit(@PathVariable int id, Principal loggedInUser, Model model) {
         Shelter shelter = shelterService.getShelterByUsername(loggedInUser.getName());
-        contactService.deleteContact(id);
         mailService.sendMail(contactService.getContact(id).getCitizen().getEmail(), "Visit", "Your visit scheduled for " + contactService.getContact(id).getDateFormatted() + " was just rejected from the shelter. Do not hesitate to contact again!");
+        contactService.deleteContact(id);
 
         model.addAttribute("contacts", shelter.getContacts());
         return "contact/inbox";
